@@ -3,12 +3,12 @@
 笔记说明：  https://github.com/ruyuejun/note  
 笔记地址：  
 - JavaScript：https://github.com/overcomputer/JavaScript 
-- Go：整理中
+- Go：https://github.com/overcomputer/Go
 - Java：整理中
 - Python：整理中
 - 数据库：整理中
 - Linux：整理中
-- 算法与数据结构：整理中
+- 算法：https://github.com/overcomputer/Algorithm
 - 大数据：整理中
 
 ## JavaScript书籍
