@@ -1,5 +1,17 @@
-```
-#### 4.2 JavaScript书籍
+## 前言
+记录笔记也是一种生活。  
+笔记说明：  https://github.com/ruyuejun/note  
+笔记地址：  
+- JavaScript：https://github.com/overcomputer/JavaScript 
+- Go：整理中
+- Java：整理中
+- Python：整理中
+- 数据库：整理中
+- Linux：整理中
+- 算法与数据结构：整理中
+- 大数据：整理中
+
+## JavaScript书籍
 ```
 网页篇：
         《CSS世界》
@@ -17,7 +29,7 @@ ES6篇：
         《深入理解ECMAScript6》         
         《ECMAScript6入门》      
 ```
-#### 4.3 Node.js书籍
+## Node.js书籍
 ```
 基础篇：
         《新时期的Node.js入门》
