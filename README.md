@@ -1,7 +1,6 @@
-## 前言
-记录笔记也是一种生活。  
-笔记说明：  https://github.com/ruyuejun/note  
-笔记地址：  
+## 笔记说明
+https://github.com/ruyuejun/note 
+## 笔记索引     
 - JavaScript：https://github.com/overcomputer/JavaScript 
 - Go：https://github.com/overcomputer/Go
 - Java：整理中
@@ -10,7 +9,6 @@
 - Linux：整理中
 - 算法：https://github.com/overcomputer/Algorithm
 - 大数据：整理中
-
 ## JavaScript书籍
 ```
 网页篇：
