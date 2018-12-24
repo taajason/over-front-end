@@ -1,10 +1,11 @@
 ## 一 jQuery动画
 #### 1.1 显示/隐藏 show/hide
 ```javascript
-$(selector).show();     //作用同于 css(“display”, ”block”)
-$(selector).show(2000);	//带参，表示 多少毫秒内执行完毕
-$(selector).show(2000, function() {});  //支持执行完毕后的回调函数
-$(selector).show("slow");   //常用参数值
+$(selector).show();                         //作用同于 css(“display”, ”block”)
+$(selector).show(2000);	                    //带参，表示 多少毫秒内执行完毕
+$(selector).show(2000, function() {});      //支持执行完毕后的回调函数
+$(selector).show("slow");                    //常用参数值
+
 //hide用法同上
 ```
 #### 1.2 滑入/滑出 slideDown/slideUp
