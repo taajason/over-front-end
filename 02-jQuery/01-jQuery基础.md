@@ -122,16 +122,18 @@ $(selector).toggleClass(“liItem”);
 ```
 #### 3.2 节点操作
 ```javascript
+
 //创建元素 $() 或者 节点.html()
 var $spanNode = $("<span>我是一个span元素</span>");
 var node = $("#box").html（"<li>我是li</li>"）；	
 
-//添加元素 append()
+//添加子元素 append()
 $(selector).append($node);				//追加传入jQuery对象
 $(selector).append('<div></div>');		//直接传入html片段
-
 appendTo(s)          //添加到s元素最后面，原生没有
 prepend()           //添加到子元素最前面，类似原生的appendChild()
+
+//添加兄弟元素
 after()		  	    //添加到自己后面（作为兄弟）
 before()		    //添加到自己前面（作为兄弟）
 
@@ -146,12 +148,12 @@ text():	没有参数获取不包含标签的内容(字符串)，有参数是插�
         设置内容时，类似原生innerText（火狐使用textContent获取），无视HTML标记插入纯文本，但是text()不存在兼容问题
 val():  获取匹配元素的值，只匹配第一个元素，
         有参数时设置所有匹配到的元素的值
-//删除与清空元素
-$(selector).empty();    // 清空参数所有子元素，会清除事件，推荐使用
-$(selector).html("");	// 同上，但元素事件不会被清空,会出现内存泄露
 
-$(selector).remove();	// 删除元素与事件，包括自己，返回被删除的元素
-$(selector).detach();	// 同上，但是会保留事件
+//删除与清空元素
+$(selector).empty();        // 清空参数所有子元素，会清除事件，推荐使用
+$(selector).html("");	    // 同上，但元素事件不会被清空,会出现内存泄露
+$(selector).remove();	    // 删除元素与事件，包括自己，返回被删除的元素
+$(selector).detach();	    // 同上，但是会保留事件
 
 //复制元素 clone()
 $(selector).clone();        //复制匹配的元素，返回值为复制的新元素
@@ -239,7 +241,13 @@ $(“div”).scrolllLeft();	    // 被卷曲的宽度，即相对于滚动条左
 ```javascript
 $('div').filter('#div1').css('background','red');
 $('div').has('span').css('background','green');
-```
+
 filter():	过滤
 not()：		filter的反义词
 has()：		has查看的是当前元素是否包含，filter过滤的是所有同级元素
+```
+#### 3.7 常见案例 全选/反选
+```js
+$(selector).prop("checked", true);          //全选
+$(selector).prop("checked", false);         //全不选
+```

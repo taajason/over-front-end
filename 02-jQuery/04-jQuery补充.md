@@ -26,8 +26,8 @@ myQuery(function(){
 ## 三 jQuery插件机制
 通过插件的方式，可以扩展jQuery的功能：
 ```
-$.extend: 		扩展工具方法下的插件形式 
-$.fn.extend:  	扩展到JQ对象下的插件形式 （fn是 prototype的简写）
+$.extend: 		                扩展工具方法下的插件形式 
+$.fn.函数名 = function(){}:  	扩展到JQ对象下的插件形式 （fn是 prototype的简写）
 ```
 案例：
 ```javascript
