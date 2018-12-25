@@ -138,3 +138,63 @@ let age = 22;
 
 
 ```
+## 四 Node与Redis
+Redis官方推荐的Node.js连接Redis驱动包有 node_redis和ioredis。本文以ioredis为例。
+```js
+const Redis = require('ioredis');
+
+// let redis = new Redis();
+// 指定地址访问
+// let redis = new Redis(6379, '127.0.0.1');
+let redis = new Redis({
+    port: 6379,          // Redis port
+    host: '1****',   // Redis host
+    family: 4,           // 4 (IPv4) or 6 (IPv6)
+    password: 'test',
+    db: 0
+});
+
+redis.set('name','lisi',function () {
+    redis.get('name',function (error,result) {
+        console.log(result);
+    });
+});
+```
+ioredis支持在HMSET命令中使用对象作为参数，对象的属性值只能是字符串，相应的HGETALL会返回一个对象。
+对事务的支持：
+```js
+let multi = redis.multi();
+multi.set('foo1','bar1');
+multi.sadd('foo2', 'bar2');
+multi.exec(function (err, replies) {
+    console.log(replies);           //[ [ null, 'OK' ], [ null, 1 ] ]
+});
+
+//或者链式调用：
+redis.multi()
+        .set('foo3','bar3')
+        .sadd('set', 'b')
+        .exec(function (err, replies) {
+            console.log(replies);       //[ [ null, 'OK' ], [ null, 1 ] ]
+        });
+```
+发布订阅：创建两个连接，分别充当发布者和订阅者
+```js
+
+let pub = new Redis({
+ 
+});
+
+let sub = new Redis({
+});
+
+
+sub.subscribe('chat',function () {
+    pub.publish('chat','hi!');
+});
+
+sub.on('message', function (channel1, message) {
+    console.log("收到 " + channel1 + " 频道的消息：" + message);    //收到 chat 频道的消息 hi
+});
+```
+注意：redis建立连接也是异步的。连接建立完成前的redi操作都会被加入到离线任务队列中，连接成功后，按顺序依次执行。

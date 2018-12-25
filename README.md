@@ -12,10 +12,14 @@ https://github.com/ruyuejun/note
 ## JavaScript书籍
 ```
 网页篇：
+        《HTML 5与CSS 3权威指南》
+        《CSS揭秘》
         《CSS世界》
+        《JavaScript DOM编程艺术》
+        《锋利的jQuery》
 基础篇：
-        《JavaScript权威指南》          
         《JavaScript高级程序设计》
+        《JavaScript权威指南》(可以作为工具书)           
 提高篇：
         《JavaScript语言精粹》          
         《你不知道JavaScript》

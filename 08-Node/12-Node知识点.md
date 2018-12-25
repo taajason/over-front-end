@@ -284,6 +284,80 @@ Node运行中，只要满足以下条件中的任意一个，对象均不会被�
 - 全局变量或者由全局变量触发，可以访问到的对象；
 - 正执行函数中的局部对象，包括这些局部对象可以访问到的对象；
 - 一个非全局对象，如果被一个闭包引用，则这个对象将和引用它的闭包异同存在，即使离开了创建它的环境。这个对象称为自由变量，它为未来闭包执行的时候保留上下文。
+## 七 Node执行环境
+Express等框架中，可以使用app.set(‘env’,’production’);指定执行环境，但是不建议，因为应用程序会一直运行在该环境中，推荐使用NODE_ENV指定运行环境。调用app.get(‘env’); 让它报告运行在哪个模式下：
+```js
+const http = require('http');
+const express = require('express');
+let app = express();
+http.createServer().listen(app.get('port'),function () {
+    console.log('Express started on ' + app.get('env'));        //直接启动会是在 development
+});
+```
+在生产环境执行：export NODE_ENV=production  
+如果是Unix系系统：NODE_ENV=production node app.js  
+注意：Express在生产环境中默认会启动视图缓存。
+Node启动程序的模块化：
+```js
+const http = require('http');
+const express = require('express');
+
+function startServer() {
+    let app = express();
+    http.createServer().listen(app.get('port'),function () {
+        console.log('Express started on ' + app.get('env'));        //直接启动会是在 development
+    });
+}
+
+if (require.main === module) {
+    startServer();  //应用程序直接运行
+} else {            //作为一个模块 导出
+    module.exports = startServer;
+}
+```
+这样做的好处是，这个文件既可以直接启动，也可以作为模块导出。直接运行时，module.main === module 是true，如果是false，证明是另外一个脚本require进来的。
+此时创建一个新脚本：
+```js
+
+
+const cluster = require('cluster');
+
+function startWoker() {
+    let worker = cluster.fork();
+    console.log('cluster worker %d started',worker.id);
+}
+
+if (cluster.isMaster) {
+
+    require('os').cpus().forEach(function () {
+        startWoker();
+    });
+
+    //记录所有断开的工作线程，断开应该退出
+    cluster.on('disconnect', function (worker) {
+        console.log('cluster worker %d disconnect',worker.id)
+    });
+
+    //当有工作线程死掉，则创建一个线程替代它
+    cluster.on('exit', function (worker,code,signal) {
+        console.log('cluster worker %d died',worker.id);
+        startWoker();
+    });
+} else {        //在工作线程上启动服务器
+    require('./app.js')();
+}
+```
+
+该JS文件在执行时，要么在主线程的上下文中（node app.js直接运行），要么在工作线程的上下文中（被node集群系统执行），属性cluster.isMaster和cluster.isWoker决定了在哪个上下文中。运行脚本时，是在主线程下执行的，并使用cluster.for为系统的每个cpu启动了一个工作线程，在else语句中处理工作线程。
+此时可以在中间件中查看当前线程：
+```js
+let cluster = require(‘cluster’)
+if (cluster.isWorker) {
+require(‘cluster’).worker.id;
+next();
+}
+```
+
 
 
 
