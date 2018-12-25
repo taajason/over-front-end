@@ -1,10 +1,11 @@
 ## 一 jQuery动画
 #### 1.1 显示/隐藏 show/hide
 ```javascript
-$(selector).show();     //作用同于 css(“display”, ”block”)
-$(selector).show(2000);	//带参，表示 多少毫秒内执行完毕
-$(selector).show(2000, function() {});  //支持执行完毕后的回调函数
-$(selector).show("slow");   //常用参数值
+$(selector).show();                         //作用同于 css(“display”, ”block”)
+$(selector).show(2000);	                    //带参，表示 多少毫秒内执行完毕
+$(selector).show(2000, function() {});      //支持执行完毕后的回调函数
+$(selector).show("slow");                    //常用参数值
+
 //hide用法同上
 ```
 #### 1.2 滑入/滑出 slideDown/slideUp
@@ -41,6 +42,11 @@ $(selector).stop(clearQueue,jumpToEnd);
 //案例：
 $(selector).stop().slideDown();	//先停止别人的动画，再执行自己的动画。
 ```
+案例：鼠标离开时停止动画
+```js
+$("#test").hide(500).stop();
+```
+
 注意：如果元素动画还没有执行完，此时调用sotp()方法，那么动画将会停止。并且动画没有执行完成，那么回调函数也不会被执行。
 #### 1.6 自定义动画
 自定义动画：执行一组CSS属性的自定义动画
