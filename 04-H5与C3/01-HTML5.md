@@ -20,6 +20,7 @@ H5同样扩展了很多标签的功能：
 ```
 
 #### 1.2 HTML5网页结构
+常见的网页结构有：html4，xhtl，html5
 ```js
 <!DOCTYPE html>
 <html lang="en">
