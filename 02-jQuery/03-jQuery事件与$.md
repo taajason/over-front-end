@@ -91,10 +91,11 @@ event.which 					鼠标的按键类型：左1 中2 右3
 event.keyCode				键盘按键代码
 ```
 #### 1.5 事件触发
+事件触发是指在某些场景下，让某个元素去执行事件。
 ```javascript
 $(selector).click(); 						//简单事件触发：触发 click事件
-$(selector).trigger(“click”);				//trigger方法触发事件
-$(selector).triggerHandler(“focus”);	//此方式不触发浏览器行为如文本框获焦点
+$(selector).trigger("click");				//让元素触发click事件，和上述相同
+$(selector).triggerHandler("click");	    //此方式不触发浏览器默认行为
 ```
 #### 1.6 阻止冒泡与默认行为
 ```javascript
