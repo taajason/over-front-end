@@ -6,6 +6,38 @@ React是Facebook开源的一款用于构建前端界面的JS库，专注于MVC�
 >component diff: 在对比每一层的时候，组件之间对比。组件雷西兴不同，则移除旧组件，新组件替换到被移除的位置
 >element diff：组件中的每个元素也要对比
 >key:key是个属性，可以把页面上的DOM节点和虚拟DOM中的对象做一层关联关系。
+react与vue的区别：
+```
+他们都采用了虚拟DOM，组件化，数据驱动视图等思想。但是:
+vue支持表单控件双向数据绑定，react不支持
+react采用JSX来编写组件，Vue使用单文件组件
+```
+页面中直接使用react，实现helloworld：  
+```js
+//shell
+$ mkdir react-demos
+$ cd react-demos
+$ npm init --yes
+$ npm install --save react react-dom @babel/standalone
+//代码：
+<head>
+  <meta charset="UTF-8">
+  <title>demo - Hello World</title>
+  <script src="node_modules/@babel/standalone/babel.js"></script>
+  <script src="node_modules/react/umd/react.development.js"></script>
+  <script src="node_modules/react-dom/umd/react-dom.development.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    ReactDOM.render(
+      <h1>Hello, react!</h1>,
+      document.getElementById('root')
+    )
+  </script>
+</body>
+```
 ## 二 HelloWorld
 使用官方提供的构建工具能够快速的构建基于react的app：
 ```
