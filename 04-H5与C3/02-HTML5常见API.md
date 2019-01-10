@@ -218,6 +218,22 @@ interval：从设备获取数据的频率（单位毫秒）
 
 </html>
 ```
+## 六 离线应用
+离线应用可以帮助用户在没有网络时使用web程序，H5的离线功能包含：离线资源缓存、在线状态监测、本地数据存储等。  
+离线web应用比普通的web应用多了一个描述文件，该文件用来列出需要缓存和永不缓存的资源，描述文件的扩展名为：.manifest 或者 .appcache(推荐使用)。  
+首先需要在项目目录下创建 offline.appcache文件：
+```
+CACHE MANIFEST      # 说明这是离线应用描述文件
+CACHE:              # 会被缓存的资源列表
+index.html
+index.js
+NETWORK:            # 总是从web获取的资源列表
+test.js
+```
+html文件需要添加如下配置：
+```html
+<html lmanifest="./offline.appcache">
+```
 
 
 
