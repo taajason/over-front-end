@@ -36,11 +36,11 @@ ES6篇：
         《新时期的Node.js入门》
 开发篇：
         《Node.js实战（第2版）》                TJ合著，适合web开发     
-        《Node.js实战（第2季）》                Node在消息队列，命令行开发等中的应用
+        《Koa与Node.js开发实战》
+        《Node.js开发实战》                     Jim R(美)
         《使用Egg.js+Vue.js+Docker》            
         《Node.js调试指南》
 提高篇：
-        《Node.js设计模式》
         《Node.js:来一打C++扩展》       
         《深入浅出Node.js》           
 ```
