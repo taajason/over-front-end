@@ -1,46 +1,17 @@
-## 笔记说明
-https://github.com/ruyuejun/note 
-## 笔记索引     
-- JavaScript：https://github.com/overcomputer/JavaScript 
-- Go：https://github.com/overcomputer/Go
+## 前言
+记录笔记也是一种生活，朝着真·全栈的路上迈进，让全栈不再是一个贬义词！  
+这里汇总了Web前端、移动端、各语言后端、大数据等多种方向的文档，也推荐了大家精挑细选一些书籍与工具。  
+仓库汇总地址：  
+https://github.com/overcomputer  
+分类索引：  
+- JavaScript：https://github.com/overcomputer/JavaScript
+- Go：https://github.com/overcomputer/Golang
 - Java：整理中
 - Python：整理中
 - 数据库：整理中
 - Linux：整理中
 - 算法：https://github.com/overcomputer/Algorithm
 - 大数据：整理中
-## JavaScript书籍
-```
-网页篇：
-        《HTML 5与CSS 3权威指南》
-        《CSS世界》
-        《JavaScript DOM编程艺术》
-        《锋利的jQuery》
-基础篇：
-        《JavaScript高级程序设计》              小红书，可以作为入门知识补全
-        《JavaScript权威指南》                  犀牛书，可以作为工具书           
-提高篇：
-        《JavaScript语言精粹》                  蝴蝶书，JS精粹合集
-        《你不知道JavaScript》                  JS相关常用知识点、难点合集
-        《JavaScript核心技术开发解密》          
-        《高性能JavaScript》
-        《JavaScript设计模式与开发实践》 
-        《JavaScript设计模式》 
-ES6篇：
-        《深入理解ECMAScript6》         
-        《ECMAScript6入门》      
-```
-## Node.js书籍
-```
-基础篇：
-        《新时期的Node.js入门》
-开发篇：
-        《Node.js实战（第2版）》                TJ合著，适合web开发     
-        《Koa与Node.js开发实战》
-        《Node.js开发实战》                     Jim R(美)
-        《使用Egg.js+Vue.js+Docker》            
-        《Node.js调试指南》
-提高篇：
-        《Node.js:来一打C++扩展》       
-        《深入浅出Node.js》           
-```
+
+## 推荐书籍
+https://github.com/ruyuejun/note/
