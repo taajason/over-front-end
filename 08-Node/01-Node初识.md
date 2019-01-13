@@ -42,8 +42,8 @@ Linux中命令会自动向~/.bashrc添加环境命令，此时如果输入nvm �
 #### 2.2 安装node
 ```
 设置下载镜像：
-nvm node_mirror：https://npm.taobao.org/mirrors/node/
-nvm npm_mirror ：https://npm.taobao.org/mirrors/npm/
+nvm node_mirror:https://npm.taobao.org/mirrors/node/
+nvm npm_mirror:https://npm.taobao.org/mirrors/npm/
 ```
 
 安装Node：
