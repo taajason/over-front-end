@@ -25,3 +25,84 @@ mac安装：
     127.0.0.1  localhost
 
 ```
+## 二 HelloWorld
+server.js
+```js
+const amqp = require("amqplib");
+
+//连接本地127.0.0.1的rabbitmq队列，返回一个promise对象
+const connect = amqp.connect("amqp://127.0.0.1");
+
+connect.then((conn)=>{
+
+    //接收到CTRL+C时关闭连接
+    process.once("SIGINT", ()=>{
+        conn.close;
+    });
+
+    //创建一个通道
+    let channel =  conn.createChannel();
+
+    channel.then((ch)=>{
+
+        //监听 hello 队列，并设置durable持久化为false，表示队列保存在内存中
+        let ok = ch.assertQueue("hello",{durable: false});
+
+        ok = ok.then((_qok)=>{
+            
+            //让通道消费hello队列，
+            return ch.consume("hello", (msg)=>{
+
+                console.log("Received:",msg.content.toString());
+
+            }, {noAck: true});
+
+        });
+
+        //消费成功后，打印一行文本，表示服务器正常工作，等待客户端数据
+        return ok.then((_consumeOK)=>{
+            console.log("Waiting for msg,press CTRL+C exit!");
+        });
+
+    });
+
+}).then(null, console.warn);
+```
+client.js
+```js
+const amqp = require("amqplib");
+
+const connect = amqp.connect("amqp://127.0.0.1");
+
+connect.then((conn)=>{
+
+    let channel = conn.createChannel();
+        
+    channel.then((ch)=>{
+
+        let q = "hello";
+        let msg = "hello world";
+
+        let ok = ch.assertQueue(q, {durable: false});
+
+        return ok.then((_qok)=>{
+            ch.sendToQueue(q, new Buffer(msg));
+            return ch.close();
+        });
+    
+    });
+
+
+}).then(null, console.warn);
+```
+## 三 工作队列
+一个生产者配合多个消费者的队列：可以让队列不至于堆积过长，同时也能保证队列的响应时间。  
+下列代码使用传统的callback模式：
+server.js:
+```js
+
+```
+client.js:
+```js
+
+```
