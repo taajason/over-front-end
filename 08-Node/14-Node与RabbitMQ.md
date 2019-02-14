@@ -463,4 +463,149 @@ node server.js info
 node client.js error "只发送了错误error"
 node client.js info "发送了info"
 ```
-## 五 RabitMQ的RPC远程调用
+## 五 RabbitMQ的RPC远程调用
+RabbitMQ还可以提供类似RPC远程调用的功能。当然跨语言通信常用的方式是基于HTTP的RESTful，或者性能更好的Thrift。  
+server.js:
+```js
+const amqp = require('amqplib/callback_api');
+
+//定义斐波那契数列，模拟耗时运算
+function fib(n) {
+
+    let a = 0;
+    let b = 1;
+
+    for (let i = 0; i < n; i++) {
+        let c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return a;
+
+}
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://localhost", (err, conn)=>{
+
+    if (err) return errHandle(err);
+
+    process.once("SIGINT", ()=>{
+        conn.close();
+    });
+
+    let q = "rpc_queue";
+
+    conn.createChannel((err, ch)=>{
+
+        ch.assertQueue(q, {durable: false});
+         //设置公平调度：RabbitMQ会将奇数消息推送给A，偶数推送给B，如果奇数消息数目较多，不利于负载，设置为1不回向繁忙消费者推送
+        ch.prefetch(1);    
+
+        ch.consume(q, reply, {noAck: false}, (err)=>{
+
+            if (err) return errHandle(err);
+
+            console.log("Waiting rpc req");
+
+        });
+
+        function reply(msg) {
+
+            let n = parseInt(msg.content.toString());
+            console.log('[.].fib(%d)', n);
+            ch.sendToQueue(
+                msg.properties.replyTo, 
+                new Buffer(fib(n).toString()),
+                {correlationId: msg.properties.correlationId}
+            );
+            ch.ack(msg);
+        }
+
+    });
+
+});
+```
+client.js:
+```js
+const amqp = require("amqplib/callback_api");
+const uuid = require("node-uuid");
+
+let basename = require("path").basename;
+
+let n;
+try {
+    if (process.argv.length < 3) {
+        throw Error("Too few args");
+    }
+    n = parseInt(process.argv[2]);
+} catch (e) {
+    console.error(e);
+    process.exit(1);
+}
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) return errHandle(err);
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) return errHandle(err, conn);
+
+        let correlationId = uuid();
+
+        function maybeAnswer(msg) {
+            if ( msg.properties.correlationId === correlationId ) {
+                console.log('[.] Got %d', msg.content.toString());
+            } else {
+                return errHandle(new Error("Unexprected msg"));
+            }
+            ch.close(()=>{
+                conn.close();
+            });
+        }
+
+        ch.assertQueue('', {exclusive: true}, (err, ok)=>{
+
+            if (err) return errHandle(err);
+
+            let q = ok.queue;
+
+            ch.consume(q, maybeAnswer, {noAck:true});
+
+            ch.sendToQueue(
+                'rpc_queue', 
+                new Buffer(n.toString()),
+                {replyTo: q, correlationId: correlationId}
+            );
+
+        });
+
+    });
+
+});
+```
+测试：
+```
+启动多个服务端，然后客户端多次启动：
+node client.js  37
+node client.js  30
+node client.js  38
+```
