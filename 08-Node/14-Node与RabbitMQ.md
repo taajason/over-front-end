@@ -609,3 +609,69 @@ node client.js  37
 node client.js  30
 node client.js  38
 ```
+## 六 基于RBMQ实现Node与Python通信案例
+本案例以Node为生产者，通过RabbitMQ消息队列发送一个Hello World给Python消费者，打印该信息。
+send.js：
+```js
+const amqp = require("amqplib/callback_api");
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) return errHandle(err);
+
+    let q = "hello";
+    let msg = "Hello world";
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) return errHandle(err, conn);
+
+        ch.assertQueue(q, {durable: false}, (err, ok)=>{
+
+            if (err) return errHandle(err);
+
+            ch.sendToQueue(
+                q, 
+                new Buffer(n.toString())
+            );
+
+            ch.close(()=>{
+                conn.close();
+            });
+
+        });
+
+    });
+
+});
+```
+receive.py:
+```python
+import pika
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'));
+
+channel = connection.channel()
+
+channel.queue_declare(queue=" hello")
+
+print 'Wating msg ,press CTRL+C exit'
+
+def callback(ch, method, properties, body):
+    print " Received %r" % (body,)
+channel.basic_consume(
+    callback,
+    queue=' hello',
+    no_ack=True
+)
+```
+## 七 RBMQ与HTTP方案应对峰值对比
