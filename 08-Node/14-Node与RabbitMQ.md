@@ -207,5 +207,131 @@ node client.js third message
 在上一节中，一个复杂的任务轮询分配给了多个消费者来平均处理，这样可以减轻系统负载。但是也有这样的需求，一个消息同时又多个消费者都在订阅，此时需要使用PUB/SUB队列。比如实际的案例：接收到一个消息后，消费者C1负责记录日志，消费者C2负责打印日志。RabbitMQ的核心思想就是每个生产者都不直接将消息丢入队列中，甚至生产者根本不知道这个消息将会被宋到哪个或者哪几个消费者手中，这样的解耦思想有利于整个系统。  
 在这样的系统中，生产者只是将消息传递给Exchange，Exchange一边连接生产者接收生产者发送过来的数据，一边连接着队列，负责把数据推送到队列中。Exchange必须知道它将对接收到的数据进行怎样的处理，如将数据推送到指定的队列，或者推送到多条队列中等等，我们称这样的行为为Exchange类型，常见的类型是：direct、topic、headers、fanout。  
 案例采用fanout类型，即广播消息出去。
+server.js:
+```js
+const amqp = require("amqplib/callback_api");
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+function work(msg) {
+    let body = msg.content.toString();
+    console.log("Receive:", body);
+    let secs = body.split(".").length - 1;
+    setTimeout(()=>{
+        console.log("Done...");
+    }, secs * 1000);
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) {
+        return errHandle(err);
+    }
+
+    process.once("SIGINT", ()=>{
+        conn.close();
+    });
+
+    let ex = "test_pub";
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) {
+            return errHandle(err, conn);
+        }
+
+        ch.assertExchange(ex, "fanout", {durable: false}, (err)=>{
+
+            if (err) {
+                return errHandle(err, conn);
+            }
+
+            //这里不再给队列命名，exclusive表示断开连接时，删除队列
+            ch.assertQueue('', {exclusive: true}, (err, ok)=>{
+
+                //获取队列对象
+                let q = ok.queue;       
+
+                //绑定队列与Exchange，参数三为路由，暂时设置为空
+                ch.bindQueue(q, ex, '');
+
+                //开始消费数据，并设置消费完成后的回调函数
+                ch.consume(
+                    q, 
+                    msg=>{
+                        if (msg) {
+                            console.log("Receive:", msg.content.toString())
+                        }
+                    }, 
+                    {noAck: true},
+                    (err, ok)=>{
+                        if (err) {
+                            return errHandle(err, conn);
+                        }
+                        console.log("Wating,press Ctrl+C exit!");
+                    }
+                );
+
+            });
+
+        });
+
+    });
+
+
+});
+```
+client.js:
+```js
+const amqp = require("amqplib/callback_api");
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) {
+        return errHandle(err);
+    }
+
+    let ex = "test_pub";
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) {
+            return errHandle(err, conn);
+        }
+
+        let msg = process.argv.slice(2).join(" ") || "info: Hello world!";
+
+        //不再把消息直接推送给队列，而是推送给Exchange
+        ch.assertExchange(ex, "fanout", {durable: false} );
+
+        ch.publish(ex, '', new Buffer(msg));
+
+        console.log("Send:", msg);
+
+        ch.close(()=>{
+            conn.close();
+        });
+
+    });
+
+});
+```
+测试：启动多个server，然后不断启动client，会发现多个server端都接收到了数据。
 ## 四 RabbitMQ的队列路由
 ## 五 RabitMQ的RPC远程调用
