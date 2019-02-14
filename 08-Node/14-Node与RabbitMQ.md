@@ -220,15 +220,6 @@ function errHandle(err, conn){
     }
 }
 
-function work(msg) {
-    let body = msg.content.toString();
-    console.log("Receive:", body);
-    let secs = body.split(".").length - 1;
-    setTimeout(()=>{
-        console.log("Done...");
-    }, secs * 1000);
-}
-
 amqp.connect("amqp://127.0.0.1", (err, conn)=>{
 
     if (err) {
@@ -337,10 +328,139 @@ amqp.connect("amqp://127.0.0.1", (err, conn)=>{
 在第三章节的案例中，消息被多个消费者订阅，实际上还有更深入的需求：消费者是多种多样的，有队日志err专门分析的消费者，有队日志做打印的专门的消费者，这些消费者要根据自己的需要去获取队列里的数据，这时需要用到Exchange的路由功能。上述案例中的fanout只能无脑广播，这里需要修改类型为direct。direct类型的Exchange会把消息推送到绑定这个路由key的队列中去，简单的说，就是生产者将消息和路由的key推送给Exchange，Exchange则个悲剧哪个或者哪几个消费队列绑定了这个路由key，把消息再推送到这些队列中，供消费者消费。
 server.js
 ```js
+const amqp = require("amqplib/callback_api");
+const path = require("path");
 
+let basename = path.basename;
+let serverities = process.argv.slice(2);   
+if (serverities.length < 1) {
+    console.log("Usage %s [info] [warning] [error]", basename(process.argv[1]));
+    process.exit(1);
+}
+
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) return errHandle(err);
+
+    process.once("SIGINT", ()=>{
+        conn.close();
+    });
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) return errHandle(err, conn);
+
+        let ex = "test_direct";
+
+        ch.assertExchange(ex, "direct", {durable: false});
+
+        ch.assertQueue('', {exclusive: true}, (err, ok)=>{
+
+            if (err) return errHandle(err, conn); 
+
+            let q = ok.queue;  
+            let i = 0;  
+            
+            //定义绑定队列的递归函数
+            function sub(err) {
+                if (err) return errHandle(err, conn);
+                while (i < serverities.length) {
+                    ch.bindQueue(q, ex, serverities[i], {}, sub);
+                    i++;
+                }
+            }
+
+            ch.consume(
+                q, 
+                msg=>{
+                    if (msg) {
+                        console.log("Receive:", msg.content.toString())
+                    }
+                }, 
+                {noAck: true},
+                (err)=>{
+                    if (err) {
+                        return errHandle(err, conn);
+                    }
+                    sub(null);
+                }
+            );
+
+        });
+    })
+})
 ```
 client.js
 ```js
+const amqp = require("amqplib/callback_api");
 
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) {
+        return errHandle(err);
+    }
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) {
+            return errHandle(err, conn);
+        }
+
+        //获取参数，这里生产者发送日志的级别，默认info
+        let args = process.argv.slice(2);
+        let severity = (args.length > 0 ) ? args[0] : "info";
+        let msg = args.slice(1).join(" ") || "Hello world!";
+
+        //将Exchange节点命名为direct_logs
+        let ex = "test_direct";
+    
+        //不再把消息直接推送给队列，而是推送给Exchange
+        ch.assertExchange(ex, "direct", {durable: false}, (err, ok)=>{
+
+            if (err) return errHandle(err, conn);
+
+            //向节点ex推送数据，并带上key变量severity
+            ch.publish(ex, severity, new Buffer(msg));
+
+            console.log("Send:", msg);
+
+            ch.close(()=>{
+                conn.close();
+            });
+
+        } );
+
+    });
+
+});
+```
+测试：
+```
+启动一个监听 info  warning error 的消费者：
+node server.js info waring error
+再启动一个只监听info的消费者：
+node server.js info
+
+客户端测试：
+node client.js error "只发送了错误error"
+node client.js info "发送了info"
 ```
 ## 五 RabitMQ的RPC远程调用
