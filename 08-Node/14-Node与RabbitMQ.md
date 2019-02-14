@@ -95,14 +95,113 @@ connect.then((conn)=>{
 
 }).then(null, console.warn);
 ```
-## 三 工作队列
+## 三 RabbitMQ工作队列
 一个生产者配合多个消费者的队列：可以让队列不至于堆积过长，同时也能保证队列的响应时间。  
 下列代码使用传统的callback模式：
 server.js:
 ```js
+const amqp = require("amqplib/callback_api");
 
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+function work(msg) {
+    let body = msg.content.toString();
+    console.log("Receive:", body);
+    let secs = body.split(".").length - 1;
+    setTimeout(()=>{
+        console.log("Done...");
+    }, secs * 1000);
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) {
+        return errHandle(err);
+    }
+
+    process.once("SIGINT", ()=>{
+        conn.close();
+    });
+
+    let q = "task_queue";
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) {
+            return errHandle(err, conn);
+        }
+
+        ch.assertQueue(q, {durable: true}, (err, _ok)=>{
+
+            if (err) {
+                return errHandle(err, conn);
+            }
+            
+            ch.consume(q, work, {noAck:false});
+
+            console.log("Waiting for ms,press CTRL+C exit!");
+
+        });
+
+    });
+
+
+});
 ```
 client.js:
 ```js
+const amqp = require("amqplib/callback_api");
 
+function errHandle(err, conn){
+    console.error("err=",err);
+    if (conn) {
+        conn.close(()=>{
+            process.exit(1);
+        });
+    }
+}
+
+amqp.connect("amqp://127.0.0.1", (err, conn)=>{
+
+    if (err) {
+        return errHandle(err);
+    }
+
+    let q = "task_queue";
+
+    conn.createChannel((err, ch)=>{
+
+        if (err) {
+            return errHandle(err, conn);
+        }
+
+        let msg = process.argv.slice(2).join(' ') || "Hello World!";
+
+        ch.sendToQueue(q, new Buffer(msg), {persistent: true});
+
+        console.log("Send:", msg);
+
+        ch.close(()=>{
+            conn.close();
+        });
+
+    });
+
+});
 ```
+启动两个服务端同时监听客户端消息，然后不停的启动客户端发送消息：
+```
+node client.js first message
+node client.js second message
+node client.js third message
+```
+此时我们会发现，任务被平均分配给了2个消费者来处理了。任务量如果增大，可以通过增加消费者来增强队列的计算能力。
+## 三 RabbitMQ的PUB/SUB队列
+在上一节中，一个复杂的任务轮询分配给了多个消费者来平均处理，这样可以减轻系统负载。但是也有这样的需求，一个消息同时又多个消费者都在订阅，此时需要使用PUB/SUB队列。  
