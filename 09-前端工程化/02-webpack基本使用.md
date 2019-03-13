@@ -87,6 +87,8 @@ module.exports = {
 };
 ```
 
+贴士：在webpack4.0时，打包需要设置mode，默认值为production，也可以设置为development，二者分别用于生产环境（会压缩）和开发环境
+
 ## 二 webpack常用配置
 
 #### 2.0 前言
