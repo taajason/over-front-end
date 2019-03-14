@@ -1,0 +1,436 @@
+## 一 webpack配置书写格式
+
+我们需要注意的是：webpack本身只是一个打包工具，不具备任何功能。各类打包、编译工具都是由加载器或者插件完成的，比如编译ES6,react都是由babel这个第三方工具完成的，webpack可以使用babel-loader加载这个第三方工具。webpack具备很好的可扩展性，在编译方面，可配置大量的加载器（loader），在打包方面，可以配置大量的插件（plugins）。  
+
+加载器的配置书写案例：
+```js
+module:{
+	rules: [
+		{
+            test: /(\.jsx|\.js)$/,    //正则匹配 哪些文件 需要该加载器
+	        use: {                    //匹配到的文件使用哪个加载器
+		        loader: "babel-loader",
+		        options: {                      //加载器的参数
+			        presets: ["env"] 
+		        }
+	        },
+	        exclude: /node_modules/  //忽略掉哪些文件不走该加载器 
+        },
+        {
+            //后续的加载器
+        }
+	]
+}
+```
+
+插件的配置书写案例：
+```js
+plugins: [
+	new htmlWebpackPlugin({
+		template: path.resolve(__dirname,'src/index.html'),
+		filename: 'index.html'
+	}),
+	//热更新插件
+	new webpack.HotModuleReplacementPlugin()
+]
+```
+
+注意：webpack配置支持书写格式五花八门（字符串，数组，json），给入门者造成了相当的困扰，笔者推荐按照上面最复杂的格式书写。
+
+## 二 loader
+
+#### 2.1 loader使用步骤
+
+webpack只支持打包JS文件，对于其他文件的打包，要依赖于各种加载器，即loader，每个加载器负责处理一种文件。比如现在需要打包图片，那么需要：
+- 安装loader：cnpm install -D file-loader
+- 配置loader：在config文件中新增module字段，该字段值是个对象，内部包含一个rules字段，rules字段是个数组，该数组内书写规则。
+
+#### 2.2 file-lader 打包文件
+
+在index.js中加载一些文件，webpack是不能正确打包的，需要安装并配置`file-loader`。  
+
+示例整体结构图：
+![](/images/JavaScript/webpack-04.png)
+
+index.js:       
+```js
+//注意：该js文件被同级目录下的index.html所引用，打包完毕后需要在dist目录下也创建相同的index.js文件，引入该js
+import saberJPG from './public/images/sabar.jpg'
+
+let img = new Image();
+img.src = saberJPG;
+
+let root = document.getElementById("root");
+root.append(img)
+```
+
+webpack配置：
+```js
+const path = require('path');
+
+module.exports = {
+	entry: {                        //entry是可以有多个的
+        main: path.resolve(__dirname, './src/index.js')
+    },
+	output: {
+		path: path.resolve(__dirname, 'dist'),     
+		filename: 'index.js'                      
+    },
+    module:{
+        rules: [
+            {
+                test:  /\.(jpg|png|jpeg|gif)$/,  
+                use:['file-loader'] 
+            }
+        ]
+    }  
+};
+```
+
+npm脚本：
+```
+	# 脚本
+    "dev": "webpack --config webpack.config.js --mode development"
+
+	# 依赖
+	"devDependencies": {
+   		"file-loader": "^3.0.1",
+    	"webpack": "^4.29.6",
+    	"webpack-cli": "^3.2.3"
+  	}
+
+```
+
+注意：打包后生成的图片名不是原名，图片的目录也是根目录，而不是原有的images文件夹，可以这样配置：
+```js
+        rules: [
+            {
+                test:  /\.(jpg|png|jpeg|gif)$/,  
+                use:{
+                    loader: 'url-loader',
+                    options: {
+                        name: '[name]_[hash].[ext]',
+						outputPath: 'public/images/'
+                    }
+                }
+            }
+        ]
+```
+此时打开dist目录下的index.html进行测试，发现一切正常。
+
+贴士：
+- [name] [hash]是webpack的占位符，还有很多类似的占位符。
+- 每次打包需要手动删除dist目录下的打包后文件
+
+#### 2.2 url-loader
+
+url-loader具备file-loader的功能，且额外拥有自己的一些功能：
+- 将会把小图片打包为base64格式，减少http请求
+
+安装：
+```
+cnpm i url-loader -D
+```
+
+配置如下：
+```js
+            {
+                test:  /\.(jpg|png|jpeg|gif)$/,  
+                use:{
+                    loader: 'url-loader',
+                    options: {
+                        name: '[name]_[hash].[ext]',
+                        outputPath: 'public/images/',
+                        limit: 2048                     //如果图片超过2048字节不生成base64
+                    }
+                }
+            }
+```
+
+#### 2.2 css-loader
+
+解决了js、html的打包问题，现在还有css需要编译打包，css可以像模块一样被引入：
+```js
+import './index.css';
+```
+但是webpack只能处理JS文件，处理CSS文件需要第三方加载器css-loader
+安装：
+```
+npm i -D style-loader css-loader 
+```
+配置：
+```js
+const path = require('path');
+const htmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+	entry:path.resolve(__dirname,'src/index.js'), 
+	output: {
+		path: path.resolve(__dirname, 'dist'),     
+		filename: 'bundle.js'                      
+    },
+    module:{
+        rules: [
+            {
+                test:  /\.css$/,  
+                use:['style-loader', 'css-loader'] 
+            }
+        ]
+    },
+    plugins: [
+        new htmlWebpackPlugin({
+            template: path.resolve(__dirname,'src/index.html'), 
+            filename: 'index.html'
+        })
+    ]    
+};
+```
+在上述配置中，css-loader会遍历 CSS 文件，然后找到 url() 表达式然后处理他们，style-loader 会把原来的 CSS 代码插入页面中的一个 style 标签中。
+案例：
+
+```js
+// index.js 代码：
+import './index.css';
+const a = 3;
+alert(a);
+
+// index.html是一个空的h5页面
+
+// index.css内设置了一些样式。
+```
+打包后，生成了 index.html和bundle.js两个文件。
+打开页面，alert后样式被修改为index.css设置的样式。
+查看index.html的源码，CSS生成方式：直接在html的 head 标签添加了index.css的样式。
+
+#### 1.4 jquery与全局变量
+
+jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
+```js
+//先安装jquery： npm i -S jquery
+import 'jquery';
+$("#div").click(()=>{
+    alert("jquery");
+});
+```
+此时打包后$不能被浏览器识别，需要webpack配置如下：
+```js
+const webpack = require('webpack');
+//插件数组添加如下元素
+new webpack.ProvidePlugin({
+	$: 'jquery',
+	jQuery: 'jquery'
+})
+
+```
+
+
+
+#### 1.1 常见 module rules
+注意：loader是从后往前处理
+```js
+// 处理 CSS 文件的 loader
+{ test: /\.css$/, use: ['style-loader', 'css-loader'] }, 
+// 处理 less 文件的 loader
+{ test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
+// 处理 scss 文件的 loader
+{ test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+// 处理 图片路径的 loader
+{ test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, 
+// 处理 字体文件的 loader 
+{ test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, 
+// 配置 Babel 来转换高级的ES语法
+{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
+```
+#### 1.2 处理CSS style-loader css-loader
+CSS的编译与打包有两种处理方式，常用的处理方式是使用：style-loader与css-loader。
+- style-loader：负责在加载的页面创建样式标签，引入css
+- css-loader：让JS支持import css模块
+配置：
+```
+rules: [
+	{ 
+		test: /\.css$/, 
+		use: [
+			{loader: 'style-loader'}, 
+			{loader: 'css-loader'}
+		]
+	}
+]
+```
+打包结果：
+我们在app.js中可以直接使用import引入css，css样式被以 style 标签的形式直接写入了html中，这样的好处是CSS 完全包含在合并的应用中，再也不需要重新下载。
+
+还有一种方式是使用file-loader，配置如下：
+```
+{ 
+	test: /\.css$/, 
+	use: [
+		{loader: 'style-loader/url'}, 
+		{loader: 'file-loader'}
+	]
+}
+```
+此时import的css不会被以标签形式直接加入html，而是额外打包成了css文件，通过link标签引入该css,如果import了多个css，那么会生成多个link，这样会造成多次请求，所以很少使用。
+style-loader也可以控制样式的显示与否，配置如下：
+```
+use:[
+    {loader: 'style-loader/useable'}, 
+    {loader: 'css-loader'}
+]
+```
+这样配置后，我们可以在js中控制CSS的显示与否，比如在app.js中加入如下代码：
+```js
+import baseCSS from './css/index.css';
+baseCSS.use();
+setInterval(function(){
+	baseCSS.unuse();
+},300);
+```
+
+style-loader也有大量的可配置选项：
+```
+	insertAt：		插入位置
+	insertInto：		插入到某个dom节点
+	singleton：		是否只使用一个style标签
+	transform：		浏览器中转化，插入也面前执行一些列操作
+```
+案例：
+```
+{
+	loader: 'style-loader',
+	options: {
+		insertInfo: '#box',
+		singleton: true
+	}
+}, 
+```
+上述配置案例中style会直接插入到 #box这个标签中，singleton为true代表多个不同的style将会被合并到一个style中。
+
+css-loader选项：
+```
+	alias：			解析的别名
+	importLoader：	也作 @import 
+	minimize：		是否压缩，true为要压缩
+	modules：		是否启用css-modules，true为启用css模块化
+	localIdentName:	CSS的class名重新生成，常见设定为：
+                    [path][name]_[local]_[hash:base64:5]
+```
+#### 1.3 加载资源文件 file-loader url-loader
+webpack无法处理background中的url地址等等类似的资源文件都需要加载器支持。
+安装：
+```
+npm i -D file-loader
+```
+配置：
+```
+{
+	test: /\.(png|jpg|jpeg|gif)$/,
+	use: [
+		{ 
+			loader: 'file-loader',
+			options: {
+				publicPath: '',
+				outputPath: 'dist/',
+				useRelativePath: true
+			}
+		}
+	]
+}
+```
+url-loader具备和file-loader一样的图片打包功能，但是额外多了base64压缩功能。
+```
+{
+	test: /\.(png|jpg|jpeg|gif)$/,
+	use: [
+		{ 
+			loader: 'url-loader',
+			options: {
+				limit: 10000 //小于该大小的图片转变为base64
+			}
+		}
+	]
+}
+```
+#### 1.4 压缩图片 img-loader
+```
+rules: [
+    {
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      use: [
+        'url-loader?limit=10000',
+        'img-loader'
+      ]
+    }
+  ]
+```
+如果需要配置压缩率，可以添加可选项：
+```
+pngquant:{
+    quality: 80
+}
+```
+#### 1.5 图片合并 postcss-loader
+```
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'postcss-loader' ]
+      }
+    ]
+```
+retina:true时候可以支持视网膜屏，比如有些图是**@2x.png
+#### 1.6 处理img标签 html-loader
+```
+{
+    test: /\.html$/,
+    use: [
+        {
+            loader: 'html-loader',
+            options: {
+                attrs: ['img:src', 'img:data-src']
+            }
+        }
+    ]
+}
+```
+#### 1.7 处理typescript 
+推荐使用官方的loader：
+```
+npm i -D ts-loader 
+```
+tsconfig.json配置：
+```js
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "allowJs": true
+    },
+    "include": [
+        "./src/*"
+    ],
+    "exclude": [
+        "./node_module"
+    ]
+}
+
+```
+webpack配置：
+```
+{
+    test: /\.tsx?$/,
+    use: {
+        loader: 'ts-loader'
+    }
+}
+```
+注意：
+ts虽然对类型进行了限制，但是不会制动提示哪个地方出现了类型问题。
+```
+npm i @types/lodash
+//如果使用了vue还需要安装：
+npm i @types/vue
+
+//使用
+import * as _ from 'lodash';
+```
