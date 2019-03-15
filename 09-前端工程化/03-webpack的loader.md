@@ -45,6 +45,8 @@ webpack只支持打包JS文件，对于其他文件的打包，要依赖于各�
 - 安装loader：cnpm install -D file-loader
 - 配置loader：在config文件中新增module字段，该字段值是个对象，内部包含一个rules字段，rules字段是个数组，该数组内书写规则。
 
+注意：多个loader的处理顺序：从下到上，从右到左！
+
 #### 2.2 file-lader 打包文件
 
 在index.js中加载一些文件，webpack是不能正确打包的，需要安装并配置`file-loader`。  
@@ -122,7 +124,7 @@ npm脚本：
 - [name] [hash]是webpack的占位符，还有很多类似的占位符。
 - 每次打包需要手动删除dist目录下的打包后文件
 
-#### 2.2 url-loader
+#### 2.2 url-loader 打包文件
 
 url-loader具备file-loader的功能，且额外拥有自己的一些功能：
 - 将会把小图片打包为base64格式，减少http请求
@@ -147,83 +149,55 @@ cnpm i url-loader -D
             }
 ```
 
-#### 2.2 css-loader
+#### 2.2 style-loader css-loader 打包CSS
 
-解决了js、html的打包问题，现在还有css需要编译打包，css可以像模块一样被引入：
-```js
-import './index.css';
-```
-但是webpack只能处理JS文件，处理CSS文件需要第三方加载器css-loader
 安装：
 ```
-npm i -D style-loader css-loader 
+cnpm i -D style-loader css-loader 
 ```
+
 配置：
 ```js
-const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
-
-module.exports = {
-	entry:path.resolve(__dirname,'src/index.js'), 
-	output: {
-		path: path.resolve(__dirname, 'dist'),     
-		filename: 'bundle.js'                      
-    },
-    module:{
-        rules: [
             {
                 test:  /\.css$/,  
                 use:['style-loader', 'css-loader'] 
             }
-        ]
-    },
+```
+
+源码：
+```js
+import "./public/css/index.css"         // 可以在js文件中直接引入css
+```
+
+- css-loader会遍历 CSS 文件，然后找到 url() 表达式的关系并处理他们
+- style-loader 把刚才分析得到的css代码插入页面head标签的style标签中。  
+
+如果用到了saas，需要安装node-saas,saas-loader（同理也有less-loader）,配置如下：
+```js
+            {
+                test:  /\.(css|scss)$/,  
+                use:['style-loader', 'css-loader','scss-loader'] 
+            }
+```  
+
+如果需要给某些css加上类`moz`这样的前缀，需要`postcss-loader`,配置方式：
+```js
+//环境
+cnpm i -D autoprefixer postcss-loader
+
+//第一步：根目录下创建 postcss.config.js,内容如下：
+module.exports = {
     plugins: [
-        new htmlWebpackPlugin({
-            template: path.resolve(__dirname,'src/index.html'), 
-            filename: 'index.html'
-        })
-    ]    
-};
+        require('autoprefixer')
+    ]
+}
+
+//第二步：loader配置
+            {
+                test:  /\.(css|scss)$/,  
+                use:['style-loader', 'css-loader','scss-loader','postcss-loader'] 
+            }
 ```
-在上述配置中，css-loader会遍历 CSS 文件，然后找到 url() 表达式然后处理他们，style-loader 会把原来的 CSS 代码插入页面中的一个 style 标签中。
-案例：
-
-```js
-// index.js 代码：
-import './index.css';
-const a = 3;
-alert(a);
-
-// index.html是一个空的h5页面
-
-// index.css内设置了一些样式。
-```
-打包后，生成了 index.html和bundle.js两个文件。
-打开页面，alert后样式被修改为index.css设置的样式。
-查看index.html的源码，CSS生成方式：直接在html的 head 标签添加了index.css的样式。
-
-#### 1.4 jquery与全局变量
-
-jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
-```js
-//先安装jquery： npm i -S jquery
-import 'jquery';
-$("#div").click(()=>{
-    alert("jquery");
-});
-```
-此时打包后$不能被浏览器识别，需要webpack配置如下：
-```js
-const webpack = require('webpack');
-//插件数组添加如下元素
-new webpack.ProvidePlugin({
-	$: 'jquery',
-	jQuery: 'jquery'
-})
-
-```
-
-
 
 #### 1.1 常见 module rules
 注意：loader是从后往前处理
@@ -315,42 +289,7 @@ css-loader选项：
 	localIdentName:	CSS的class名重新生成，常见设定为：
                     [path][name]_[local]_[hash:base64:5]
 ```
-#### 1.3 加载资源文件 file-loader url-loader
-webpack无法处理background中的url地址等等类似的资源文件都需要加载器支持。
-安装：
-```
-npm i -D file-loader
-```
-配置：
-```
-{
-	test: /\.(png|jpg|jpeg|gif)$/,
-	use: [
-		{ 
-			loader: 'file-loader',
-			options: {
-				publicPath: '',
-				outputPath: 'dist/',
-				useRelativePath: true
-			}
-		}
-	]
-}
-```
-url-loader具备和file-loader一样的图片打包功能，但是额外多了base64压缩功能。
-```
-{
-	test: /\.(png|jpg|jpeg|gif)$/,
-	use: [
-		{ 
-			loader: 'url-loader',
-			options: {
-				limit: 10000 //小于该大小的图片转变为base64
-			}
-		}
-	]
-}
-```
+
 #### 1.4 压缩图片 img-loader
 ```
 rules: [

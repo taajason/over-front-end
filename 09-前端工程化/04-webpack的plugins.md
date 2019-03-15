@@ -1,3 +1,24 @@
+
+#### 1.4 jquery与全局变量
+
+jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
+```js
+//先安装jquery： npm i -S jquery
+import 'jquery';
+$("#div").click(()=>{
+    alert("jquery");
+});
+```
+此时打包后$不能被浏览器识别，需要webpack配置如下：
+```js
+const webpack = require('webpack');
+//插件数组添加如下元素
+new webpack.ProvidePlugin({
+	$: 'jquery',
+	jQuery: 'jquery'
+})
+
+```
 ## 二 插件 html-webpack-plugin
 
 安装插件：
