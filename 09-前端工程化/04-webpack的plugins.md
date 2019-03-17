@@ -1,25 +1,8 @@
+## 一 常用插件
 
-#### 1.4 jquery与全局变量
+插件可以使webpack的打包更加便捷，对打包提供了一些额外支持。
 
-jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
-```js
-//先安装jquery： npm i -S jquery
-import 'jquery';
-$("#div").click(()=>{
-    alert("jquery");
-});
-```
-此时打包后$不能被浏览器识别，需要webpack配置如下：
-```js
-const webpack = require('webpack');
-//插件数组添加如下元素
-new webpack.ProvidePlugin({
-	$: 'jquery',
-	jQuery: 'jquery'
-})
-
-```
-## 二 插件 html-webpack-plugin
+#### 1.1 移动html插件 html-webpack-plugin
 
 安装插件：
 ```
@@ -45,26 +28,24 @@ module.exports = {
 };
 ```
 此时我们在项目根目录创建index.html,无需引入index.js，打包后index.js自动被引入了index.html中。
-## 二 常用插件
-#### 2.1 去除注释
+
+#### 1.2 去除注释
 uglifyjs-webpack-plugin
 注意：新版webpack4 在打包时候如果使用了 mode为 production，则无需该插件自动去除注释。
-#### 2.2 打包html插件
+
+#### 1.3 其他常用插件
+
 ```
-npm i html-webpack-plugin -D
+postcss-loader          自动加入浏览器前缀加载器
+clean-webpack-plugin    删除目录插件 			
+CommonsChunkPlugin      提取公共JS插件		
+copy-webpack-plugin     拷贝文件插件			
+
 ```
-如果有多个html，每个html入口不一致，需要配置多个new htmlWebpackPlugin。
-#### 2.3 压缩插件
-webpack自带，配置即可：
-```
-new webpack.optimize.UglifyJsPlugin({
-    compress: {
-        		warnings: false
-   	}
-})
-```
-webpack4 配置了 生产mode后无需配置。
-#### 2.4 提取公共代码
+
+## 二 提取公共代码
+
+#### 2.1 提取公共代码
 webpack内置了提取公共代码的插件，主要针对多页面配置：
 ```
 entry: {
@@ -100,18 +81,10 @@ vendor是默认该项目引入的一系列第三方包，其他入口的功用�
         chunks: ['pageA', 'pageB']
     })
 ```
-#### 2.5 提取公共CSS插件
+#### 2.2 提取公共CSS插件
 旧版webpack使用插件：extract-text-webpack-plugin 。
 新版推荐使用插件：mini-css-extract-plugin
 
-## 三 其他
-```
-postcss-loader          自动加入浏览器前缀加载器
-clean-webpack-plugin    删除目录插件 			
-CommonsChunkPlugin      提取公共JS插件		
-copy-webpack-plugin     拷贝文件插件			
-
-```
 
 
 
