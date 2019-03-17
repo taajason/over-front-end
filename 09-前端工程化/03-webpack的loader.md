@@ -149,7 +149,7 @@ cnpm i url-loader -D
             }
 ```
 
-#### 2.2 style-loader css-loader 打包CSS
+#### 2.2 打包CSS
 
 安装：
 ```
@@ -169,8 +169,8 @@ cnpm i -D style-loader css-loader
 import "./public/css/index.css"         // 可以在js文件中直接引入css
 ```
 
-- css-loader会遍历 CSS 文件，然后找到 url() 表达式的关系并处理他们
-- style-loader 把刚才分析得到的css代码插入页面head标签的style标签中。  
+- css-loader：让JS支持import css模块，会遍历 CSS 文件，然后找到 url() 表达式的关系并处理他们
+- style-loader： 把刚才分析得到的css代码插入页面head标签的style标签中。  
 
 如果用到了saas，需要安装node-saas,saas-loader（同理也有less-loader）,配置如下：
 ```js
@@ -199,43 +199,9 @@ module.exports = {
             }
 ```
 
-#### 1.1 常见 module rules
-注意：loader是从后往前处理
-```js
-// 处理 CSS 文件的 loader
-{ test: /\.css$/, use: ['style-loader', 'css-loader'] }, 
-// 处理 less 文件的 loader
-{ test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
-// 处理 scss 文件的 loader
-{ test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
-// 处理 图片路径的 loader
-{ test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=7631&name=[hash:8]-[name].[ext]' }, 
-// 处理 字体文件的 loader 
-{ test: /\.(ttf|eot|svg|woff|woff2)$/, use: 'url-loader' }, 
-// 配置 Babel 来转换高级的ES语法
-{ test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ }
-```
-#### 1.2 处理CSS style-loader css-loader
-CSS的编译与打包有两种处理方式，常用的处理方式是使用：style-loader与css-loader。
-- style-loader：负责在加载的页面创建样式标签，引入css
-- css-loader：让JS支持import css模块
-配置：
-```
-rules: [
-	{ 
-		test: /\.css$/, 
-		use: [
-			{loader: 'style-loader'}, 
-			{loader: 'css-loader'}
-		]
-	}
-]
-```
-打包结果：
-我们在app.js中可以直接使用import引入css，css样式被以 style 标签的形式直接写入了html中，这样的好处是CSS 完全包含在合并的应用中，再也不需要重新下载。
 
 还有一种方式是使用file-loader，配置如下：
-```
+```js
 { 
 	test: /\.css$/, 
 	use: [
@@ -283,14 +249,13 @@ style-loader也有大量的可配置选项：
 css-loader选项：
 ```
 	alias：			解析的别名
-	importLoader：	也作 @import 
-	minimize：		是否压缩，true为要压缩
-	modules：		是否启用css-modules，true为启用css模块化
+	importLoaders：	也作 @import，常用值为2，意思是必须按照顺序执行前2个loader
+	minimize：		是否压缩，true为要压缩，
+	modules：		是否启用css-modules，true为启用css模块化，推荐使用
 	localIdentName:	CSS的class名重新生成，常见设定为：
                     [path][name]_[local]_[hash:base64:5]
 ```
-
-#### 1.4 压缩图片 img-loader
+#### 2.3 压缩图片 img-loader
 ```
 rules: [
     {
@@ -308,17 +273,8 @@ pngquant:{
     quality: 80
 }
 ```
-#### 1.5 图片合并 postcss-loader
-```
-    rules: [
-      {
-        test: /\.css$/,
-        use: [ 'style-loader', 'postcss-loader' ]
-      }
-    ]
-```
-retina:true时候可以支持视网膜屏，比如有些图是**@2x.png
-#### 1.6 处理img标签 html-loader
+
+#### 2.4 处理img标签 html-loader
 ```
 {
     test: /\.html$/,
@@ -332,7 +288,8 @@ retina:true时候可以支持视网膜屏，比如有些图是**@2x.png
     ]
 }
 ```
-#### 1.7 处理typescript 
+
+#### 2.5 处理typescript 
 推荐使用官方的loader：
 ```
 npm i -D ts-loader 
