@@ -4,39 +4,50 @@
 
 #### 1.1 移动html插件 html-webpack-plugin
 
+在之前的loader章节，html文件并未被移动，对开发造成了很大困扰，使用插件`html-webpack-plugin`会将源码中的html页面从src拷贝到dist下，且会自动将入口文件打包的js文件插入html页面的script标签中。
+
 安装插件：
 ```
-npm i -D html-webpack-plugin
+cnpm i -D html-webpack-plugin
 ```
 配置插件：
 ```js
 const path = require('path');
-const htmlWebpackPlugin = require('html-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-	entry:path.resolve(__dirname,'src/index.js'), 
+	entry: {                        //entry是可以有多个的
+        main: path.resolve(__dirname, './src/index.js')
+    },
 	output: {
 		path: path.resolve(__dirname, 'dist'),     
-		filename: 'bundle.js'                      
+		filename: 'index.js'                      
+    },
+    module:{
+        rules: [
+            {
+                test:  /\.(css|scss)$/,  
+                use:['style-loader', 'css-loader'] 
+            }
+        ]
     },
     plugins: [
         new htmlWebpackPlugin({
             template: path.resolve(__dirname,'src/index.html'), 
             filename: 'index.html'
         })
-    ]    
+    ]     
 };
 ```
 此时我们在项目根目录创建index.html,无需引入index.js，打包后index.js自动被引入了index.html中。
 
-#### 1.2 去除注释
-uglifyjs-webpack-plugin
-注意：新版webpack4 在打包时候如果使用了 mode为 production，则无需该插件自动去除注释。
+#### 1.2 去除注释插件
+
+去除注释插件为：`uglifyjs-webpack-plugin`,但是webpack4 不再需要该插件，因为在打包时候如果使用了`mode`为`production`，则自动去除注释。
 
 #### 1.3 其他常用插件
 
 ```
-postcss-loader          自动加入浏览器前缀加载器
 clean-webpack-plugin    删除目录插件 			
 CommonsChunkPlugin      提取公共JS插件		
 copy-webpack-plugin     拷贝文件插件			
