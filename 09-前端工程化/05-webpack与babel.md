@@ -47,7 +47,7 @@ npm i -D babel-loader@7 babel-core babel-preset-env
 
 解决办法：
 ```
-# 安装polufill
+# 安装poyfill
 npm install -S @babel/polyfill
 
 # 配置preset，意思是在第三步中引入的pollyfill不再将所有的ES6语法实现，即只有用到了map，才会加载map的实现，不会加载没用到的promise实现。
@@ -56,7 +56,7 @@ presets: [
 ]
 
 # 在业务源码的顶部加入以下代码：
-import "@babel/pollyfill"
+import "@babel/pollyfill"     # 如果配置了useBuiltIns，则无需引入，会自动引入
 ```
 
 但是如果我们当前书写的不是业务代码，而是自己书写一些插件，框架，那么pollyfill的方式不推荐，因为pollyfill生成的map，promise都是以全局变量的形式存在，会污染框架的环境，此时推荐的配置方式:

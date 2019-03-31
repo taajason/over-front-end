@@ -14,6 +14,8 @@ webpack的优点：
 - 6. 支持 SourceUrls 和 SourceMaps，易于调试
 - 7.  webpack使用异步 IO 并具有多级缓存。这使得 webpack 很快且在增量编译上更快。
 
+推荐课程：DellLee老师的https://coding.imooc.com/class/316.html
+
 #### 1.2 webpack与gulp区别  
 
 Gulp 的定位是 Task Runner, 用来跑一个一个任务，但是没有解决 js module 的问题。其工作方式是：指明对某些文件进行类似编译、组合、压缩等任务的具体步骤，之后gulp工具可以自动替你完成这些任务。
@@ -88,28 +90,6 @@ module.exports = {
 ```
 
 贴士：在webpack4.0时，打包需要设置mode，默认值为production，也可以设置为development，二者分别用于生产环境（会压缩）和开发环境
-
-#### 1.8 jquery与全局变量
-
-jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
-```js
-//先安装jquery： npm i -S jquery
-import 'jquery';
-$("#div").click(()=>{
-    alert("jquery");
-});
-```
-此时打包后$不能被浏览器识别，需要webpack配置如下：
-```js
-const webpack = require('webpack');
-//插件数组添加如下元素
-new webpack.ProvidePlugin({
-	$: 'jquery',
-	jQuery: 'jquery'
-})
-
-```
-
 
 
 

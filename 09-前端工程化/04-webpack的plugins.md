@@ -45,7 +45,34 @@ module.exports = {
 
 去除注释插件为：`uglifyjs-webpack-plugin`,但是webpack4 不再需要该插件，因为在打包时候如果使用了`mode`为`production`，则自动去除注释。
 
-#### 1.3 其他常用插件
+#### 1.4 jquery与全局变量
+
+jquery可以使用传统的script标签形式引入，但有了webpack，可以使用更加模块化的方式：
+```js
+//先安装jquery： npm i -S jquery
+import $ from "jquery";
+$("#div").click(()=>{
+    alert("jquery");
+});
+```
+此时jquery就可以正常使用了.  
+
+但是有两种情况:
+- 直接引用jquery:import "jquery";
+- 引入类似jqueryui,bootstrap这样的库,他们依赖于jquery,传统写法中,需要先用script标签加载jquery,然后再加载bootstrap.由于webpack是模块打包器,$只针对当前模块,并不会针对booststrap内部使用,我们也不可能去修改bootstrap源码.  
+此时需要webpack配置如下：
+```js
+const webpack = require('webpack');
+//插件数组添加如下元素
+new webpack.ProvidePlugin({
+	$: 'jquery',
+	jQuery: 'jquery'
+})
+```
+此时webpack在bootstrap源码中偷偷加入`import "jquery"`
+
+
+#### 1.4 其他常用插件
 
 ```
 clean-webpack-plugin    删除目录插件 			

@@ -37,10 +37,7 @@ module.exports = {
 output的其他配置：
 - publicPath:   会给注入到html中的JS的src添加该前缀
 
-#### 1.2 模式
-mode:
-
-### 1.3 sourceMap
+### 1.2 sourceMap
 
 sourceMap可以映射打包后的代码错误点与源码错误点位置，方便调试。  
 配置方式：
@@ -100,3 +97,97 @@ if(module.hot) {
     })
 }
 ```
+
+## 三 webpack打包模式。
+
+webpack在打包时有开发模式（development）和生产模式（prodction）两种，在mode中配置，那么为了对应不同的环境就需要不同的配置。  
+
+二者区别：
+```
+
+```
+
+npm脚本配置：
+```json
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js"
+```
+
+由于dev与prod的配置有很多相同的地方，推荐将共同部分抽离。  
+```
+# 安装webpack配置合并插件
+cnpm install -D webpack-merge
+
+# 将通用配置移动到到webpack基础配置文件：webpack.config.base.js
+const path = require('path');
+const htmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = {
+	entry: {                                                                
+        main: path.resolve(__dirname, './src/index.js')
+    },
+    module:{
+        rules: [
+            {
+                test:  /\.(css|scss)$/,  
+                use:['style-loader', 'css-loader'] 
+            }
+        ]
+    },
+    plugins: [
+        new htmlWebpackPlugin({
+            template: path.resolve(__dirname,'src/index.html'), 
+            filename: 'index.html'
+        })
+    ]     
+};
+
+# 开发配置：webpack.config.dev.js
+const path = require("path");
+const merge = require("webpack-merge");
+const webpack = require("webpack");
+
+const baseConfig = require("./webpack.config.base");
+
+const devConfig = {
+    mode: 'development',
+    devtool: 'cheap-module-source-map',
+    output: {                                       //name变成了上述的入口名   
+		path: path.resolve(__dirname, 'dist'),     
+		filename: '[name].js'                        
+    },
+    devServer: {
+        contentBase:  path.join(__dirname, "dist"),
+        open: true,                                 //启动时，会打开浏览器并渲染页面
+        port: 3000,                                 //默认是3000
+        hot: true,                                  //开启hotModule功能
+        hotOnly: true
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]  
+};
+
+module.exports = merge(baseConfig, devConfig)
+
+
+# 生产配置：webpack.config.prod.js
+const path = require("path");
+const merge = require("webpack-merge");
+
+const baseConfig = require("./webpack.config.base");
+
+const prodConfig = {
+    mode: 'production',
+    output: {                                           //name变成了上述的入口名   
+		path: path.resolve(__dirname, 'build'),     
+		filename: '[name].js'                        
+    },
+};
+
+module.exports = merge(baseConfig, prodConfig);
+
+
+```
+
+贴士：在开发时，使用webpack-dev-server往往不能查看打包后的代码了，也可以在npm脚本内再建一个`"dev-build": "webpack --config webpack.config.dev.js"`。
