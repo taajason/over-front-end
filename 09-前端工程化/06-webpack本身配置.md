@@ -76,7 +76,8 @@ cnpm i webpack-dev-server -D
         open: true,                 //启动时，会打开浏览器并渲染页面
         port: 3000,                 //默认是3000
         hot: true,                   //开启hotModule功能
-        hotOnly: true               //html生效，则浏览器不刷新
+        hotOnly: true,               //html生效，则浏览器不刷新
+        historyApiFallback:true      //单页面应用启用路由时候需要该设置    
     },
 ```
 
