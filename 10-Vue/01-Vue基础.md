@@ -169,6 +169,30 @@ new Vue({
 })
 ```
 
+注意：v-on可以缩写为@  
+
+v-on提供一些事件修饰符，如：`@click.stop="clickHandler"`
+- stop:阻止冒泡
+- prevent:阻止默认事件
+- capture：添加事件侦听器时使用事件捕获模式
+- self：只有当事件在该元素本身（非子元素）触发时触发回调
+- once：事件只触发一次
+
+self与stop区别：
+```js
+<div  id="outter">
+    <div  id="inner">
+        <button id="btn">
+
+        </button>
+    </div>
+<div>
+```
+
+为三个元素都绑定一个点击事件：
+- 默认当点击button时，事件冒泡，事件被依次触发三次
+- 当btn为stop时，则阻止冒泡，事件只被btn触发
+- 当inner为self时，则事件冒泡到inner处不触发，且继续冒泡到outter处触发
 
 
 
