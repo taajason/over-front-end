@@ -1,5 +1,7 @@
 ## 一 http模块
+
 #### 1.1 简单的web程序性
+
 ```JavaScript
 const http = require('http');
 let server = http.createServer(function (req, res) {
@@ -8,12 +10,16 @@ let server = http.createServer(function (req, res) {
 });
 server.listen(8000);
 ```
-http.createServer()方法返回的是http模块封装的一个基于事件的http服务器。
-req，res分别是http.IncomingMessage和http.ServerResponse的实例。
+http.createServer()方法返回的是http模块封装的一个基于事件的http服务器。  
+
+req，res分别是http.IncomingMessage和http.ServerResponse的实例。  
+
 http.Server的主要事件有：
 - request：客户端发起请求时，被处罚，提供req，res参数
 - connection：TCP建立连接时候处罚，提供一个scoket参数，是net.Socket的实例。
 - close：服务器关闭时，触发。
+
+
 http.createServer()方法其实就是添加了一个Reuqest事件监听，如下所示：
 ```JavaScript
 const http = require('http');
@@ -27,24 +33,34 @@ server.on('request', function (req, res) {
 });
 server.listen(8081, 'localhost');
 ```  
+
 #### 1.2 Node没有web容器
+
 在Java、php等语言中，还需要一个web容器来存放web资源（如Java的Tomcat，PHP的Apache），而Node没有这样的概念。
 所以，Node很难提供一个静态文件服务，也就是说，node.js中，如果看见一个网址是：127.0.0.1:3000/fang，不一定有fang这个文件夹。
 即：URL和真实物理文件，是没有关系的，URL是通过了Node的顶层路由设计，呈递某一个静态文件的。
+
 #### 1.3 http模块常见api
+
 http.IncomingMessage是http请求信息，提供了3个事件：
 - data：当请求数据到来时触发；
 - end：当请求体数据传输完毕时候触发；
 - close：当用户请求结束时候触发。
+
+
 http.IncomingMessage提供的属性有：
 - method：请求方式
 - headers：请求头
 - url：请求路径
 - httpVersion：http版本
+
+
 http.ServerResponse是返回客户端的信息，主要方法有：
 - res.writeHead(statusCode,[headers];	//向请求的客户端发送响应头
 - res.write(data,[encoding]);	        //向请求发送内容
 - res.end([data],[encoding);            //结束请求
+
+
 #### 1.4 https
 ```JavaScript
 const https = require('https');
@@ -55,7 +71,9 @@ https.createServer(options, function (req, res) {
     res.end('hi');
 }).listen(80);
 ```
+
 ## 二 url模块
+
 req.url属性，表示用户的请求URL地址。所有的路由设计，都是通过req.url来实现的。
 ```JavaScript
 const url = require('url');
@@ -94,12 +112,14 @@ let urlObj = {
 console.log(url.format(urlObj));                        //https://www.baidu.com?q=test
 console.log(url.resolve('http://www.a.com','/image')); //http://www.a.com/image
 ```
+
 ## 三 querystring模块
+
 该模块有2个主要方法：
-querystring.parse();	    
-将查询字符串反序列化为一个对象，类似JSON.parse()
-querystring.stringify();	
-将一个对象序列化为一个字符串对象，类似JSON.stringify()
+- querystring.parse();	    # 将查询字符串反序列化为一个对象，类似JSON.parse()
+- querystring.stringify();	# 将一个对象序列化为一个字符串对象，类似JSON.stringify()
+
+
 ```JavaScript
 const querstring = require('querystring');
 let str1 = 'username=lisi&password=123';
@@ -107,13 +127,16 @@ let obj1 = querstring.parse(str1);    //转换为了对象
 let obj2 = {username: 'zs', password: '456'};
 let str2 = querstring.stringify(obj2);  //重新转换为字符串
 ```
+
 用户提交的网址一般包含一定的数据，比如 username=lisi 这样的参数，我们可以通过url.query获取到这些字符串数据，Node提供了querystring对象来对这个字符串数据进行实例化处理：
 ```JavaScript
 var querystring = require(‘querystring’);
 urlStr = url.parse(req.url);
 console.log(querystring.parse(urlStr));
 ```
+
 ## 四 path模块
+
 ```JavaScript
 const path = require('path');
 let myurl = path.join(__dirname, 'username', '123');
@@ -121,9 +144,13 @@ console.log(myurl);     //输出类似这样的绝对路径 E:\ProjectWeb\Test\u
 ```
 
 ## 五 文件模块fs
-fs模块即：文件模块，是Node的核心模块，提供了操作文件的一些API。
-文件模块针对同一个业务提供了 异步、同步两种操作方式，比如读取文件：readFile()  readFileSync()。
+
+fs模块即：文件模块，是Node的核心模块，提供了操作文件的一些API。  
+
+文件模块针对同一个业务提供了 异步、同步两种操作方式，比如读取文件：`readFile()  readFileSync()`。  
+
 #### 5.1 打开文件 open()
+
 > fs.open(path,flags,[mode],callback);
 > - path：要打开的文件的路径（注意相对路径要 ./开头，为了兼容Linux和Win）
 > - flags：打开文件的方式  读/写
@@ -133,7 +160,7 @@ fs模块即：文件模块，是Node的核心模块，提供了操作文件的�
 >   - fd：被打开文件的标识
 
 案例：
-```JavaScript
+```js
 const fs = require('fs');
 fs.open('./1.html', 'r', function (err, fd) {
     if (err) {
@@ -144,7 +171,9 @@ fs.open('./1.html', 'r', function (err, fd) {
     }
 });
 ```
+
 #### 5.2 读取文件 readFile
+
 Node中读取文件一般使用fs.read()方法，该方法从一个特定的文件描述fd中读取数据。
 > fs.read(fd,buffer,offset,length,position,callback);
 > - fd：通过fs.open()方法返回的文件描述符
@@ -165,11 +194,18 @@ fs.readFile('./1.html', function (err, data) {
     console.log(data.toString());    //data是个Buffer 
 });
 ```
+
+注意:readFile会将一个文件的内容全部读取到内存中，适用于体积较小的文本文件。
+
 #### 5.3 写入文件 writeFile
+
 异步的将数据写入一个文件，如果文件不存在则创建，如果文件存在，则替换。data参数可以是一个string，也可以是一个buffer。
 > fs.writeFile(filename,data,[options],callback);
 > fs.appendFile()  该方法也可以将字符串或者缓冲区内容写入文件，
+
+
 #### 5.4 监听文件 watch
+
 > fs.wathc(filename,[options],[listener]);
 观察置顶路径的改变，filename可以是文件或者目录，返回的对象是：fs.FSWatcher。第二个参数为布尔值，默认为true，代表只要文件被监听，就继续执行。
 ```JavaScript
@@ -183,7 +219,9 @@ fs.watch('./1.html', function (ev, fn) {
     }
 });
 ```
+
 #### 6.5 文件元信息 stat
+
 > fs.stat(path,[callback]);
 ```JavaScript
 const fs = require('fs');
@@ -191,7 +229,9 @@ fs.stat('./1.html', function (err, data) {
     console.log(data);  //输出一系列文件本身信息
 });
 ```
+
 #### 5.6 其他常见API
+
 > fs.appendFile(name,data,[options],callback);
 将数据添加到文件末尾（文件不存在则创建）
 > fs.unlink(path,callback);			删除一个文件
@@ -204,6 +244,7 @@ fs.stat('./1.html', function (err, data) {
 > fs.rmdir([path,callback);			删除文件夹
 
 ## 六 压缩模块 zlib
+
 ```JavaScript
 const zlib = require('zlib');
 const fs = require('fs');
