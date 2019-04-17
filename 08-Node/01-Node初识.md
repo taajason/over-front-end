@@ -68,6 +68,7 @@ console.log(foo);
 - `module.exports`是直接导出了变量本身，`exports`是将导出的变量挂载到了`var foo`这个变量内，因为exports只是module对象下的一个属性。所有exports都是通过module.exports传递的，类似于每个模块头部都有：`var exports = module.exports;`
 - 多个`module.exports`，只会导出最后一个，前面的都会被忽略
 - `module.exports`和`exports`不能共用
+- require并不依赖于exports，可以加载一个没有暴露任何方法的模块，这相当于执行一个模块内部的代码
 
 #### 2.3 模块加载机制
 

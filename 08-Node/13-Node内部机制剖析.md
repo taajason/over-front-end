@@ -244,6 +244,47 @@ require("fs").readFile("./foo.js", function(){
 - AMD：RequireJS采用的模块机制，即异步模块加载机制，依赖这个模块的代码定义在一个回调函数中，等待加载完成后，这个回调函数才会运行
 - ES6Module：ES6的模块机制
 
+#### 3.2 重复引用问题
+
+Node无须关心重复引用问题，因为Node先从缓存中加载模块，一个模块被第一次加载后，就会在缓存中维持一个副本，如果遇到重复加载的模块会直接提取缓存中的副本，也就是说在任何情况下每个模块都只在缓存中有一个实例。
+
+#### 3.3 require同步加载问题
+
+require加载模块为什么是同步而非异步？
+- CommonJS的标准中，require是同步加载（这没有多少意义，标准也是可以推翻的）
+- Node服务器端，会缓存已经加载的模块，且访问的是本地文件，IO开销几乎可以忽略，所以无需像前端那样考虑异步加载，且服务端很少出现重启情况，也无须担心启动时的时间开销
+
+#### 3.4 require缓存策略
+
+require从缓存中加载文件是基于文件路径的，这表示即使有两个完全相同的文件，但她们位于不同的路径下，也会在缓存中维持两份。  
+
+查看缓存代码：
+```js
+console.log(require.cache);
+```
+
+#### 3.5 require缓存隐患
+
+当调用require加载一个模块时，模块内部的代码都会被调用！！！！，有时候这可能会带来隐藏的bug。   
+
+module.js：
+```js
+function test() {
+    setInterval(function(){
+        console.log("test");
+    },1000);
+}
+test();
+
+module.exports = test;
+```
+
+main.js:
+```js
+var test = require("./module");
+```
+
+main.js只是加载了module文件，但是仍然每隔1秒输出了test字符串，且main.js的进程始终没有退出！！这在生产环境中极其造成内存泄漏。所以使用模块时要留意该情况。
 
 ## 四 Node异常处理机制
 
