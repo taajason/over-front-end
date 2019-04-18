@@ -1,4 +1,5 @@
 ## 一 Hello World
+
 ```JavaScript
 const koa = require('koa');
 
@@ -10,8 +11,11 @@ app.use(async (ctx)=>{
 
 app.listen(3000);
 ```
+
 ## 二 路由中间件koa-router
+
 #### 2.1 路由创建
+
 Express自带了路由功能，而Koa则没有，需要额外安装koa-router模块：
 ```JavaScript
 const Koa = require('koa');
@@ -34,7 +38,9 @@ app.use(router.allowedMethods());	//根据ctx.status设置响应头
 
 app.listen(3000);
 ```
+
 #### 2.2 路由设计
+
 ```JavaScript
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -68,10 +74,15 @@ app.use(router.routes());
 
 app.listen(8000);
 ```
+
 #### 2.3 koa中间件与Express的不同
-Express中的中间件是按照顺序执行的；
+
+Express中的中间件是按照顺序执行的；  
+
 koa中的中间件无论写在什么位置，都会先执行。因为Koa的中间件是洋葱模型！
+
 #### 2.4错误处理中间件
+
 ```JavaScript
 app.use((ctx,next)=>{
     next();
@@ -81,7 +92,9 @@ app.use((ctx,next)=>{
     } 
 });
 ```
+
 ## 三 请求处理
+
 #### 3.1 GET请求
 ```JavaScript
 const Koa = require('koa');
@@ -102,6 +115,7 @@ app.use(async function(ctx){
 });
 app.listen(8000);
 ```
+
 #### 3.2 动态路由 /:
 使用 /: 接收参数
 ```JavaScript
@@ -120,6 +134,7 @@ app.listen(3000);
 ```
 
 #### 2.3 POST请求
+
 ```JavaScript
 const Koa = require('koa');
 const app = new Koa();
@@ -244,6 +259,7 @@ app.listen(3000, () => {
     console.log('run')
 });
 ```
+
 ## 六 cookie
 ```JavaScript
 app.use(async (ctx)=>{
@@ -273,6 +289,7 @@ app.use(async (ctx)=>{
 (new Buffer('李四')).toString('base64');				//汉字转换为base64
 (new Buffer('dwadwadwa','base64')).toString();		//base64转换为汉字
 ```
+
 ## 七 session中间件 koa-session
 ```JavaScript
 const Koa = require('koa');
@@ -308,4 +325,35 @@ router.get('/set',async (ctx)=>{
 
 app.use(router.routes());
 app.listen(3000);
+```
+
+## 八 消息队列
+
+一般来说，消息队列有两种场景：
+- 发布订阅模式：发布者向某个频道发布一条消息后，多个订阅者都会收到同一个消息
+- 生产消费模式：生产者生产消息放到队列里，消费者同时监听队列，如果队列里有了新的消息就将其取走，对于单条消息，只能由一个消费者消费
+
+发布订阅模式：
+```js
+// publisher
+var redis = require("redis");
+var client = redis.createClient(6379, "127.0.0.1");
+client.on("error", function(err){
+    console.log(err);
+});
+client.on("ready", function(){
+    client.publish("channel1", "hello");
+});
+
+//subsciber
+var redis = require("redis");
+var client = redis.createClient(6379, "127.0.0.1");
+client.on("error", function(err){
+    console.log(err);
+});
+client.subscribe("channel1");
+client.on("message", function(channel, message){
+    console.log("channel: ", channel);
+    console.log("message: ", message);
+});
 ```
