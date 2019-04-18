@@ -13,3 +13,9 @@ gm("./danny.jpg").crop(141,96,152,181).write("./2.jpg",function(err){
 });
 
 ```
+
+## 二 request
+
+## 三 bluebird
+
+## 四 async
