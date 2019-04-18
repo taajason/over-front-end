@@ -1,8 +1,11 @@
 ## 一 websocket
+
 #### 1.1 websocket简介
-websocket性能高，且支持双向通信。
+
+WebSocket可以看做是HTTP协议的升级版，也是基于TCP协议的应用层协议，弥补了HTTP协议无状态等缺陷，且提供了客户端和服务器之间双工通信机制。
  
 #### 1.2 使用io.socket
+
 使用 npm install socket.io安装该第三方模块，且该模块需要与http模块配合使用（原因见原理）。
 ```
 //客户端支持：

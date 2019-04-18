@@ -60,18 +60,6 @@ http.ServerResponse是返回客户端的信息，主要方法有：
 - res.write(data,[encoding]);	        //向请求发送内容
 - res.end([data],[encoding);            //结束请求
 
-
-#### 1.4 https
-```JavaScript
-const https = require('https');
-const fs = require('fs');
-let options = {key: fs.readFileSync('keys/agent2-key.pem'), cert: fs.readFileSync('keyas/agent2-key.pem')};
-https.createServer(options, function (req, res) {
-    res.writeHead(200);
-    res.end('hi');
-}).listen(80);
-```
-
 ## 二 url模块
 
 req.url属性，表示用户的请求URL地址。所有的路由设计，都是通过req.url来实现的。
