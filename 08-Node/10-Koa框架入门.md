@@ -327,7 +327,7 @@ app.use(router.routes());
 app.listen(3000);
 ```
 
-## 八 消息队列
+## 八 koa与消息队列
 
 一般来说，消息队列有两种场景：
 - 发布订阅模式：发布者向某个频道发布一条消息后，多个订阅者都会收到同一个消息
@@ -357,3 +357,20 @@ client.on("message", function(channel, message){
     console.log("message: ", message);
 });
 ```
+
+
+## 九 Koa源码阅读
+
+koa的中间件：  
+
+中间件的本质是一个函数，在koa中，该函数通常具有ctx和next两个参数，分别表示封装好的req/res对象以及下一个要执行的中间件，当有多个中间件的时候，本质上是一种嵌套调用，就像洋葱。  
+
+koa和express都是用app.use()来加载中间件，但是内部实现大不相同，koa的源码文件Application.js中定义了use方法：
+```js
+use(fn){
+    //....
+    this.middleware.push(fn);
+    return this;
+}
+```
+koa在application.js中维护了一个middleware的数组，如果有新的中间件被加载，就push到这个数组中。
