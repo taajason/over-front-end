@@ -110,6 +110,11 @@ export default router
 ```js
 let router = new VueRouter({
   mode: 'history',                  // 默认是hash
+  scrollBehavior(to,from,savePosition){   // 点击浏览器前进后退、切换导航时触发
+    // to 要进入的目标路由对象                
+    // from 要离开的路由对象
+    // savePosition 记录滚动条坐标        // 可以利用hash，或者 savePosition来定位前进后退后的视窗位置
+  },
   routes: [
     {
       path: '/home',
@@ -225,3 +230,45 @@ router-view是组件渲染的地方，他也可以设置很多配置：
     </router-link>
 </ul>
 ```
+
+## 四 路径与参数
+
+#### 4.1 动态参数
+
+关于路由的两个对象：
+- $router: router的示例对象
+- $route: 当前激活的路由信息对象，每个组件实例都会有
+
+获取路由中的参数：
+```js
+// 以 /user/:uid  方式访问某个子组件，根据uid的不同，该子组件渲染不同的数据
+  <div>
+    <router-link 
+      style="padding-right: 50px;" 
+      :to="'/user/' + item.uid " 
+      :key="index" 
+      v-for="(item,index) in userList"
+    > 
+      第 {{ index + 1 }} 个用户： {{ item.name }}
+    </router-link>
+  </div>
+
+
+// 子组件中获取数据
+  export default {
+    name: 'User.vue',
+    watch: {                      // 监控
+      $route(){
+        console.log(this.$route.params)
+      }
+    },
+    created () {
+      console.log(this.$route.params)
+    }
+  }
+```
+
+贴士：
+- 传输多个参数的方式：:to="'/user/1/1'   类型参数：是否是vip，uid参数 1
+- 路由配置：  path: '/user/:isvip/:uid'
+- 子组件中的打印结果： {type: 1, uid: 1}
