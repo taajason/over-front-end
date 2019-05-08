@@ -14,7 +14,7 @@ https://github.com/overnote
 - 大数据：整理中
 
 ## 推荐书籍
-https://github.com/ruyuejun/note/
+https://github.com/ruyuejun/polaris
 
 
 ## JS相关书籍推荐
