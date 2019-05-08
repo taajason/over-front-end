@@ -2,15 +2,15 @@
 记录笔记也是一种生活，朝着真·全栈的路上迈进，让全栈不再是一个贬义词！  
 这里汇总了Web前端、移动端、各语言后端、大数据等多种方向的文档，也推荐了大家精挑细选一些书籍与工具。  
 仓库汇总地址：  
-https://github.com/overcode 
+https://github.com/overnote 
 分类索引：  
-- JavaScript：https://github.com/overcode/JavaScript
-- Go：https://github.com/overcode/Golang
+- JavaScript：https://github.com/overnote/JavaScript
+- Go：https://github.com/overnote/Golang
 - Java：整理中
 - Python：整理中
 - 数据库：整理中
 - Linux：整理中
-- 算法：https://github.com/overcode/Algorithm
+- 算法：https://github.com/overnote/Algorithm
 - 大数据：整理中
 
 ## 推荐书籍
