@@ -1,5 +1,4 @@
-## JS相关书籍推荐
-#### 网页书籍
+## JavaScript相关资料整理
 
 - [《HTML&CSS设计与构建网站》](https://book.douban.com/subject/21338365/)：适合网页开发0基础入门
 - [《CSS揭秘》](https://book.douban.com/subject/26745943/)
