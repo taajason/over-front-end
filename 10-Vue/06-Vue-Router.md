@@ -272,3 +272,14 @@ router-view是组件渲染的地方，他也可以设置很多配置：
 - 传输多个参数的方式：:to="'/user/1/1'   类型参数：是否是vip，uid参数 1
 - 路由配置：  path: '/user/:isvip/:uid'
 - 子组件中的打印结果： {type: 1, uid: 1}
+
+获取查询字符串：
+```js
+<router-link exact :to="{path:'', query:{uid:'1'}}">
+<div>
+$route.query      <!-- 这就是上述query内的json -->
+</div>
+```
+
+#### 3.5 导航的钩子函数
+
