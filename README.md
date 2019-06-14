@@ -45,11 +45,7 @@
 
 ## 附录：博主自己的其他笔记
 
-[推荐书籍](https://github.com/ruyuejun/polaris)：综合了所有技术对应的书籍与书评  
-
-[知识笔记汇总仓库](https://github.com/overnote)：所有技术笔记所在组织  
-
-对上述仓库的分类索引：  
+- [推荐书籍](https://github.com/ruyuejun/polaris)：综合了所有技术对应的书籍与书评  
 - [Server](https://github.com/overnote/server)：包含常用服务端技术：Nginx、mysql、redis、mongodb、linux系统等
 - [数据结构与算法](https://github.com/overnote/algorithm)：数据结构与算法笔记，主讲Go版本，另附JS，Java版本，未来可能增加C版
 - [JavaScript](https://github.com/overnote/javascript)：包含网页、JS、前端工程化、Node、vue、react等JS相关领域技术
