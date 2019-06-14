@@ -45,9 +45,9 @@
 
 ## 附录：博主自己的其他笔记
 
-[推荐书籍](https://github.com/ruyuejun/polaris)：综合了所有技术对应的书籍与书评 https://github.com/ruyuejun/polaris  
+[推荐书籍](https://github.com/ruyuejun/polaris)：综合了所有技术对应的书籍与书评  
 
-[知识笔记汇总仓库](https://github.com/overnote)：所有技术笔记所在组织 https://github.com/overnote   
+[知识笔记汇总仓库](https://github.com/overnote)：所有技术笔记所在组织  
 
 对上述仓库的分类索引：  
 - [Server](https://github.com/overnote/server)：包含常用服务端技术：Nginx、mysql、redis、mongodb、linux系统等
