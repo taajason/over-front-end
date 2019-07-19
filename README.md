@@ -1,20 +1,20 @@
 ## 新时代前端的学习方向要点
 
-需要深入的技术点：
+**需要深入的技术点**：
 - 三个框架：Angular/Vue/React的深入理解
 - TypeScript：笔者认为是前端开发者掌握开发语言生态建设（依赖注入、接口等）的最快方式，当然TS也会因为vue3.0的普及而持续上升份额
 - 小程序：小程序已经很多年了，不算新，mpvue、Taro、didi的库都可以试试
 - NodeJS：无Node不前端
 - 计算机基础：所有开发者都逃不掉的三大件：数据结构与算法、操作系统、计算机网络
 
-需要实践的技术点：
+**需要实践的技术点**：
 - Nest.js：NodeJS后端服务框架，拥有完善IOC机制，可以提升前端的架构视野，当然阿里的midway也不错，这2个框架也是直接使用TS书写，可以加强TS学习
 - Flutter：笔者认为是具有划时代意义的跨平台框架，笔者也认为这会引起前端的第三次革命（第一次是ajax，第二次是nodejs）
 - GraphQL：
 - Electron：快速构建跨平台应用的利器
 - 项目集成：docker，CI/CD，甚至可以了解k8s、Serverless
 
-可以简单了解的技术点：
+**可以简单了解的技术点**：
 - PWA：简单关注即可，其技术原理也极其简单
 - WASM：目前火热的rust、go等语言已经支持，可以尝试
 - IOT
@@ -24,17 +24,11 @@
 
 #### 网页开发
 
-基础：
-- [《Head First HTML与CSS（第2版）》](https://book.douban.com/subject/25752357/)
-- [《HTML&CSS设计与构建网站》](https://book.douban.com/subject/21338365/)
-- [《HTML5与CSS3基础教程（第8版）》](https://book.douban.com/subject/25878992/)
-
-提升：
-- [《HTML5权威指南》](https://book.douban.com/subject/25786074/)
-- [《CSS3实用指南》](https://book.douban.com/subject/10482084/)
-- [《CSS揭秘》](https://book.douban.com/subject/26745943/)
-- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)
-
+- [《Head First HTML与CSS（第2版）》](https://book.douban.com/subject/25752357/)：基础书籍
+- [《HTML&CSS设计与构建网站》](https://book.douban.com/subject/21338365/)：基础书籍
+- [《HTML5权威指南》](https://book.douban.com/subject/25786074/)：基础书籍
+- [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
+- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
 
 #### JavaScript
 
@@ -71,6 +65,7 @@ ES6篇：
 
 - [Node基础学习](https://github.com/overnote/javascript/tree/master/08-Node)：Node多数入门书质量堪忧，笔者推荐直接看本笔记
 - [《Koa与Node.js开发实战》](https://book.douban.com/subject/30404722/)：《Node In Action》也是经典，但大部分内容被本书涵盖，且本书更详细
+- [《Node.js 设计模式（第 2 版）》](https://book.douban.com/subject/30159269/)：对Node各方面做了原理性解释
 - [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
 
