@@ -69,16 +69,17 @@ ES6篇：
 
 #### Node书籍
 
-- [《狼书（卷1）：更了不起的Node.js》](https://book.douban.com/subject/33950116/)：Node基础介绍，入门力荐
+- [Node基础学习](https://github.com/overnote/javascript/tree/master/08-Node)：Node多数入门书质量堪忧，笔者推荐直接看本笔记
 - [《Koa与Node.js开发实战》](https://book.douban.com/subject/30404722/)：《Node In Action》也是经典，但大部分内容被本书涵盖，且本书更详细
-- [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍中的瑰宝
-- [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 
+- [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
+- [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
 
 #### 资料
 
 - [《Node.js调试指南》 ](https://github.com/nswbmw/node-in-debugging)
 - [《前端面试之道》](https://yuchengkai.cn/docs/frontend/ )
 - [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
+- [《重学前端》]()：极客时间winter
 
 ## 附录：笔记汇总
 

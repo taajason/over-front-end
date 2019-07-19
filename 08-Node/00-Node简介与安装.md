@@ -2,7 +2,7 @@
 
 #### 1.1 简介
 
-Ryan Dahl将Chrome浏览器的JS解释引擎V8抽离了出来，补充了一些API，实现了可以在服务端运行的JS，这一套环境称之为Node.JS，严格来说，Node就是ECMAScript的一个运行时环境(runtime)，该环境的底层使用C++开发，提供了JS代码运行所需要的编译器（V8）以及操作系统底层支持（fs包等）。
+Ryan Dahl将Chrome浏览器的JS解释引擎V8抽离了出来，补充了一些API，实现了一套可以用来开发服务端的JS运行时环境，这一套环境称之为Node.JS，该环境的底层使用C++开发，提供了JS代码运行所需要的编译器（V8）以及操作系统底层支持（fs包等）。
 
 注意：语言和运行时的区别如下
 - 语言：一种语法的抽象规范，使用某个编程语言开发软件其实是在使用这套规范来开发
@@ -25,7 +25,7 @@ Node善于I/O，不善于计算。即CPU密集型Node不擅长，Node擅长的�
 
 当应用程序需要处理大量并发的I/O，而在向客户端发出响应之前，应用程序内部并不需要进行非常复杂的处理的时候，Node.js非常适合。Node.js也非常适合与web socket配合，开发长连接的实时交互应用程序，比如：用户表单收集、聊天室、考试系统、图文直播、提供RestfulAPII。  
 
-当然Node从10版本开始支持worker_threads,也能强有力的支持CPU密集型运算。
+当然Node从10版本开始支持worker_threads，也能强有力的支持CPU密集型运算。
 
 #### 1.3 Node结构
 
@@ -38,27 +38,43 @@ Node善于I/O，不善于计算。即CPU密集型Node不擅长，Node擅长的�
 
 偶数位版本为稳定版，奇数位版本为非稳定版。初学者可以在Node官网下载安装包，下一步下一步安装即可，并（可能）需要配置环境变量。  
 
-nvm是一款可以管理node版本的工具，所以在企业级开发中，我们可以使用nvm来安装node，这样可以方便我们控制node的版本。
+nvm是一款可以管理node版本的工具，所以在企业级开发中，我们可以使用nvm来安装node，这样可以方便我们控制node的版本。  
+
+贴士：nvm安装也可以有效避免直接安装可能会出现的权限问题，笔者极力推荐使用nvm安装Node。
 
 #### 2.1 安装nvm
+
+win版nvm下载地址：https://github.com/coreybutler/nvm-windows/releases  
+
 ```
-win安装地址：
-https://github.com/coreybutler/nvm-windows/releases
+# 安装步骤：下载后直接下一步下一步即可
 
-Linux安装地址：
-https://github.com/creationix/nvm
-
-安装后查看：
+# 安装后查看：
 nvm version
 ```
-Linux中命令会自动向~/.bashrc添加环境命令，此时如果输入nvm 无法出现nvm命令，打开 .bash_profile 后面添加 source ~/.bashrc  即可
 
+Linux与Mac安装地址：https://github.com/creationix/nvm  
+
+```
+# 执行安装：
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+
+# 配置环境变量
+vim ~/.bash_profile
+export NVM_DIR="${XDG_CONFIG_HOME/:-$HOME/.}nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+source ~/.bash_profile
+
+# 安装后查看：
+nvm version
+```
 
 #### 2.2 安装node
+
+Node因为一些国内特殊原因，需要设置下载镜像：
 ```
-设置下载镜像：
-nvm node_mirror:https://npm.taobao.org/mirrors/node/
-nvm npm_mirror:https://npm.taobao.org/mirrors/npm/
+nvm node_mirror:https://npm.taobao.org/mirrors/node/        # 设置node下载镜像地址
+nvm npm_mirror:https://npm.taobao.org/mirrors/npm/          # 设置node的第三方包下载镜像地址
 ```
 
 安装Node：
@@ -79,56 +95,3 @@ nvm alias default 8.5.0
 
 安装完node后，打开webstorme，会自动识别node路径，如果没有识别：
 可以打开Settings-搜索node-配置；如果此时webstorme 仍然没Node的代码提示功能，解决步骤：File-setting-Languages&Frameworks-Node。
-
-#### 2.3 npm的使用
-
-npm是node的包管理工具，用来下载各种node模块、第三方文件
-```
-npm install jQuery
-```
-在空文件夹中使用 npm init 可以初始化一个项目。
-支持的命令行参数有：-g 全局安装， -S 以生产依赖形式本地安装，-D 以开发依赖形式本地安装
-
-设置npm镜像：
-```
-npm config rm proxy
-npm config rm https-proxy
-npm config set registry https://registry.npm.taobao.org
-```
-也可以直接使用淘宝开发的cnpm：
-```
-npm install cnpm -g
-cnpm install jQuery
-```
-恢复npm镜像办法：
-```
-npm config set proxy=http://127.0.0.1:1080
-npm config set registry=http://registry.npmjs.org
-```
-
-#### 2.4 PM2管理工具
-
-由于Node是单进程，很容易服务器死去，无法重启，这对于服务端程序来说，是致命的。  
-
-pm2可以有效的监控服务器状况，并让node服务器自动重启。  
-
-安装pm2：
-```
-npm install pm2 -g
-```
-
-使用pm2：
-```
-开启：pm2 start ***.js		                    # node关闭窗口仍然运行，且会自动重启
-参数启动：pm2 start **.js --name=”test” 		 # 启动应用程序并命名为 "api"
-关闭：pm2 stop **.js
-重启：pm2 restart **.js
-```
-
-pm2可以监控并管理多个应用程序，并对其进行日志监控。  
-
-进程监控命令：`pm2 list`，监控界面：
-![](/images/node/pm2list.png)
-
-日志监控：`pm2 logs 项目名/id名`，监控界面：
-![](/images/node/pm2logs.png)
