@@ -127,8 +127,9 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 默认列表无任何标记
 - type="square"     小方块显示
 - type="circle"      小圆圈
-###### 2.9.2 有序列表 ul
-```Html
+
+有序列表 ul:
+```html
 <ol type="a" start="3">
     <li>新闻1</li>
     <li>新闻2</li>
@@ -137,15 +138,18 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 - A,a：分别以A或者a字幕顺序排序
 - I,i ：分别以大小写罗马数字排列
 - start="3" ：li前面的显示从第几个开始计数
-###### 2.9.3 自定义列表 dl
-```Html
+
+自定义列表 dl：
+```html
 <dl>
     <dt>新闻汇总</dt>
     <dd>新闻1</dd>
     <dd>新闻2</dd>
 </dl>
 ```
-#### 2.10 标签语义化
+
+## 三 标签语义化
+
 标签语义化概念：根据内容的结构化（内容语义化），选择合适的标签（代码语义化）
 标签语义化意义：
 - 1:网页结构合理
@@ -158,8 +162,12 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 - 2:在语义不明显时，既可以使用div或者p时，尽量用p, 因为p	在默认情况下有上下间距，对兼容特殊终端有利；
 - 3:不要使用纯样式标签，如：b、font、u等，改用css设置。
 - 4:需要强调的文本，可以包含在strong或者em标签中strong默认	样式是加粗（不要用b），em是斜体（不用i）；
-## 三 表格标签table组成
-#### 3.1 table组成
+
+
+## 四 表格标签table
+
+#### 4.1 table组成
+
 ```Html
 <table border="1" width="300" height="100" cellspacing="0" cellpadding="5" align="center" bgcolor="pink">
     <tr>
@@ -176,20 +184,25 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
     </tr>
 </table>
 ```
+
 表格结构:thead（表头）、tbody（主体）、tfoot（结尾）	
 - cellspacing:用来设置单元格与单元格的距离（td）， 默认值为2
 - cellpadding:设置内容距边框的距离（文字距离td左侧）
 - align:设置对齐方式，包括left| right|center(居中对齐)
+
 注意：
-table标签的标题标签是caption，不能使用title
-td内容垂直对齐使用valign：
+- table标签的标题标签是caption，不能使用title
+- td内容垂直对齐使用valign
 ```Html
 <!-- valign的其他值有 top middle bottom -->
 <td valign="bottom">123</td>
 ```
-#### 3.2 合并单元格
-横向合并colspan：设置td的横向合并
-纵向合并rowspan：设置td的纵向合并
+
+#### 4.2 合并单元格
+
+- 横向合并colspan：设置td的横向合并
+- 纵向合并rowspan：设置td的纵向合并
+
 ```Html
 <table width="300" height="200" cellspacing="0" border="1">
     <tr>
@@ -209,9 +222,13 @@ td内容垂直对齐使用valign：
     </tr>
 </table>
 ```
-## 四 表单标签
-#### 4.1 表单标签简介
-表单用来收集信息，构成包含：表单域（form标签）与表单控件（input等）。
+
+## 五 表单标签
+
+#### 5.1 表单标签简介
+
+表单用来收集信息，构成包含：表单域（form标签）与表单控件（input等）。  
+
 表单域：
 ```Html
 <!-- 
@@ -221,9 +238,13 @@ td内容垂直对齐使用valign：
 <form action="" method="">  
 </form>
 ```
+
 #### 4.2 表单控件
-input标签的type可以指定控件的类型为文本、密码、单选框等等。
-只有将表单控件放置到表单域中，该表单才能被提交。
+
+input标签的type可以指定控件的类型为文本、密码、单选框等等。  
+
+只有将表单控件放置到表单域中，该表单才能被提交。  
+
 文本输入框：
 ```Html
 <input type="text" maxlength="6" disabled="disabled">
@@ -236,6 +257,7 @@ input标签的type可以指定控件的类型为文本、密码、单选框等�
     placeholder 			提示信息属性 
 -->
 ```
+
 常用表单控件：
 ```Html
 
@@ -289,6 +311,7 @@ input标签的type可以指定控件的类型为文本、密码、单选框等�
 - 邮件控件： type="email"
 - 滑块控件： type="range"
 - 上传控件： type=”file”
+
 #### 4.3 表单优化写法
 表单元素的描述文字应该使用label标签包裹，并且使用for属性指向表单元素，从而达到点击描述文字可以聚焦文本框的效果：(注意下列的username是id)
 ```Html
