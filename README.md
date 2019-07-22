@@ -1,7 +1,7 @@
 ## 新时代前端的学习方向要点
 
 **需要深入的技术点**：
-- 三个框架：Angular/Vue/React的深入理解
+- 三大框架：Angular/Vue/React的深入理解，精通其原理、周边生态！
 - TypeScript：笔者认为是前端开发者掌握开发语言生态建设（依赖注入、接口等）的最快方式，当然TS也会因为vue3.0的普及而持续上升份额
 - 小程序：小程序已经很多年了，不算新，mpvue、Taro、didi的库都可以试试
 - NodeJS：无Node不前端
@@ -22,34 +22,49 @@
 
 ## 资料
 
+贴士：
+- 使用目录展示并附上地址的书籍是笔者极力推荐阅读的
+- 附在其他类目中的书籍仍然值得一看，但是基本被推荐书籍覆盖，或者是因为`年久失修`问题而失去了核心竞争力 
+
 #### 网页开发
 
-- [《Head First HTML与CSS（第2版）》](https://book.douban.com/subject/25752357/)：基础书籍
-- [《HTML&CSS设计与构建网站》](https://book.douban.com/subject/21338365/)：基础书籍
-- [《HTML5权威指南》](https://book.douban.com/subject/25786074/)：基础书籍
+- [《Head First HTML与CSS（第2版）》](https://book.douban.com/subject/25752357/)：0基础入门书籍
+- [《CSS 实战手册（第四版）》](https://book.douban.com/subject/26898555/)：CSS基础到加强书籍
+- [《HTML5权威指南》](https://book.douban.com/subject/25786074/)：H5全面了解书籍
 - [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
 - [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
 
+其他：
+```
+HTML&CSS设计与构建网站
+HTML5与CSS3基础教程（第8版）
+CSS世界
+精通CSS（第2版）
+CSS禅意花园（修订版）
+CSS权威指南（第三版）
+CSS3实用指南
+```
+
 #### JavaScript
 
-语法篇：
-- [《JavaScript权威指南》](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
+语法基础：
+- [《JavaScript权威指南》第6版](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
 - [《JavaScript高级程序设计》](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
 - [《JavaScript语言精粹》](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
 - [《Eloquent JavaScript》3rd Edition](https://book.douban.com/subject/30275136/)：笔者认为目前最好的JS全面了解书籍之一
 
-网页开发篇：
+DOM编程：
 - [《JavaScript DOM编程艺术》（第2版）](https://book.douban.com/subject/6038371/)
 - [《锋利的jQuery》](https://book.douban.com/subject/10792216/)
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
 
 提升篇：
-- [《你不知道JavaScript》](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
+- [《你不知道JavaScript》上卷+中卷](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
 - [《JavaScript核心技术开发解密》](https://book.douban.com/subject/30190189/)：短小精悍的介绍了一些难点
 - [《高性能JavaScript》](https://book.douban.com/subject/5362856/)
 - [《JavaScript设计模式与开发实践》](https://book.douban.com/subject/26382780/)
-- [《JavaScript忍者秘籍》](https://book.douban.com/subject/26638316/)
 - [《JavaScript面向对象精要》](https://book.douban.com/subject/26352658/)
+- [《高效前端：Web高效编程与优化实践》](https://book.douban.com/subject/30170670/)
 
 ES6篇：
 - [《深入理解ECMAScript6》](https://book.douban.com/subject/27072230/)
@@ -61,13 +76,23 @@ ES6篇：
 - [《React状态管理与同构实战》](https://book.douban.com/subject/30290509/)
 - [《深入浅出Vue.js》](https://book.douban.com/subject/32581281/)
 
+其他：
+```
+JavaScript忍者秘籍
+```
+
 #### Node书籍
 
-- [Node基础学习](https://github.com/overnote/javascript/tree/master/08-Node)：Node多数入门书质量堪忧，笔者推荐直接看本笔记
-- [《Koa与Node.js开发实战》](https://book.douban.com/subject/30404722/)：《Node In Action》也是经典，但大部分内容被本书涵盖，且本书更详细
-- [《Node.js 设计模式（第 2 版）》](https://book.douban.com/subject/30159269/)：对Node各方面做了原理性解释
+- [NodeJS应用开发](https://github.com/overnote/javascript/tree/master/08-1-NodeJS应用开发)：Node多数入门书质量堪忧，笔者推荐直接看本笔记
+- [《Koa与Node.js开发实战》](https://book.douban.com/subject/30404722/)：也是经典，但大部分内容被本书涵盖，且本书更详细
 - [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
+
+其他书籍：
+```
+Node In Action(第2版)
+Node.js 设计模式（第2版）
+```
 
 #### 资料
 

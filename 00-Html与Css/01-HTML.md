@@ -1,98 +1,129 @@
 ## 一 网页基础
-网页构成：文字、图片、按钮、输入框、视频等 元素 组成。
-HTML:Hyper text markup language （超文本标记语言，即能够实现网页跳转的文本）
+
+网页由文字、图片、按钮、输入框、视频等元素组成。  
+
 网页的标准：
-- 结构标准：HTML		
-- 表现标准：CSS			
-- 行为标准：JS
+- 结构标准：HTML，即 `Hyper text markup language` ，超文本标记语言，能够实现网页跳转的文本	
+- 表现标准：CSS，即 `Cascading Style Sheets`，层叠样式表			
+- 行为标准：JavaScript
+
 ## 二 常见标签
+
 #### 2.0 标签分类
+
 单标签：只有开始没有结束 
 ```
 文本注释标签:	<!--   -->
 文本换行标签:	<br>
 横线标签:		<hr>
 ```
+
 双标签：有开始有结束
 ```
 段签:		<p>我是段落</p>
 文体:		<em></em>
 ```
+
 #### 2.1 图片标签img与路径
-```Html
+
+```html
 <img src="1.jpg" atl="我是图片" title="图片标题" width="200" height="300">
 ```
-alt属性：当图片无法现实和，显示alt内的文字
-src：包括绝对路径、相对路径
+
+img标签常用属性：
+- alt：当图片无法现实和，显示alt内的文字
+- src：包括绝对路径、相对路径
+
+贴士：
 - 绝对路径：以磁盘路径或者/开头的路径，
 - 相对路径：以文件名开头或者./开头的路径。 ../代表上一层
+
 #### 2.2 a链接
-```Html
+
+```html
 <a href="http://www.baidu.com/">百度</a>
 ```
-当href值为#时，则不能跳转，值为一个文件时，则可以实现下载功能；
-除了href以为，a链接中还有一些其他常见属性：
+
+a标签常用属性：
+- href：值为#时不能跳转，值为一个文件时则可以实现下载功能  
 - title：鼠标划过时显示的文字
-- target：网页打开方式，值为"_self"时默认值，在当前页打开，"_blank"在新窗口中打开。
+- target：网页打开方式，值为"_self"是默认值，在当前页打开，"_blank"在新窗口中打开。
+
 锚链接位置跳转演示：
-```Html
+```html
 <p id="test">你好</p>
 <a href="#test">查看问候语</a>
 ```
-a 链接的新写法：
+
+a链接特殊写法：
 ```html
 <!-- 点击不执行的意思,一般在tab栏切换中用到 -->
 <a href=”javascript:;”></a>  
 <a href=”javascript:void(0);”></a> 
 ```
+
 #### 2.3 特殊字符
-Html中的特殊字符需要使用转义字符书写：
+
+Html中的特殊字符需要使用转义字符书写：  
 ![](/images/JavaScript/html-01.png)
+
 #### 2.4 meta标签
-用来设置字符集、关键字、描述、重定向等。
-```Html
+
+meta标签用来设置字符集、关键字、描述、重定向等：
+
+```html
 <meta charset="utf-8">
 <meta name="keywords" content="流行资讯">
 <meta name="description" content="最新服装设计流行信息">
 <!-- 这里指2秒后跳转到1.html -->
 <meta http-equiv="refresh"  content="2; url=1.html">  
 ```
+
 #### 2.5 link标签
-link标签必须放在head中，用来引入外部样式表和网页标题小图标。
-```Html
+
+link标签必须放在head中，用来引入外部样式表和网页标题小图标：
+
+```html
 <!-- 用法一：引入外部样式表 -->
 <link rel="stylesheet" href="1.css">
 <!-- 用法二：设置网页标题小图标	 favicon.ico在IE下一般是16*16-->
 <link rel="icon" href="favicon.ico">
 ```
+
 #### 2.6 背景音乐标签 embed
-```Html
+
+```html
 <embed src="1.mp3" hidden="true"></embed>
 ```
+
 #### 2.7 滚动标签 marquee
-```Html
+```html
 <marquee behavior="slide" direction="up" width="280" height="300" bgcolor="blue">
     <img src="1.jpg">
 </marquee>
 ```
-中间的内容可以是文字、图片，也可以是由程序生成的文字、图片。
-behavior可以设置滚动方式
+
+中间的内容可以是文字、图片，也可以是由程序生成的文字、图片，behavior可以设置滚动方式：
 - slide：		一端滚到另一端不会重复
 - scroll：		一端滚到另一端会重复
 - alternate：	两端之间来回滚动
 - direction：	设置滚动方向，值分别有left、right、up、down
 - loop：		设置滚动次数，-1为一直滚动下去
+
 #### 2.8 注释
-```Html
-<!--...-->
+```html
+<!-- 这里书写注释 -->
 ```
+
 #### 2.9 列表标签
-###### 2.9.1 无序列表 ul
-```Html
+
+无序列表 ul：
+```html
 <ul>新闻1</ul>
 <ul>新闻2</ul>
 <ul>新闻3</ul>
 ```
+
 默认列表无任何标记
 - type="square"     小方块显示
 - type="circle"      小圆圈
