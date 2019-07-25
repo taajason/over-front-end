@@ -77,15 +77,43 @@ v-on提供一些事件修饰符，如：`@click.stop="clickHandler"`
 - self：只有当事件在该元素本身（非子元素）触发时触发回调
 - once：事件只触发一次
 
-self与stop区别：
-```js
-<div  id="outter">
-    <div  id="inner">
-        <button id="btn">
+事件修饰符是可以串联写的：如：`@click.prevent.once="clickHandler"`
 
-        </button>
+self与stop区别：
+
+self与stop都可以触发阻止冒泡行为，stop阻止了所有冒泡，而self只阻止了自己身上的冒泡行为；
+
+```js
+// stop 案列
+// <div  id="outter" @click="outterEv">
+//     <div  id="inner" @click="innerEv">
+//         <button id="btn" @click.stop="btnEv"></button>
+//     </div>
+// </div>
+
+// self 案列
+<div  id="outter" @click="outterEv">
+    <div  id="inner" @click.self="innerEv">
+        <button id="btn" @click="btnEv"></button>
     </div>
-<div>
+</div>
+
+// js
+new Vue({
+    el: "#app",
+    data: {},
+    methods: {
+        btnEv(){
+            console.log('触发btn点击事件');
+        },
+        innerEv(){
+            console.log('触发inner点击事件');
+        },
+        outterEv(){
+            console.log('触发outter点击事件');
+        },
+    }
+})
 ```
 
 为三个元素都绑定一个点击事件：
@@ -108,72 +136,8 @@ self与stop区别：
 
 注意：v-model用于表单元素中。
 
-#### 1.6- vue样式支持
 
-内联方式：
-```js
-//html
-<div id="app">
-    <h2 :style="{'background-color': 'green'}">test1</h2>
-    <h2 :style="styleObj1">test2</h2>
-    <h2 :style="[styleObj1,styleObj2]">test3</h2>
-</div>
-
-//js
-    new Vue({
-        el: "#app",
-        data: {
-            msg: "hello",
-            isActive: true,
-            styleObj1: {'background-color': 'green' },
-            styleObj2: {'font-size': '100px' },
-        },
-        methods: {
-
-        }
-    });
-
-```
-
-分离方式：
-```js
-    //css
-    <style>
-        .green {
-            background-color: green;
-        }
-        .big {
-            font-weigth: 200;
-        }
-        .active {
-            letter-spacing: 0.5em;
-        }
-    </style>
-
-    //html
-    <div id="app">
-        <h2 :class="['green', 'big']">test1</h2>
-        <h2 :class="['green', 'big', isActive?'active':'']">test2</h2>
-        <h2 :class="['green', 'big', {'active': isActive}]">test3</h2>
-        <h2 :class="{ green:true, big:true }">test4</h2>
-        <h2 :class="classObj">test5</h2>
-    </div>
-
-    //vue
-    new Vue({
-        el: "#app",
-        data: {
-            msg: "hello",
-            isActive: true，
-            classObj: { green:true, big:true }
-        },
-        methods: {
-
-        }
-    });
-```
-
-#### 1.7 v-for
+#### 1.6 v-for
 
 ```js
 <div id="app">
@@ -187,7 +151,7 @@ self与stop区别：
 
 注意：2.20版本以上的vue中，key是必须的
 
-#### 1.8 v-if与v-show
+#### 1.7 v-if与v-show
 
 ```js
     <h2 v-if="flag">test1</h2>          <!-- 会创建/移除元素，切换性能消耗高 -->
