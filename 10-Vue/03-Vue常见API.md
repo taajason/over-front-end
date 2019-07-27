@@ -1,6 +1,63 @@
 ## 一 常见API
 
 #### 1.2 过滤器
+过滤器可以用在两个地方：mustache插值和v-bind表达式；过滤器应该被添加在js表达式的尾部，由“管道符”指示;
+
+语法：
+```js
+  Vue.filter("过滤器的名称",function(data,arg){
+    // 对传过来的数据进行处理；
+  })
+```
++ data 是由过滤器 管道符前面(如下面案列中的msg) 传递过来的数据 ;
++ arg 这个是参数(可以传多个)，可在过滤器调用的时候灵活赋值，如：
+  ```html
+  <div id="app">
+    {{count | myFormat(3,1) }} 
+  </div>
+
+  <script>
+    Vue.filter("myFormat", function (count,num1，num2) {
+        return count + num1 - num2;
+    });
+
+    new Vue({
+        el: "#app",
+        data: {
+            count: 2
+        }
+    });
+  </script>
+    
+  ```
+
+过滤器可多次调用：{{count | myFormat(3,1) | test }} 
+
+多个过滤器调用时：先把最原始的值 count 交给第一个过滤器 myFormat 来处理，处理的结果再交给第二个过滤 test 器去处理...，直到最后一个过滤器调用完毕，把最终的结果放在{{}}里
+```HTML
+ <div id="app">
+    {{count | myFormat(3,1) | test }} 
+  </div>
+
+  <script>
+
+    Vue.filter("myFormat", function (count,num1，num2) {
+        return count + num1 - num2;
+    });
+    Vue.filter("test", function (count) {
+        return count + 9;
+    });
+
+    new Vue({
+        el: "#app",
+        data: {
+            count: 2
+        }
+    });
+
+  </script>
+
+```
 
 全局过滤器：
 ```js
