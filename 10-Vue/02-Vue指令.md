@@ -138,7 +138,9 @@ new Vue({
 
 
 #### 1.6 v-for
+当在组件中使用v-for时，key现在是必须的；
 
+每次for循环的时候，通过指定的key来标识唯一身份，
 ```js
 <div id="app">
     <h2 v-for="item in arr">{{item}}</h2>
@@ -153,8 +155,22 @@ new Vue({
 
 #### 1.7 v-if与v-show
 
-```js
-    <h2 v-if="flag">test1</h2>          <!-- 会创建/移除元素，切换性能消耗高 -->
-    <h2 v-show="flag">test1</h2>        <!-- 只会显示和隐藏:display，初始渲染消耗高 -->
+v-if：每次都会重新创建或移除元素，切换性能消耗高;
+
+v-show：只是切换display:none的样式，初始渲染消耗高；
+
+```html
+
+     <!-- 每次都会重新创建或移除元素，切换性能消耗高 -->
+    <h2 v-if="flag">test1</h2>
+
+    <!-- 只是切换display:none的样式，初始渲染消耗高  -->
+    <h2 v-show="flag">test1</h2>    
+
     <button @click="flag=!flag">点击</button>
 ```
+
+
+**如果元素涉及到频繁的切换，最好不要用v-if，推荐使用v-show；**
+
+**如果元素可能永远也不会被显示出来被用户看到，推荐使用v-if；**
