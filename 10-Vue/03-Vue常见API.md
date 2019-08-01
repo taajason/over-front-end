@@ -88,7 +88,16 @@ new Vue({
 
 如果出现了同名过滤器，将会依据就近原则调用（私有为准）
 
-#### 1.2 自定义按键修饰符
+#### 1.2 按键修饰符
++ 按键别名
+
+    .enter \ .tab \ .delete \ .esc \ .space \ .up \ .down \ .left \ .right
+
+```js
+<input type="text" @keyup.enter="add">  
+```
+
++ 自定义按键修饰符
 
 113键（F2）按下去的时候执行add方法
 ```js
@@ -97,9 +106,13 @@ new Vue({
 
 但是键盘码不方便记忆，可以自定义：
 ```js
-<input type="text" @keyup.250="add"> 
-Vue.config.keyCode.f2 = 250;
+<input type="text" @keyup.f2="add"> 
+
+
+Vue.config.keyCode.f2 = 250; // 自定义按键修饰符
 ```
+
+js里键盘事件对应值：https://www.cnblogs.com/wuhua1/p/6686237.html
 
 #### 1.3 自定义指令
 
