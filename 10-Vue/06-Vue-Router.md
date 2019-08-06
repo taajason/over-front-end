@@ -23,11 +23,42 @@ main.js中的`/* eslint-disable no-new */`用户忽略eslint的检查（因为�
 
 #### 2.1 前端路由
 
-前端路由即：根据url分配对应的处理程序。vue-router中，通过管理url，实现组件与url的对应。  
+前端路由即：根据url分配对应的处理程序。vue-router中，通过管理url，实现组件与url的对应，通过url进行组件之间的切换。  
 
+**使用步骤：**
+
+ + 安装路由；
+
+    npm i vue-router --save
+
+    如果用的是vue-cli就不需要单独安装了
+
+  + 引入路由模块；
+  
+    import VueRouter from 'vue-router'
+
+  + 作为vue的插件；
+
+    Vue.use(VueRouter)
+
+  + 创建路由实例对象；
+  
+    new VueRouter({
+      ...配置参数
+    })
+
+  + 注入vue选项参数；
+    new Vue({
+      router
+    })
+
+  + 告诉路由渲染位置：
+    ``` html
+    <router-view> </router-view>
+    ```
 #### 2.2 helloworld
 
-第一步：在main.js中配置vue-router，
+在main.js中配置vue-router，
 ```js
 import VueRouter from 'vue-router'
 
@@ -35,7 +66,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 ```
 
-第二步：创建一个组件HomeComponent，并在main中引入，完整代码如下
+创建一个组件HomeComponent，并在main中引入，完整代码如下
 ```js
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -48,7 +79,7 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 let router = new VueRouter({
-  routes: [
+  routes: [ // 一个路径对应一个组件
     {
       path: '/home',
       component: Home
@@ -67,7 +98,7 @@ new Vue({
 
 ```
 
-第三步：在跟组件App.vue上展示该组件
+在根组件App.vue上展示该组件
 ```js
   <div id="app">
     <router-view></router-view>
