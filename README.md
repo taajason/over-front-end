@@ -30,8 +30,12 @@
 
 - [《Head First HTML与CSS（第2版）》](https://book.douban.com/subject/25752357/)：0基础入门书籍
 - [《CSS 实战手册（第四版）》](https://book.douban.com/subject/26898555/)：CSS基础到加强书籍
-- [《HTML5权威指南》](https://book.douban.com/subject/25786074/)：H5全面了解书籍
+
+- [《HTML5秘籍》](https://book.douban.com/subject/11610880/)：H5全面了解书籍
+- [《CSS3实用指南》](https://book.douban.com/subject/10482084/)
 - [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
+
+- [《HTML5+JavaScript动画基础》](https://book.douban.com/subject/24744218/)
 - [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
 
 其他：
@@ -88,10 +92,9 @@ JavaScript忍者秘籍
 - [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
 
-其他书籍：
+其他：
 ```
-Node In Action(第2版)
-Node.js 设计模式（第2版）
+Node.js设计模式第2版
 ```
 
 #### 资料
