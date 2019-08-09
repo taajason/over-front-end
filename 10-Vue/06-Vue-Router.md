@@ -1,8 +1,9 @@
+
 ## 前言
 
 VueRouter是vue可以渐进引入的路由模块，但是既然已经引入了路由模块，项目已经具备了工程化概念，不妨直接使用webpack方式构建vue项目
 
-## 一 vue-cli
+## 一 vue-cli 
 
 vue-cli是vue的脚手架（为vue提供初始化环境的工具）。
 
@@ -145,11 +146,6 @@ export default router
 ```js
 let router = new VueRouter({
   mode: 'history',                  // 默认是hash，此时设置为history模式
-  scrollBehavior(to,from,savePosition){   // 点击浏览器前进后退、切换导航时触发
-    // to 要进入的目标路由对象                
-    // from 要离开的路由对象
-    // savePosition 记录滚动条坐标        // 可以利用hash，或者 savePosition来定位前进后退后的视窗位置
-  },
   routes: [
     {
       path: '/home',
@@ -445,6 +441,72 @@ let router = new VueRouter({
         // 键slider 是上面的 name="slider" 中的 slider   
         // 值slider 是引进来的组件slider: import slider from '@/components/slider'
 ```
+
+#### 3.7 scrollBehavior()
+
+跳转组件后，返回上一次组件界面时，定位到上次滚动条的位置
+
++ 方法一：
+
+   通过 scrollBehavior() 方法里的savePosition参数记录滚动条坐标,来定位前进后退后的视窗位置
+
+```js
+let router = new VueRouter({
+  mode: 'history',                  
+  scrollBehavior(to,from,savePosition){   // 点击浏览器前进后退、切换导航时触发
+    // to 要进入的目标路由对象                
+    // from 要离开的路由对象
+    // savePosition 记录滚动条坐标,点击前进后退的时候记录值       
+    if(savePosition){
+      return savePosition;
+    }else {
+      return {x:0,y:0}
+    }
+  },
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+    }
+  ]
+})
+```
++ 方法二：在 scrollBehavior()方法里 利用hash来定位前进后退后的视窗位置
+   
+步骤一： 设置跳转的hash值  
+```html
+<router-link to="/about#abc" ></router-link>
+
+```
+步骤二：在about组件里添加id的属性值为abc。
+```html
+<div>
+<p id="abc">定位到这个元素</p>
+</div>
+
+```
+步骤三：在路由里判断hash值
+```js
+let router = new VueRouter({
+  mode: 'history',                  
+  scrollBehavior(to,from,savePosition){   
+    // to 要进入的目标路由对象                
+    // from 要离开的路由对象
+    //  利用hash记录坐标    
+    if(to.hash){
+      return {
+        selector: to.hash
+      }
+    }  
+  },
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+    }
+  ]
+})
+```   
 
 ## 四 路径与参数
 
