@@ -24,6 +24,8 @@ console.log("hello world");
 node helloworld.js      # 查看输出结果
 ```
 
+注意：文件名不要以node.js来命名。
+
 #### 1.2 服务端helloweb
 
 新建`helloweb.js`，编写代码如下：
