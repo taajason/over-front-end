@@ -1,8 +1,9 @@
+
 ## 前言
 
 VueRouter是vue可以渐进引入的路由模块，但是既然已经引入了路由模块，项目已经具备了工程化概念，不妨直接使用webpack方式构建vue项目
 
-## 一 vue-cli
+## 一 vue-cli 
 
 vue-cli是vue的脚手架（为vue提供初始化环境的工具）。
 
@@ -79,7 +80,7 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 let router = new VueRouter({
-  routes: [ // 一个路径对应一个组件
+  routes: [ // 一个路径对应一个组件 
     {
       path: '/home',
       component: Home
@@ -137,34 +138,18 @@ export default router
 
 #### 3.1 路由模式
 
-路由的默认模式是hash模式：
+路由模式有两种：hash模式和history模式；
+
+路由的默认模式是hash模式，
+
+
 ```js
 let router = new VueRouter({
-  mode: 'history',                  // 默认是hash
-  scrollBehavior(to,from,savePosition){   // 点击浏览器前进后退、切换导航时触发
-    // to 要进入的目标路由对象                
-    // from 要离开的路由对象
-    // savePosition 记录滚动条坐标        // 可以利用hash，或者 savePosition来定位前进后退后的视窗位置
-  },
+  mode: 'history',                  // 默认是hash，此时设置为history模式
   routes: [
     {
       path: '/home',
       component: Home,
-      name: 'Home',                 // 可选项，给路由起个名字Home
-      alias: '/index'               // 别名：访问/index渲染Home
-    },
-    {
-      path: '*',                    // 配置在最后，当所有路由都未被匹配到则如何处理
-      component: Error
-
-      // redirect会替换掉浏览器中的地址，alias不会
-      // redirect: '/index'         // 也可以配置重定向
-      // redirect: {path:: '/home'} // 重定向方式二
-      // redirect: {name: 'Home'}   // 重定向方式三，name是路由的名字
-      // redirect: (to)=>{          // 重定向方式四,to是原来的目标路由
-      //     return '/home'         // return值也可以写为  {path:} 或 {name:}
-      // }
-
     }
   ]
 })
@@ -201,7 +186,9 @@ router-link的其他设置：
 - 默认的触发组件事件是点击事件，也可以修改为别的事件：添加属性：` event="mouseover" `
 - 添加` exact `属性会让样式渲染变为不包含形式（精确匹配）。
 
-贴士1：很多导航中，使用导航标签既包含图标又包含文字，router-link可以这样配置：
+**贴士1：router-link可以改成制定的标签：**
+
+很多导航中，使用导航标签既包含图标又包含文字，router-link可以这样配置：
 ```js
 <router-link :to="home" tag="li">
     <i><img src=""></i>
@@ -209,39 +196,156 @@ router-link的其他设置：
 </router-link>
 ```  
 
-贴士2：router-link生成的li元素，被点击的li上会带有router-link-active的class属性，可以配置激活状态的样式。如果觉得这个class名字很长也可以自己配置新名字：
+**贴士2：router-link 配置当前激活状态的class名**
+
+router-link生成的li元素，被点击的li上会带有router-link-active的class属性，可以配置激活状态的样式。如果觉得这个class名字很长也可以自己配置新名字：
+
+配置当前激活状态的class名有两种方式：
+
 ```js
-// 全局配置方式：所有生成的元素的router-link-active都被修改
+// 第一种：全局配置方式：在router里面修改，linkActiveClass:“” ， 所有生成的元素的router-link-active都被修改
 let router = new VueRouter({
     linkActiveClass: 'isActive',            // 此时class名为isActive
 })
 
-// 局部修改：只支持当前组件
+// 第二种：局部修改：在router-link标签上添加属性 active-class=“” ，只支持当前组件
 <router-link to="/home" active-class="isActive">显示home</router-link>
 ```
 
-#### 3.3 <router-view>
+#### 3.3 router-view 标签的其他配置
 
 router-view是组件渲染的地方，他也可以设置很多配置：
+
+**同时给子组件添加相同的类名**
+
+在router-view标签添加class="center"，那么所有子组件渲染的时候，外层根节点标签就会自动添加class="center"；
+
 ```js
 <router-view class="center"></router-view>      <!-- 配置样式 -->
 ```
 
-#### 3.4 嵌套路由
+#### 3.4 redirect重定向
 
-嵌套路由时，父路由不要使用name，name应该设置在默认子路由上
+重定向与别名设置：
+
+```js
+let router = new VueRouter({
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+      name: 'Home',                 // 可选项，给路由起个名字Home，Home就代表当前的路由，可以用这个name来指向这个路由，或是用这个name来做其他的事情；
+      alias: '/index'               // 别名：访问/index渲染Home
+    },
+    {
+      path: '*',                    // 配置在最后，当所有路由都未被匹配到则如何处理
+      // component: Error,          // 可以直接调转到错误提示页
+
+      // redirect会替换掉浏览器中的地址，alias不会
+      // redirect: '/index'         // 也可以配置重定向
+      // redirect: {path: '/home'} // 重定向方式二
+      // redirect: {name: 'Home'}   // 重定向方式三，name是路由的名字
+       redirect: (to)=>{          // 重定向方式四,动态设置重定向的目标；
+      //     console.log(to);       // to目标路由对象，就是访问的路径的路由信息
+      //     return '/home'         // return值也可以写为  {path:} 或 {name:}
+
+
+          //除了可以直接return重定向的路由外，还可以通过 path\hash\query 等判断，动态设置重定向的目标路由：
+
+          if(to.path === "/123"){
+             return '/home' 
+          }else if(to.path === "/456"){
+             return {path: '/document'}
+          }else{
+            return {name: 'about'}
+          }
+
+       }
+
+    }
+  ]
+})
+```
+
+
+#### 3.5 路由中的name属性
+
+路由中的name属性是个可选项，
+
+作用是 给路由起个名字Home，Home就代表当前的路由，可以用这个name来指向这个路由，或是用这个name来做其他的事情；
+
+name的使用场景一：
+```js
+let router = new VueRouter({
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+      name: 'Home',                 // 可选项
+      alias: '/index'               // 别名：访问/index渲染Home
+    },
+    {
+      path: '*',
+      redirect: {name: 'Home'}      
+    }
+    
+  ]
+})
+```
+
+name的使用场景二：
+```html
+<router-link :to="{name:'路由的名字'}"></router-link>
+```
+
+
+#### 3.6 嵌套路由
+
+**3.6.1 嵌套步骤：**
+
++ 1、html的书写：
+    
+    点击about的时候，设置默认匹配到study的话，router-link的to属性值就不需要写成 to="/about/study" 而是需要写成： to="/about"
+
+  
++ 2、路由的书写：
+  
+    a、路由配置的时候，path的值不需要设置：path: ''；
+    
+    b、嵌套路由时，父路由不要使用name，name应该设置在默认子路由上 
+
+```html
+<ul class="nav">
+  <!-- -->
+  <router-link to="/about" tag="li">
+    <a>study</a>
+  </router-link>
+  <router-link to="/about/work" tag="li">
+    <a>work</a>
+  </router-link>
+  <router-link to="/about/tel" tag="li">
+    <a>tel</a>
+  </router-link>
+</ul>
+```
+
 ```js
 {
     path: '/about',
     component: about,
     children: [
-        {                           // 当访问 /about也会默认渲染children第一个
-            path: '/work',          // 匹配地址为： /about/work
+        {                           
+            path: '',          // 当访问 /about也会默认渲染children第一个
+            component: study,
+            name: about       // 父路由的name要放在默认的子路由上
+        },
+        {                          
+            path: 'work',          // 匹配地址为： /about/work
             component: work,
-            name: about
+            name: work
         },
         {
-            path: '/tel',          // 匹配地址为： /about/tel
+            path: 'tel',          // 匹配地址为： /about/tel
             component: tel,
             name: tel
         }
@@ -249,10 +353,14 @@ router-view是组件渲染的地方，他也可以设置很多配置：
 }
 ```
 
+**3.6.2 exact表示精确的匹配**
+
+路由的嵌套里，有个全包含匹配关系，需要设置精确匹配才能去掉全包含匹配的激活状态样式，从而精确到只显示点击的当前匹配样式。
+
 注意：需要设置渲染在哪个位置，即填写router-view标签
 ```js
 <ul class="nav">
-    <!-- 默认渲染 about/work, exact如果不加，则会模糊匹配，点击about/tel时，第一个link的样式也是被点击状态 -->
+    <!-- 默认渲染 about/work, exact表示精确的匹配，exact如果不加，则会模糊匹配，点击about/tel时，第一个link的样式也是被点击状态 -->
     <router-link to="about" exact tag="li">         
         <a>work</a>
     </router-link>
@@ -262,9 +370,153 @@ router-view是组件渲染的地方，他也可以设置很多配置：
 </ul>
 ```
 
+**3.6.3 路由的路径不嵌套但组件嵌套的时候的设置**
+
++ 组件和路由路径都嵌套的写法：localhost:3000/about/work
+
++ 组件嵌套，但路径不嵌套的写法： localhost:3000/tel
+
+  path值前面添加斜杠 '/'，表示相对于根路径的
+
+```js
+{
+    path: '/about',
+    component: about,
+    children: [
+        {                           
+            path: '',          
+            component: study,
+            name: about      
+        },
+        {                          
+            path: 'work',          // 匹配地址为： /about/work
+            component: work,
+            name: work
+        },
+        {
+            path: '/tel',          //path值前面添加斜杠 '/' ，匹配地址为： /tel  
+            component: tel,
+            name: tel
+        }
+    ]
+}
+```
+
+**3.6.4 命名视图**
+
+一个路径里面展示多个同级组件
+
+步骤
++ 1、为了明确同级组件的渲染地方，在router-view渲染处需要取名字来区别，如：name="slider"；
+
++ 2、在路由里配置对应的组件: 一个路径对应多个组件 -- 使用components 而不是 component
+
+    components: {
+        default:document,
+        slider:slider    
+      }     
+
+```html
+<router-view name="slider"></router-view>  
+<router-view class="center"></router-view>  
+```
+```js
+let router = new VueRouter({
+  routes: [
+    {
+      path: '/document',
+      components: {    // components
+        default:document,   // 默认的
+        slider:slider   
+      }            
+    }
+  ]
+})
+
+
+        // 设置一个默认的组件。 当进入路由的时候，遇到default，就会把这个默认的组件渲染到 没有取名字的 router-view 中。 
+        //（<router-view class="center"></router-view>  ）
+
+
+        // 键slider 是上面的 name="slider" 中的 slider   
+        // 值slider 是引进来的组件slider: import slider from '@/components/slider'
+```
+
+#### 3.7 scrollBehavior()
+
+跳转组件后，返回上一次组件界面时，定位到上次滚动条的位置
+
++ 方法一：
+
+   通过 scrollBehavior() 方法里的savePosition参数记录滚动条坐标,来定位前进后退后的视窗位置
+
+```js
+let router = new VueRouter({
+  mode: 'history',                  
+  scrollBehavior(to,from,savePosition){   // 点击浏览器前进后退、切换导航时触发
+    // to 要进入的目标路由对象                
+    // from 要离开的路由对象
+    // savePosition 记录滚动条坐标,点击前进后退的时候记录值       
+    if(savePosition){
+      return savePosition;
+    }else {
+      return {x:0,y:0}
+    }
+  },
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+    }
+  ]
+})
+```
++ 方法二：在 scrollBehavior()方法里 利用hash来定位前进后退后的视窗位置
+   
+步骤一： 设置跳转的hash值  
+```html
+<router-link to="/about#abc" ></router-link>
+
+```
+步骤二：在about组件里添加id的属性值为abc。
+```html
+<div>
+<p id="abc">定位到这个元素</p>
+</div>
+
+```
+步骤三：在路由里判断hash值
+```js
+let router = new VueRouter({
+  mode: 'history',                  
+  scrollBehavior(to,from,savePosition){   
+    // to 要进入的目标路由对象                
+    // from 要离开的路由对象
+    //  利用hash记录坐标    
+    if(to.hash){
+      return {
+        selector: to.hash
+      }
+    }  
+  },
+  routes: [
+    {
+      path: '/home',
+      component: Home,
+    }
+  ]
+})
+```   
+
 ## 四 路径与参数
 
+
+
 #### 4.1 动态参数
+
+什么时候用到动态路径？
+
+    匹配到所有路由，全部映射到同一个组件的时候。
 
 关于路由的两个对象：
 - $router: router的示例对象
