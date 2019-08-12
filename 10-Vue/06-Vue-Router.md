@@ -602,20 +602,43 @@ let dataUser = [
       console.log(this.$route.params)
     }
   }
+
+  // 生成一个组件之后，再在这个组件里面操作，这个组件不会重新生成，而是复用之前生成的组件； 
+
+  //组件刚生成一次的时候，会去执行一下生命周期的钩子函数， 如果下次没有让组件重新生成，钩子函数就不会执行了，也就是说钩子函数只会执行一次；此时， 在组件里面切换的时候，路径发生变化，匹配到一个路由，就可以得到一个路由信息对象 $route；
+
+  //如果地址栏一旦发生变化，$route 就会重新生成一个路由信息对象，$route 重新赋值， 通过 watch 监控路由信息对象 $route；当 $route 改变的时候，就可以拿到对应的信息了。
+
 ```
 
 贴士：
 - 传输多个参数的方式：:to="'/user/1/1'   类型参数：是否是vip，uid参数 1
-- 路由配置：  path: '/user/:isvip/:uid'
+- 路由配置：  path: '/user/:isvip?/:uid?'   
 - 子组件中的打印结果： {type: 1, uid: 1}
 
 获取查询字符串：
 ```js
 <router-link exact :to="{path:'', query:{uid:'1'}}">
 <div>
-$route.query      <!-- 这就是上述query内的json -->
+{{$route.query}}      <!-- 这就是上述query内的json -->
 </div>
+
+// query对象里可以多个元素 ： query:{uid:'1', 'infor':'alow', ...} 
 ```
+## 五 编程式导航
+
+之前使用router-link 生成标签去切换组件；编程式导航也可以切换组件。
+
+编程式导航 其实是借助于 router 实例的一些方法，通过调用这些方法，编写代码来实现导航的切换；
+
+**router实例提供的方法：**
++ back 回退一步
++ forward 前进一步
++ go 指定 前进/回退 步数
++ push 导航到不同的 url，向 history栈 添加一个新的记录
++ replace 导航到不同的 url，替换 history栈 中当前记录
+
+
 
 #### 3.5 导航的钩子函数
 
