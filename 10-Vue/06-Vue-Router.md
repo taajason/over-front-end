@@ -516,11 +516,64 @@ let router = new VueRouter({
 
 什么时候用到动态路径？
 
-    匹配到所有路由，全部映射到同一个组件的时候。
+匹配到所有路由，全部映射到同一个组件的时候。
+    
+    比如：
+    在一个网站中，进入到个人信息的时候，每个信息页面一样，但是不同的用户展示的信息不一样，此时的路径就可以写成： user/:userId ，userId 为动态路径参数；
 
-关于路由的两个对象：
-- $router: router的示例对象
+    访问的是同一个组件，但是userId根据不同用户展示数据不一样；我们通过获取到userId就可以拿到不同用户的信息
+
+**获取参数：路由信息对象的params**
+
+用户数据
+```js
+let dataUser = [
+  {
+    uid:1,
+    name:zhangsan,
+  },
+  {
+    uid :2,
+    name:lisi,
+  }
+]
+```
+路由配置：
+```js
+ routes: [
+    {
+      path: '/user/:userId?',  
+      component: user,
+    }
+  ]
+
+  // userId只是个变量，当访问对应具体的路由的时，此变量的值就是对应的具体值；
+  // userId后面的‘？’是个正则，作用是判断匹配：当userId没有值的时候，直接访问的是‘/user’，当userId有值的时候，直接访问的是 ‘/user/所传值’ ，
+``` 
+数据插入对应路由
+```html
+  <div>
+    <router-link 
+      style="padding-right: 50px;" 
+      :to="'/user/' + item.uid " 
+      :key="index" 
+      v-for="(item,index) in userList"
+    > 
+      第 {{ index + 1 }} 个用户： {{ item.name }}
+    </router-link>
+  </div>
+
+```
+
+
+
+**关于路由的两个对象：**
+- $router: 通过 $router 拿到router的实例对象 
 - $route: 当前激活的路由信息对象，每个组件实例都会有
+      
+    每访问一个路径，都会对应一个路由，此时 $route 里存放的就是当前路由的信息对象。所以可以通过它来获得用户id了。
+
+
 
 获取路由中的参数：
 ```js
