@@ -516,11 +516,64 @@ let router = new VueRouter({
 
 什么时候用到动态路径？
 
-    匹配到所有路由，全部映射到同一个组件的时候。
+匹配到所有路由，全部映射到同一个组件的时候。
+    
+    比如：
+    在一个网站中，进入到个人信息的时候，每个信息页面一样，但是不同的用户展示的信息不一样，此时的路径就可以写成： user/:userId ，userId 为动态路径参数；
 
-关于路由的两个对象：
-- $router: router的示例对象
+    访问的是同一个组件，但是userId根据不同用户展示数据不一样；我们通过获取到userId就可以拿到不同用户的信息
+
+**获取参数：路由信息对象的params**
+
+用户数据
+```js
+let dataUser = [
+  {
+    uid:1,
+    name:zhangsan,
+  },
+  {
+    uid :2,
+    name:lisi,
+  }
+]
+```
+路由配置：
+```js
+ routes: [
+    {
+      path: '/user/:userId?',  
+      component: user,
+    }
+  ]
+
+  // userId只是个变量，当访问对应具体的路由的时，此变量的值就是对应的具体值；
+  // userId后面的‘？’是个正则，作用是判断匹配：当userId没有值的时候，直接访问的是‘/user’，当userId有值的时候，直接访问的是 ‘/user/所传值’ ，
+``` 
+数据插入对应路由
+```html
+  <div>
+    <router-link 
+      style="padding-right: 50px;" 
+      :to="'/user/' + item.uid " 
+      :key="index" 
+      v-for="(item,index) in userList"
+    > 
+      第 {{ index + 1 }} 个用户： {{ item.name }}
+    </router-link>
+  </div>
+
+```
+
+
+
+**关于路由的两个对象：**
+- $router: 通过 $router 拿到router的实例对象 
 - $route: 当前激活的路由信息对象，每个组件实例都会有
+      
+    每访问一个路径，都会对应一个路由，此时 $route 里存放的就是当前路由的信息对象。所以可以通过它来获得用户id了。
+
+
 
 获取路由中的参数：
 ```js
@@ -549,20 +602,43 @@ let router = new VueRouter({
       console.log(this.$route.params)
     }
   }
+
+  // 生成一个组件之后，再在这个组件里面操作，这个组件不会重新生成，而是复用之前生成的组件； 
+
+  //组件刚生成一次的时候，会去执行一下生命周期的钩子函数， 如果下次没有让组件重新生成，钩子函数就不会执行了，也就是说钩子函数只会执行一次；此时， 在组件里面切换的时候，路径发生变化，匹配到一个路由，就可以得到一个路由信息对象 $route；
+
+  //如果地址栏一旦发生变化，$route 就会重新生成一个路由信息对象，$route 重新赋值， 通过 watch 监控路由信息对象 $route；当 $route 改变的时候，就可以拿到对应的信息了。
+
 ```
 
 贴士：
 - 传输多个参数的方式：:to="'/user/1/1'   类型参数：是否是vip，uid参数 1
-- 路由配置：  path: '/user/:isvip/:uid'
+- 路由配置：  path: '/user/:isvip?/:uid?'   
 - 子组件中的打印结果： {type: 1, uid: 1}
 
 获取查询字符串：
 ```js
 <router-link exact :to="{path:'', query:{uid:'1'}}">
 <div>
-$route.query      <!-- 这就是上述query内的json -->
+{{$route.query}}      <!-- 这就是上述query内的json -->
 </div>
-```
 
-#### 3.5 导航的钩子函数
+// query对象里可以多个元素 ： query:{uid:'1', 'infor':'alow', ...} 
+```
+## 五 编程式导航
+
+之前使用router-link 生成标签去切换组件；编程式导航也可以切换组件。
+
+编程式导航 其实是借助于 router 实例的一些方法，通过调用这些方法，编写代码来实现导航的切换；
+
+**router实例提供的方法：**
++ back 回退一步
++ forward 前进一步
++ go 指定 前进/回退 步数
++ push 导航到不同的 url，向 history栈 添加一个新的记录
++ replace 导航到不同的 url，替换 history栈 中当前记录
+
+
+
+## 六 导航的钩子函数
 
