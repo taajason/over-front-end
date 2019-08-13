@@ -638,7 +638,240 @@ let dataUser = [
 + push 导航到不同的 url，向 history栈 添加一个新的记录
 + replace 导航到不同的 url，替换 history栈 中当前记录
 
+```html
+<div>
+  <input type="button" value="后退" @click="backHandle">
+  <input type="button" value="前进" @click="forwardHandle">
+  <input type="button" value="前进/后退 到指定步数" @click="goHandle">
+  <input type="button" value="控制指定的导航 push" @click="pushHandle">
+  <input type="button" value="控制指定的导航 replace" @click="replaceHandle">
+</div>
 
+<script>
+  export default{
+    methods: {
+      backHandle(){
+        this.$router.back();
+      },
+      forwardHandle(){
+        this.$router.forward();
+      },
+      goHandle(){
+        this.$router.go(-2);  // 负数是后退，正数是前进，0是刷新当前页面，超过步数的话没有效果；
+      },
+      pushHandle(){
+         this.$router.push('/document');  // 目标链接 -- 字符串形式
+         this.$router.push({path:'/document', query:{uid:'1'}});  // 目标链接 -- 对象形式
+      },
+      replaceHandle(){
+        this.$router.replace('/document');  // 目标链接 -- 字符串形式
+        this.$router.replace({path:'/document', query:{uid:'1'}});  // 目标链接 -- 对象形式
+      }
+    }
+  }
+
+</script>
+```
 
 ## 六 导航的钩子函数
 
+导航发生变化的时候，导航钩子主要用来拦截导航，让它完成跳转或取消；
+
+#### 6.1 执行钩子函数的位置
+
++ router全局：
+
+     router实例身上：beforeEach(to, from, next)、afterEach;(to, from)
+
++ 单个路由：
+  
+     单个路由中：beforeEnter(to, from, next)
+
++ 组件中：
+  
+     组件内的钩子：
+     
+     beforeRouteEnter(to, from, next)、
+     
+     beforeRouteUpdate(to, from, next)、
+     
+     beforeRouteLeave(to, from, next)
+
+
+#### 6.2 导航钩子函数的案列
+
+
+**6.2.1 导航钩子函数的参数**
++ to -- 目标导航的路由信息对象；
++ from -- 离开的路由信息对象；
++ next -- 是否要进入导航，如果需要进入导航就执行 next();
+
+**6.2.2 router实例身上的钩子函数案列**
+
++ beforeEach():
+```js
+  let router= new VueRouter();
+
+  router.beforeEach((to, from, next)=>{
+    console.log('beforeEach');
+    next(); 
+  })
+
+  // 只要切换不同的导航，beforeEach 这个导航钩子就会被执行
+  
+```
+
+
+next 里面可以接收参数：next(false) -- 取消导航，不会进入导航内；比如 登录功能，如果没有登录，就重定向到登录页面；
+
+```js
+  // 路由配置：
+  routes: [
+    {
+      path: '/user',  
+      component: user,
+      meta:{
+        login:true     // 添加 login 标识
+      }
+    }
+  ]
+
+  // 钩子函数判断：
+  router.beforeEach((to, from, next)=>{ 
+    if(to.meta.login){
+      next('/login');  // 如果需要登录就进入登录页
+    }else {
+      next();          // 如果不需要登录就进入导航页
+    }
+  })
+```
++ afterEach()
+
+afterEach没有参数 next;
+
+当进入导航之后触发；
+```js
+
+  //案列： 当渲染不同的导航时，页面的 title 对应的改变
+
+  // 路由配置：
+  routes: [
+    {
+      path: '/user',  
+      component: user,
+      meta:{
+        title: 'user'     // 添加 title 标识
+      }
+    }
+  ]
+
+  // 钩子函数判断：
+  router.afterEach((to, from)=>{ 
+    if(to.meta.title){
+      window.document.title = to.meta.title;  // 如果title存在，就改变页面的title为to.meta.title
+    }else {
+      window.document.title = '给个固定的title';        
+    }
+  })
+
+  // 钩子函数内部是不能直接访问document的，需要通过window去访问，所以不能直接写成：document.title
+  
+```
+
+
+**6.2.3 单个路由中的钩子函数案列**
+
++ beforeEnter
+
+给某个具体的路由设置钩子函数：
+```js
+
+  routes: [
+    {
+      path: '/user',  
+      component: user,
+
+      beforeEnter(to, from, next){
+       // 当访问 /user 这个导航的时候，执行这个钩子函数
+        console.log('beforeEnter');
+
+        next();
+      },
+      
+      meta:{
+        login:true   
+      }
+    }
+  ]
+
+```
+
+**6.2.4 组件内的钩子函数案列**
++ beforeRouteEnter
+  
+  beforeRouteEnter执行的时候，组件还没有创建，所以在beforeRouteEnter里面是不能直接用this来获取这个组件的数据的；
+
+> 进入组件的时候，执行的第一个生命周期函数是 beforeCreate, 那么是路由的钩子函数先执行还是组件的钩子函数先执行？
+
+    下面的案列  先打印 beforeRouteEnter，后打印beforeCreate，所以是路由的钩子函数先执行，再执行组件里的钩子函数，创建组件实例；
+
+路由的钩子函数执行的时候，组件的实例还没有创建，所以this是undefuad,所以直接用this就访问不到 test了;
+
+> 那么要怎么在 beforeRouteEnter 里去修改数据呢？
+
+    可以通过 beforeRouteEnter 的参数 next(),里面传递一个回调函数，这个回调函数会在进入导航之后执行，同时这个回调函数会接收一个参数，这个参数就是当前的组件实例 vm，此时就可以获取到实例了，从而获取到 test ；
+
+```html
+<!-- 案列： 进入导航的时候，在beforeRouteEnter里把渲染的数据修改了  -->
+
+<div>
+  测试：{{test}}
+</div>
+
+<script>
+  export default{
+
+    data(){
+      return {
+        test: '改变前' 
+      } 
+    },
+    beforeCreate(){
+       console.log('beforeCreate');
+    },
+    // 进入组件之前执行 beforeRouteEnter
+    beforeRouteEnter(to, from, next){
+      console.log('beforeRouteEnter');
+      next((vm)=>{
+        vm.test = '改变了';
+      });
+    }
+  }
+
+</script>
+  
+```
++ beforeRouteUpdate
+  
+  在一个组件里面，点击切换二级导航的时候，导航改变更新了，就会触发钩子函数 beforeRouteUpdate；
+```js
+export default{
+  // 二级导航导航改变更新的时候执行 beforeRouteUpdate
+  beforeRouteUpdate(to, from, next){
+    console.log('beforeRouteUpdate');
+    next();
+  }
+}
+```
+
++ beforeRouteLeave
+  
+  离开当前组件的时候，就会触发钩子函数 beforeRouteUpdate；
+```js
+export default{
+  beforeRouteLeave(to, from, next){
+    console.log('beforeRouteLeave');
+    next();   // 控制是否离开当前组件
+  }
+}
+```
