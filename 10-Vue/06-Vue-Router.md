@@ -811,15 +811,15 @@ afterEach没有参数 next;
   
   beforeRouteEnter执行的时候，组件还没有创建，所以在beforeRouteEnter里面是不能直接用this来获取这个组件的数据的；
 
-> 进入组件的时候，执行的第一个生命周期函数是 beforeCreate, 那么是路由的钩子函数先执行还是组件的钩子函数先执行？
+**进入组件的时候，执行的第一个生命周期函数是 beforeCreate, 那么是路由的钩子函数先执行还是组件的钩子函数先执行？**
 
-    下面的案列  先打印 beforeRouteEnter，后打印beforeCreate，所以是路由的钩子函数先执行，再执行组件里的钩子函数，创建组件实例；
+下面的案列  先打印 beforeRouteEnter，后打印beforeCreate，所以是路由的钩子函数先执行，再执行组件里的钩子函数，创建组件实例；
 
 路由的钩子函数执行的时候，组件的实例还没有创建，所以this是undefuad,所以直接用this就访问不到 test了;
 
-> 那么要怎么在 beforeRouteEnter 里去修改数据呢？
+**那么要怎么在 beforeRouteEnter 里去修改数据呢？**
 
-    可以通过 beforeRouteEnter 的参数 next(),里面传递一个回调函数，这个回调函数会在进入导航之后执行，同时这个回调函数会接收一个参数，这个参数就是当前的组件实例 vm，此时就可以获取到实例了，从而获取到 test ；
+可以通过 beforeRouteEnter 的参数 next(),里面传递一个回调函数，这个回调函数会在进入导航之后执行，同时这个回调函数会接收一个参数，这个参数就是当前的组件实例 vm，此时就可以获取到实例了，从而获取到 test ；
 
 ```html
 <!-- 案列： 进入导航的时候，在beforeRouteEnter里把渲染的数据修改了  -->
