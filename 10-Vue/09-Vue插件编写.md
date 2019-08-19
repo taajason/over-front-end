@@ -81,12 +81,12 @@ let obj1 = {};
 let obj2 = {};
 let obj3 = {};
 
-export default{ 
-    install:function(vm){
-        vm.prototype.$lobj1 = lobj1,
-        vm.prototype.$obj2 = obj2,
-        vm.prototype.$obj3 = obj3,
-    }
+export default {
+  install: function (vm) {
+    vm.prototype.$obj1 = obj1;
+    vm.prototype.$obj2 = obj2;
+    vm.prototype.$obj3 = obj3;
+  }
 }
 
 ```
