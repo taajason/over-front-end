@@ -84,11 +84,6 @@ ES6篇：
 - [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
 
-其他：
-```
-Node.js设计模式第2版
-```
-
 #### 前端架构概览
 
 - [《现代前端技术解析》](https://book.douban.com/subject/27021790/)
