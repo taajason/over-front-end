@@ -26,24 +26,9 @@
 
 ## 资料
 
-贴士：
-- 使用目录展示并附上地址的书籍是笔者极力推荐阅读的
-- 附在其他类目中的书籍仍然值得一看，但是基本被推荐书籍覆盖，或者是因为`年久失修`问题而失去了核心竞争力 
-
-#### 网页开发
-
-css：
+#### 网页基础
 - [《Head First HTML与CSS》第2版](https://book.douban.com/subject/25752357/)：0基础入门书籍
 - [《CSS 实战手册（第四版）》](https://book.douban.com/subject/26898555/)：CSS基础到加强书籍
-- [《HTML5秘籍》](https://book.douban.com/subject/11610880/)：H5全面了解书籍
-- [《CSS设计指南》](https://book.douban.com/subject/23123255/)
-- [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
-- [《响应式Web设计实践》](https://book.douban.com/subject/21263576/)
-
-动画：
-- [《HTML5+JavaScript动画基础》](https://book.douban.com/subject/24744218/)
-- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
-
 
 #### JavaScript
 
@@ -59,6 +44,14 @@ DOM编程：
 - [《JavaScript DOM编程艺术》（第2版）](https://book.douban.com/subject/6038371/)
 - [《锋利的jQuery》](https://book.douban.com/subject/10792216/)
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
+
+H5与C3：
+- [《HTML5秘籍》](https://book.douban.com/subject/11610880/)：H5全面了解书籍
+- [《CSS设计指南》](https://book.douban.com/subject/23123255/)
+- [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
+- [《响应式Web设计实践》](https://book.douban.com/subject/21263576/)
+- [《HTML5+JavaScript动画基础》](https://book.douban.com/subject/24744218/)
+- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
 
 提升篇：
 - [《你不知道JavaScript》上卷+中卷](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
@@ -77,7 +70,6 @@ ES6篇：
 - [《深入React技术栈》](https://book.douban.com/subject/26918038/)
 - [《深入浅出React和Redux》](https://book.douban.com/subject/27033213/)
 - [《React状态管理与同构实战》](https://book.douban.com/subject/30290509/)
-
 - [《Vue移动开发实战技巧》](https://book.douban.com/subject/27662351/)
 - [《深入浅出Vue.js》](https://book.douban.com/subject/32581281/)
 
@@ -103,25 +95,13 @@ ES6篇：
 - [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
 - [《重学前端》]()：极客时间winter
 
-#### Flutter
+#### Flutter资料
 
-**官方网址**：
-- [flutter官网](https://flutter.dev/)
-- [dart镜像网址](http://dart.goodev.org/)
-- [flutter中文网](https://flutterchina.club/)
-
-**书籍**：
 - [《Flutter：从0到1构建大前端应用》](https://book.douban.com/subject/34455732/)
 - [Flutter实战](https://book.flutterchina.club/)：短小精悍的电子书
-
-**源码**：
 - [flutter-go示例](https://github.com/alibaba/flutter-go):github上 140+ flutter组件的demo 
 - [flutter项目源码](https://github.com/CarGuo/GSYGithubAppFlutter)：涵盖了移动开发90%左右常见的功能
-
-**视频**
-- [技术胖](https://jspang.com/posts/2017/01/11/all-video-list.html)
-
-**框架**：
+- [技术胖视频教程](https://jspang.com/posts/2017/01/11/all-video-list.html)
 - [flutterchina/dio](https://github.com/flutterchina/dio):flutter中文社区开源的web框架
 - [flutter_boost](https://github.com/alibaba/flutter_boost):闲鱼开源的flutter与java绑定插件
 
@@ -132,10 +112,12 @@ ES6篇：
 **推荐书籍**地址：https://github.com/ruyuejun/polaris  
 
 **OverNote分类**：  
-- [Go](https://github.com/overnote/golang)：详尽的Go领域笔记，包括语法、并发编程、web编程、微服务等
+- [Go](https://github.com/overnote/over-golang)：详尽的Go领域笔记：Go语法、Go并发编程、GoWeb编程、Go微服务等
 - [大前端 front-end-master](https://github.com/overnote/front-end-master)：包含JavaScript、Node.js、vue/react、微信开发、Flutter等大前端技术
-- [架构-分布式与微服务](https://github.com/overnote/architecture/)：分布式与微服务相关
-- [计算机底层五巨头](https://github.com/overnote/fivex)：算法、操作系统、网络、组成原理、编译原理，附录数学/英语/政治考研笔记
-- [服务端常用技术](https://github.com/overnote/serverside)：Nginx、mysql、redis、mongodb、linux系统等
-- [Python](https://github.com/overnote/python)：整理中
-- [Java](https://github.com/overnote/java)：整理中
+- [数据结构与算法](https://github.com/overnote/over-algorithm)：以C/Go实现为主记录数据结构与算法的笔记
+- [分布式与微服务架构](https://github.com/overnote/over-architecture/)：分布式与微服务等架构相关笔记
+- [Linux](https://github.com/overnote/over-linux)：计算机组成原理、操作系统、计算机网络、编译原理基础学科笔记
+- [服务端常用技术](https://github.com/overnote/server-sider)：nginx、mysql、redis、mongodb、linux系统基础等服务端常用技术汇总笔记
+- [大数据](https://github.com/overnote/over-bigdata)：大数据笔记，完善中
+- [Python](https://github.com/overnote/over-python)：Python相关笔记，完善中
+- [Java](https://github.com/overnote/over-java)：Java相关笔记，完善中
