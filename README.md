@@ -1,3 +1,7 @@
+## 关于本笔记
+
+笔记刚刚开始整理，许多地方仍然没有体系化、详细化，敬请期待正式版。  
+
 ## 新时代前端的学习方向要点
 
 **需要深入的技术点**：
@@ -99,6 +103,28 @@ ES6篇：
 - [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
 - [《重学前端》]()：极客时间winter
 
+#### Flutter
+
+**官方网址**：
+- [flutter官网](https://flutter.dev/)
+- [dart镜像网址](http://dart.goodev.org/)
+- [flutter中文网](https://flutterchina.club/)
+
+**书籍**：
+- [《Flutter：从0到1构建大前端应用》](https://book.douban.com/subject/34455732/)
+- [Flutter实战](https://book.flutterchina.club/)：短小精悍的电子书
+
+**源码**：
+- [flutter-go示例](https://github.com/alibaba/flutter-go):github上 140+ flutter组件的demo 
+- [flutter项目源码](https://github.com/CarGuo/GSYGithubAppFlutter)：涵盖了移动开发90%左右常见的功能
+
+**视频**
+- [技术胖](https://jspang.com/posts/2017/01/11/all-video-list.html)
+
+**框架**：
+- [flutterchina/dio](https://github.com/flutterchina/dio):flutter中文社区开源的web框架
+- [flutter_boost](https://github.com/alibaba/flutter_boost):闲鱼开源的flutter与java绑定插件
+
 ## 附录：笔记汇总
 
 **OverNote**地址：https://github.com/overnote   
@@ -106,10 +132,10 @@ ES6篇：
 **推荐书籍**地址：https://github.com/ruyuejun/polaris  
 
 **OverNote分类**：  
+- [Go](https://github.com/overnote/golang)：详尽的Go领域笔记，包括语法、并发编程、web编程、微服务等
+- [大前端 front-end-master](https://github.com/overnote/front-end-master)：包含JavaScript、Node.js、vue/react、微信开发、Flutter等大前端技术
 - [架构-分布式与微服务](https://github.com/overnote/architecture/)：分布式与微服务相关
 - [计算机底层五巨头](https://github.com/overnote/fivex)：算法、操作系统、网络、组成原理、编译原理，附录数学/英语/政治考研笔记
 - [服务端常用技术](https://github.com/overnote/serverside)：Nginx、mysql、redis、mongodb、linux系统等
-- [Go](https://github.com/overnote/golang)：详尽的Go领域笔记，包括语法、并发编程、web编程、微服务等
-- [JavaScript](https://github.com/overnote/javascript)：包含网页、JS、前端工程化、Node、vue、react、小程序等JS相关领域技术
 - [Python](https://github.com/overnote/python)：整理中
 - [Java](https://github.com/overnote/java)：整理中
