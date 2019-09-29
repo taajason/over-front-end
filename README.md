@@ -26,84 +26,72 @@
 
 ## 资料
 
-#### 网页基础
-- [《Head First HTML与CSS》第2版](https://book.douban.com/subject/25752357/)：0基础入门书籍
-- [《CSS 实战手册（第四版）》](https://book.douban.com/subject/26898555/)：CSS基础到加强书籍
+#### 网页与动画
+
+- [《HTML5与CSS3基础教程》第8版](https://book.douban.com/subject/25878992/)：HTML与CSS基础入门
+- [《HTML5秘籍》](https://book.douban.com/subject/11610880/)：H5全面了解书籍
+- [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍瑰宝！！！
+- [《HTML5+JavaScript动画基础》](https://book.douban.com/subject/24744218/)：目前最好的动画书籍
+- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：目前最好的canvas书籍
 
 #### JavaScript
 
 语法基础：
 - [《JavaScript权威指南》第6版](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
-- [《JavaScript高级程序设计》](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
-- [《JavaScript语言精粹》](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
-- [《Eloquent JavaScript》3rd Edition](https://book.douban.com/subject/30275136/)：笔者认为目前最好的JS全面了解书籍之一
-- [《JavaScript忍者秘籍》第2版](https://book.douban.com/subject/30143702/)
+- [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
+- [《JavaScript语言精粹》修订版](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
+- [《JavaScript忍者秘籍》第2版](https://book.douban.com/subject/30143702/)：对函数的讲解：闭包、重载、curry化讲解极好
 - [《JavaScript编程全解》](https://book.douban.com/subject/25767719/)：各项技术的懒人包，适合统领全局式入门
+- [《》]()
 
 DOM编程：
-- [《JavaScript DOM编程艺术》（第2版）](https://book.douban.com/subject/6038371/)
-- [《锋利的jQuery》](https://book.douban.com/subject/10792216/)
+- [《JavaScript DOM编程艺术》第2版](https://book.douban.com/subject/6038371/)
+- [《锋利的jQuery》第2版](https://book.douban.com/subject/10792216/)
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
 
-H5与C3：
-- [《HTML5秘籍》](https://book.douban.com/subject/11610880/)：H5全面了解书籍
-- [《CSS设计指南》](https://book.douban.com/subject/23123255/)
-- [《CSS揭秘》](https://book.douban.com/subject/26745943/)：重点书籍，CSS书籍中的瑰宝！！！
-- [《响应式Web设计实践》](https://book.douban.com/subject/21263576/)
-- [《HTML5+JavaScript动画基础》](https://book.douban.com/subject/24744218/)
-- [《HTML5 Canvas核心技术》](https://book.douban.com/subject/24533314/)：canvas方向好书
-
 提升篇：
-- [《你不知道JavaScript》上卷+中卷](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
 - [《JavaScript核心技术开发解密》](https://book.douban.com/subject/30190189/)：短小精悍的介绍了一些难点
+- [《你不知道JavaScript》上卷+中卷](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
 - [《JavaScript设计模式与开发实践》](https://book.douban.com/subject/26382780/)
 - [《JavaScript模式》](https://book.douban.com/subject/11506062/)
 - [《JavaScript面向对象精要》](https://book.douban.com/subject/26352658/)
-- [《编写可维护的JavaScript》](https://book.douban.com/subject/21792530/)
 - [《JavaScript面向对象编程指南（第2版）》](https://book.douban.com/subject/26302623/)
 
 ES6篇：
 - [《深入理解ECMAScript6》](https://book.douban.com/subject/27072230/)
 - [《ECMAScript6入门》](https://book.douban.com/subject/25966265/)
 
-框架篇：
+Vue：
+- [《深入浅出Vue.js》](https://book.douban.com/subject/32581281/)
+
+React:
 - [《深入React技术栈》](https://book.douban.com/subject/26918038/)
 - [《深入浅出React和Redux》](https://book.douban.com/subject/27033213/)
 - [《React状态管理与同构实战》](https://book.douban.com/subject/30290509/)
-- [《Vue移动开发实战技巧》](https://book.douban.com/subject/27662351/)
-- [《深入浅出Vue.js》](https://book.douban.com/subject/32581281/)
 
+综合：
+- [《高效前端：Web高效编程与优化实践》](https://book.douban.com/subject/30170670/)
+- [《高性能JavaScript》](https://book.douban.com/subject/5362856/)
+- [《了不起的JavaScript工程师：从前端到全端高级进阶》](https://book.douban.com/subject/34788884/)：笔者力荐
 
 #### Node书籍
 
 - [《Koa与Node.js开发实战》](https://book.douban.com/subject/30404722/)：也是经典，但大部分内容被本书涵盖，且本书更详细
 - [《深入浅出Node.js》](https://book.douban.com/subject/25768396/)：Node书籍的集大成者，虽然一部分技术已经过时，但是仍然值得购买并收藏
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
-
-#### 前端架构概览
-
-- [《现代前端技术解析》](https://book.douban.com/subject/27021790/)
-- [《高效前端：Web高效编程与优化实践》](https://book.douban.com/subject/30170670/)
-- [《Web性能实践日志》](https://book.douban.com/subject/25891125/)
-- [《高性能JavaScript》](https://book.douban.com/subject/5362856/)
-- [《了不起的JavaScript工程师：从前端到全端高级进阶》](https://book.douban.com/subject/34788884/)：笔者力荐
+- [《Node.js调试指南》 ](https://github.com/nswbmw/node-in-debugging)：开源书籍
 
 #### 资料
 
-- [《Node.js调试指南》 ](https://github.com/nswbmw/node-in-debugging)
 - [《前端面试之道》](https://yuchengkai.cn/docs/frontend/ )
 - [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
-- [《重学前端》]()：极客时间winter
 
 #### Flutter资料
 
 - [《Flutter：从0到1构建大前端应用》](https://book.douban.com/subject/34455732/)
 - [Flutter实战](https://book.flutterchina.club/)：短小精悍的电子书
-- [flutter-go示例](https://github.com/alibaba/flutter-go):github上 140+ flutter组件的demo 
-- [flutter项目源码](https://github.com/CarGuo/GSYGithubAppFlutter)：涵盖了移动开发90%左右常见的功能
+- [flutter项目源码](https://github.com/CarGuo/GSYGithubAppFlutter)：涵盖了移动开发90%功能
 - [技术胖视频教程](https://jspang.com/posts/2017/01/11/all-video-list.html)
-- [flutterchina/dio](https://github.com/flutterchina/dio):flutter中文社区开源的web框架
-- [flutter_boost](https://github.com/alibaba/flutter_boost):闲鱼开源的flutter与java绑定插件
 
 ## 附录：笔记汇总
 

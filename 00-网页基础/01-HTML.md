@@ -1,45 +1,44 @@
 ## 一 网页基础
 
-网页由文字、图片、按钮、输入框、视频等元素组成。  
-
 网页的标准：
-- 结构标准：HTML，即 `Hyper text markup language` ，超文本标记语言，能够实现网页跳转的文本	
-- 表现标准：CSS，即 `Cascading Style Sheets`，层叠样式表			
-- 行为标准：JavaScript
+- 结构：HTML，即 `Hyper text markup language` ，超文本标记语言，能够实现网页跳转的文本	
+- 表现：CSS，即 `Cascading Style Sheets`，层叠样式表			
+- 行为：JavaScript
+
+一个网页的基本结构：
+```html
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+```
+
+由上可见网页的内容都是由大量的HTML标签构成，按照标签的开合可以将标签分为分类：
+- 单标签：只有开始没有结束，如：`<hr>  <!-- -->  <br>  <hr>`
+- 双标签：有开始有结束，如：`<p></p>   <em></em> `
 
 ## 二 常见标签
 
-#### 2.0 标签分类
-
-单标签：只有开始没有结束 
-```
-文本注释标签:	<!--   -->
-文本换行标签:	<br>
-横线标签:		<hr>
-```
-
-双标签：有开始有结束
-```
-段签:		<p>我是段落</p>
-文体:		<em></em>
-```
-
 #### 2.1 图片标签img与路径
 
+图片标签img示例：
 ```html
 <img src="1.jpg" atl="我是图片" title="图片标题" width="200" height="300">
 ```
 
 img标签常用属性：
-- alt：当图片无法现实和，显示alt内的文字
-- src：包括绝对路径、相对路径
-
-贴士：
-- 绝对路径：以磁盘路径或者/开头的路径，
-- 相对路径：以文件名开头或者./开头的路径。 ../代表上一层
+- alt：当图片无法显示时显示alt内的文字
+- src：图片路径，可以是绝对路径（/开头）或者相对路径（./开头，可以省略./）
 
 #### 2.2 a链接
 
+a链接示例：
 ```html
 <a href="http://www.baidu.com/">百度</a>
 ```
@@ -47,7 +46,9 @@ img标签常用属性：
 a标签常用属性：
 - href：值为#时不能跳转，值为一个文件时则可以实现下载功能  
 - title：鼠标划过时显示的文字
-- target：网页打开方式，值为"_self"是默认值，在当前页打开，"_blank"在新窗口中打开。
+- target：网页打开方式，有两种值
+  - "_self"：默认值，在当前页打开
+  - "_blank"：在新窗口中打开
 
 锚链接位置跳转演示：
 ```html
@@ -55,9 +56,8 @@ a标签常用属性：
 <a href="#test">查看问候语</a>
 ```
 
-a链接特殊写法：
+a链接特殊写法：可以制造点击不执行，一般在tab栏切换中使用
 ```html
-<!-- 点击不执行的意思,一般在tab栏切换中用到 -->
 <a href=”javascript:;”></a>  
 <a href=”javascript:void(0);”></a> 
 ```
@@ -65,38 +65,41 @@ a链接特殊写法：
 #### 2.3 特殊字符
 
 Html中的特殊字符需要使用转义字符书写：  
-![](/images/JavaScript/html-01.png)
+
+| 特殊字符 | HTML中的表示 |
+| ------ | ------ |
+| 空格 | `&nbsp;` |
+| < | `&lt;` |
+| > | `&gt` |
+| & | `&amp;` |
 
 #### 2.4 meta标签
 
 meta标签用来设置字符集、关键字、描述、重定向等：
-
 ```html
 <meta charset="utf-8">
 <meta name="keywords" content="流行资讯">
 <meta name="description" content="最新服装设计流行信息">
-<!-- 这里指2秒后跳转到1.html -->
-<meta http-equiv="refresh"  content="2; url=1.html">  
+<meta http-equiv="refresh"  content="2; url=1.html">        <!-- 2秒后跳转到1.html -->
 ```
 
 #### 2.5 link标签
 
 link标签必须放在head中，用来引入外部样式表和网页标题小图标：
-
 ```html
-<!-- 用法一：引入外部样式表 -->
 <link rel="stylesheet" href="1.css">
-<!-- 用法二：设置网页标题小图标	 favicon.ico在IE下一般是16*16-->
 <link rel="icon" href="favicon.ico">
 ```
 
 #### 2.6 背景音乐标签 embed
 
+引入音乐文件：
 ```html
 <embed src="1.mp3" hidden="true"></embed>
 ```
 
 #### 2.7 滚动标签 marquee
+
 ```html
 <marquee behavior="slide" direction="up" width="280" height="300" bgcolor="blue">
     <img src="1.jpg">
@@ -111,6 +114,7 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 - loop：		设置滚动次数，-1为一直滚动下去
 
 #### 2.8 注释
+
 ```html
 <!-- 这里书写注释 -->
 ```
@@ -124,17 +128,18 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 <ul>新闻3</ul>
 ```
 
-默认列表无任何标记
-- type="square"     小方块显示
-- type="circle"      小圆圈
+无序列表，默认无任何显示样式，但是可以添加一些样式：
+- type="square"：列表样式为小方块
+- type="circle"：列表样式为小圆圈
 
-有序列表 ul:
+有序列表 ol:
 ```html
 <ol type="a" start="3">
     <li>新闻1</li>
     <li>新闻2</li>
 </ol>
 ```
+有序列表的样式：
 - A,a：分别以A或者a字幕顺序排序
 - I,i ：分别以大小写罗马数字排列
 - start="3" ：li前面的显示从第几个开始计数
@@ -150,19 +155,15 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 
 ## 三 标签语义化
 
-标签语义化概念：根据内容的结构化（内容语义化），选择合适的标签（代码语义化）
-标签语义化意义：
-- 1:网页结构合理
-- 2:有利于seo:和搜索引擎建立良好沟通，便于抓取
-- 3:方便其他设备解析（如屏幕阅读器、盲人阅读器、移动设备）
-- 4:便于团队开发和维护
+标签语义化概念：根据内容的结构化（内容语义化），选择合适的标签（代码语义化）。  
+
+标签语义化可以让网页结构更加合理，且利于SEO。  
 
 标签语义化方式：
-- 1:尽可能少的使用无语义的标签div和span；
-- 2:在语义不明显时，既可以使用div或者p时，尽量用p, 因为p	在默认情况下有上下间距，对兼容特殊终端有利；
-- 3:不要使用纯样式标签，如：b、font、u等，改用css设置。
-- 4:需要强调的文本，可以包含在strong或者em标签中strong默认	样式是加粗（不要用b），em是斜体（不用i）；
-
+- 尽可能少的使用无语义的标签div和span；
+- 在语义不明显时，既可以使用div或者p时，尽量用p, 因为p在默认情况下有上下间距，对兼容特殊终端有利；
+- 不要使用纯样式标签，如：b、font、u等，改用css设置。
+- 需要强调的文本，可以包含在strong或者em标签中strong默认样式是加粗（不要用b），em是斜体（不用i）；
 
 ## 四 表格标签table
 
@@ -186,9 +187,9 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 ```
 
 表格结构:thead（表头）、tbody（主体）、tfoot（结尾）	
-- cellspacing:用来设置单元格与单元格的距离（td）， 默认值为2
-- cellpadding:设置内容距边框的距离（文字距离td左侧）
-- align:设置对齐方式，包括left| right|center(居中对齐)
+- cellspacing：用来设置单元格与单元格的距离（td），默认值为2
+- cellpadding：设置内容距边框的距离（文字距离td左侧）
+- align：设置对齐方式，包括left、right、center
 
 注意：
 - table标签的标题标签是caption，不能使用title
@@ -227,24 +228,18 @@ link标签必须放在head中，用来引入外部样式表和网页标题小图
 
 #### 5.1 表单标签简介
 
-表单用来收集信息，构成包含：表单域（form标签）与表单控件（input等）。  
-
-表单域：
+表单用来收集信息，构成包含：表单域（form标签）与表单控件（input等），form 标签即代表包裹了一个表单域：
 ```Html
-<!-- 
-    action:用来处理表单数据
-    method:表单提交得方式 
--->
-<form action="" method="">  
+<form action="" method="">  <!--  action:用来处理表单数据 method:表单提交得方式 -->
 </form>
 ```
 
-#### 4.2 表单控件
+#### 5.2 表单控件
 
-input标签的type可以指定控件的类型为文本、密码、单选框等等，只有将表单控件放置到表单域中，该表单才能被提交。  
+只有位于表单域中的数据才能被提交，这些数据存放于input标签（表单控件）中。  
 
-文本输入框：
-```Html
+input标签的type可以指定控件的类型为文本、密码、单选框等多种类型，最常见的表单空间是文本输入框：
+```html
 <input type="text" maxlength="6" disabled="disabled">
 <!-- 
     maxlength="6"    		限制输入字符长度
@@ -257,8 +252,7 @@ input标签的type可以指定控件的类型为文本、密码、单选框等�
 ```
 
 常用表单控件：
-```Html
-
+```html
 <!-- 密码框： -->
 <input type="password">  <!-- 密码输入框的属性与文本输入框一致 -->
 
@@ -301,33 +295,10 @@ input标签的type可以指定控件的类型为文本、密码、单选框等�
 </fieldset>
 ```
 
-其他表单控件：
-- 网址控件： type="url"
-- 日期控件： type="date"
-- 时间控件： type="time"
-- 数字控件： type="number"
-- 邮件控件： type="email"
-- 滑块控件： type="range"
-- 上传控件： type=”file”
-
-#### 4.3 表单优化写法
+#### 5.3 表单优化写法
 
 表单元素的描述文字应该使用label标签包裹，并且使用for属性指向表单元素，从而达到点击描述文字可以聚焦文本框的效果：(注意下列的username是id)
-
-```Html
+```html
 <label for="username">用户名</label>
 <input type="text" id="username">
 ```
-
-
-
-
-
-
-
-
-
- 								
-
-
-

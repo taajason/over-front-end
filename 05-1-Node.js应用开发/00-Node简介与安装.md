@@ -85,10 +85,13 @@ nvm version
 
 #### 2.2 安装node
 
-Node因为一些国内特殊原因，需要设置下载镜像：
+设置nvm下载镜像：
 ```
-nvm node_mirror:https://npm.taobao.org/mirrors/node/        # 设置node下载镜像地址
-nvm npm_mirror:https://npm.taobao.org/mirrors/npm/          # 设置node的第三方包下载镜像地址
+# 设置node下载镜像地址
+nvm node_mirror https://npm.taobao.org/mirrors/node/  
+
+# 设置node的第三方包下载镜像地址
+nvm npm_mirror https://npm.taobao.org/mirrors/npm/         
 ```
 
 安装Node：
@@ -105,7 +108,7 @@ nvm use ls
 nvm alias default 8.5.0
 ```
 
-安装完node后，可以使用node -v 查看node版本；  
+安装完node后，可以使用 `node -v` 查看node版本；  
 
 安装完node后，打开webstorme，会自动识别node路径，如果没有识别：
 可以打开Settings-搜索node-配置；如果此时webstorme 仍然没Node的代码提示功能，解决步骤：File-setting-Languages&Frameworks-Node。

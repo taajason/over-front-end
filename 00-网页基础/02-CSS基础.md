@@ -1,0 +1,279 @@
+## 一 CSS简介
+
+CSS即层叠样式表（Cascading  Style  Sheets），也称为级联样式表。  
+
+CSS书写位置：
+- 内嵌式：在head标签中直接书写：`<style type="text/css"></style>`
+- 外连式：`<link rel="stylesheet" href="1.css">`
+- 行内式：通过给标签直接设置style属性来设置样式
+
+## 二 CSS选择器
+
+#### 2.1 常见基础选择器
+
+```Html
+<style type="text/css">
+    * {}                         /*通配符选择器，控制所有*/
+    p { color: red; }           /*标签选择器*/
+    .test { color: green;}      /*类选择器*/
+    #oDiv { color: blue;}       /*id选择器*/
+</style>
+
+<div class="test"></div>
+<div id="oDiv"></div>
+```
+贴士：
+- id选择器：多个标签不要同时使用同一id选择器，一个标签只能调用一个id。
+- 类选择器：多个标签可以同时调用一个类样式， 一个标签可以调用多个类样式。
+
+类选择器命名规范：
+- 不能以纯数字或者以数字开头定义类名
+- 不推荐使用汉字定义类名
+- 不能以特殊符号或者以特殊符号开头（“_”除外）定义类名
+- 不建议使用标签名或者属性名定义类名
+
+#### 2.2 标签指定选择器
+
+特点关系：既.....又.....   如下案例使用id p#id也可以实现：
+```Html
+<style type="text/css">
+   p.one{ color: red;}
+</style>
+
+<p class="one">one</p>
+<p class="two">two</p>
+```
+
+#### 2.3 后代选择器
+
+特点关系：标签之间必须属于嵌套关系，选择器之间用空格隔开，如下案例，选择p标签下的类名为p1的标签。
+
+```Html
+<style type="text/css">
+   div #div1{ color: red;}
+</style>
+
+<div >
+    <div id="div1"></div1>
+</div>
+```
+
+#### 2.4 并集选择器
+```Html
+<style type="text/css">
+   div,p,span{ color: red;}
+</style>
+```
+
+#### 2.5 属性选择器
+```Html
+<style>
+    input[type=text][class="password"] {
+        background-color: red;
+    }
+</style>
+
+<input type="text" id="username">
+<input type="password">
+```
+
+#### 2.6 伪类选择器
+```
+:link      /* 未访问的链接 */
+:visited   /* 已访问的链接 */
+:hover     /* 鼠标移动到链接上 */
+:active    /* 选定的链接 */
+```
+
+## 三 标签分类
+
+#### 3.1 块级元素
+
+代表：`div  p  li   h1`  
+
+特点：
+- 元素独占一行显示，与宽度无关，即不给宽度直接占满一行
+- 支持所有CSS命令（可以设置宽度和高度）
+- 当嵌套一个块级元素，子元素如果不设置宽度，子元素的宽度为父元素的宽度
+
+#### 3.2 行内元素
+
+代表:  `span，a，font，strong`  
+
+特点：
+- 元素可以在同一行上显示
+- 宽高由内容撑开
+- 不支持上下margin
+- 代码换行会被解析
+
+#### 3.3 行内块元素
+
+代表： `image,  input(表单控件)`  
+
+特点： 元素在一行上显示，可以设置宽高，没有宽度时由内容撑开。  
+
+案例：给下列的div设置text-align:center一样能居中，所以行内块元素可以当做文字来处理。
+```html
+<div style="text-align:center">
+    <span>111</span
+></div>
+```
+
+#### 3.4 元素转换
+
+- display: inline 将元素转化为行内元素
+- display：inline-block   将元素转化行内块元素
+- display: block  将元素转化为块元素
+
+注意：inline-block也可以实现类似float的效果，但是同一行的元素间有间隔。
+
+## 四 CSS特性
+
+- 层叠性：某个元素同时出现了多个同级别的同名样式，那么书写在后面的样式将会覆盖之前的样式。
+- 继承性：子元素会继承父元素的：颜色、大小、字体、行高。注意：a标签不能继承父元素文字颜色（层叠掉了），h标签不能继承父元素文字大小。
+- 优先级：`默认样式 0 < 标签选择器 1 < 类选择器 10 < id选择器 100 < 行内样式 1000 < !important 1000以上`
+
+注意：
+- 继承的权重为0；权重可以叠加
+- left比right，权重高，有left又有right的时候，执行left的值。
+- top比bottom，权重高，有top又有bottom的时候，执行top的值。
+
+## 五 伪类
+
+```
+a:link{属性:值;}    超链接默认状态，与a{}一样
+a:visited{属性:值;} 超链接访问过后的样式
+a:hover{属性:值;}	鼠标放到超链接上的样式
+a:active{}      	超链接激活状态下的样式
+:focus{}            获取焦点的时候的样式
+```
+
+## 三 CSS与文字
+#### 3.1 常见文字设置
+```
+设置居中    text-align: center;  
+            设置盒子内文本居中，不能让标签居中，当然我们可以把行内元素、行内块元素看成文本
+设置大小    font-size: 16px;
+            经常使用相对长度单位，如像素
+设置字体    font-family:"宋体","微软雅黑";
+            可以设置单个值，也可以设置多个，即浏览器不支持第一个字体，则会尝试下一个，如果都不支持，那么使用系统默认的字体。
+设置加粗    font-weight
+            直接设置数字        100-900（必须是100的整数倍，推荐使用700）
+            直接设置设置英文：   bold   (700)   
+                              normal (400，即文字字体正常显示)
+                              其他：bolder、lighter
+设置样式    font-style
+            italic            文字斜体显示；
+            normal            文字正常显示；
+            oblique           文字倾斜显示；
+```
+注意：
+- <font color=red>现在网页中普遍使用14px+，尽量使用偶数字字号，ie6等老式浏览器支持奇数会有bug</font>
+- 当需要设置英文字体时，英文字体名必须位于中文字体名之前。
+- 如果字体名中包含空格、#、$等符号，则该字体必须加英文状态下的单引号或双引号，例如font-family: "Times New Roman";
+- 在 CSS 中设置字体名称，直接写中文是可以的。但是在文件编码（GB2312、UTF-8 等）不匹配时会产生乱码的错误。xp 系统不支持 类似微软雅黑的中文。可以使用英文代替： font-family:"Microsoft Yahei"，或者使用Unicode编码：font-family: "\5FAE\8F6F\96C5\9ED1"。
+- 平时我们很少给文字加斜体，反而喜欢给斜体标签（em，i）改为普通模式
+#### 3.2 属性连写
+```Html
+语法：
+    选择器{font: font-style  font-weight  font-size/line-height  font-family;}
+示范：
+    p {  font: italic 700 30px 宋体; }
+```
+注意： 联写必须有 font-size和font-family(其他属性可以不写)，且顺序不能更换。
+#### 3.3 行高 line-height
+浏览器默认文字大小：16px，
+浏览器默认行高大小：18px。
+行高的定义：两行文本基线的距离，就是行高（这里才是正确量取行高的方法）
+行高 = 文字大小 + 上间距 + 下间距   
+三者加起来如果等于盒子高度，正好文字居中！
+![](/images/JavaScript/css-01.png)
+当行高值为父容器的高度时，可以让父容器中的文字垂直显示。
+如果单独给一个元素设置行高：
+
+| 行高单位 | 赋值 | 文字大小 | 行高值 |
+| :------| ------: | :------: |:------: |
+| px | 20px | 20px |20px|
+| em | 2em | 20px |40px|
+| % | 120%	| 20px | 24px |
+| 不带单位 | 2 | 20px | 40px |
+总结：当给一个独立的元素设置行高值的时候，除了以px为单位的行高值与文字大小无关，其他都与文字大小有关（与文字大小的积）。
+盒子嵌套，给父元素设置行高值，子元素的行高问题：
+|行高单位|设置行高|父文字|子文字|行高|
+| :------| ------: | :------: |:------: |:------: |
+||px|	20px|	20px|	30px|	20px
+em|	2em|	20px|	30px|	40px
+|%|	120%|	20px|	30px|	24px
+|不带单位|	2	|20px	|30px|	60px
+总结：行高可以继承。当父元素设置了行高值（不带单位除外），子元素的行高值都是父元素行高值乘以父元素文字大小。
+
+总结图表：
+| 给父元素设置行高 | 子元素行高结果 | 
+| :------| ------: | 
+| px | 行高=父元素行高|
+| em | 行高=父元素文字大小*行高|
+| % | 行高=父元素文字大小*行高 |
+| 不带单位 | 行高=子元素文字大小*行高|
+
+## 七 CSS与背景
+#### 7.1 背景色 背景图
+注意：插入背景图一定要设置高度和宽度
+```Html
+div{
+    background-color: red;
+    background-image: url("1.jpg");
+    width: 200px;
+    height: 200px;
+}
+```
+#### 7.2 背景平铺
+repeat 		默认值 
+no-repeat 	不平铺
+repeat-x  	横向平铺
+repeat-y 	纵向平铺
+#### 7.3 背景位置
+设置具体值： left| right| top| bottom| cneter
+background-position: top right;	
+设置具体值时不区分顺序，分别为水平、垂直方向
+#### 7.4 背景固定于滚动
+background-attachment:fixed;
+fixed：图片固定   scroll：滚动（默认）
+#### 7.5 属性连写
+没有数量限制和先后顺序限制：
+```html
+background: url("1.png") red no-repeat 30px 40px;
+```
+
+## 一 图片文字对齐 vertical-align
+
+同时有图片和文字的地方，图片默认和文字底线对齐。  
+
+vertical-align用来设置元素的垂直对其方式，默认值是baseline，middle可以实现文字图片垂直居中显示。  
+
+使用vertical-align起作用的元素只有：行内块元素和table。  
+
+## 二 精灵图  
+
+精灵图是一种处理网页背景图像的方式（背景图片），可以给一个元素将精灵图设置为背景图片，使用坐标找到指定的背景图片，减少请求压力  
+ 
+浏览器坐标系：圆点往右为正，圆点往上移动为负  
+
+## 三 滑动门  
+
+小知识：white-space:nowrap; 可以强制在同一行显示所有文本，直到文本结束或者遇到br标签。  
+
+需求：导航栏目中，不会随着文字的增加而变形。
+```html
+<a href="#">
+    <span>首页2222222333</span>
+</a>
+
+<style>
+    span {
+        display: inline-block;
+        height: 30px;
+        background: url("sabar.jpg") no-repeat right;
+        padding: 5px 10px 5px 10px;
+    }
+</style>
+```
