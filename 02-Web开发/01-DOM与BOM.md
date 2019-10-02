@@ -1,4 +1,13 @@
 ## 一 DOM
+
+
+浏览器js主要构成：
+- ECMAScript：js基础语法规范
+- DOM：`Document Object Model`，JavaScript操作网页元素的API
+- BOM：`Browser Object Model`，JavaScript操作浏览器部分功能的API
+
+贴士：  
+
 #### 1.1 DOM解析过程与入口函数
 HTML加载完毕，渲染引擎会在内存中把HTML文档，生成一个DOM树，getElementById是获取内中DOM上的元素节点。然后操作的时候修改的是该元素的属性。
 DOM（document）即文档对象模型的一部分，DOM是一个复合的数据类型。

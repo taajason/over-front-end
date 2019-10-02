@@ -3,9 +3,15 @@
 网页的标准：
 - 结构：HTML，即 `Hyper text markup language` ，超文本标记语言，能够实现网页跳转的文本	
 - 表现：CSS，即 `Cascading Style Sheets`，层叠样式表			
-- 行为：JavaScript
+- 行为：由JavaScript编程语言控制
 
-一个网页的基本结构：
+HTML标准由W3C组织制定，经过多年发展，其标准已经到达了HTML5，当然其兼容性仍然较差，市面上现有的HTML标准有：
+- HTML4：被大多数浏览器所兼容，推荐使用
+- XHTML：是HTML4与XML的过渡版本，不推荐使用
+- XML：可以自定义标签，但是未被浏览器标准接受，被广泛应用于通信协议领域
+- HTML5：具备划时代意义的HTML版本，已经被Chrome、FireFox等浏览器接受，但是大多数场合兼容度较低
+
+标准HTML4网页结构：
 ```html
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,11 +25,29 @@
 </html>
 ```
 
-由上可见网页的内容都是由大量的HTML标签构成，按照标签的开合可以将标签分为分类：
-- 单标签：只有开始没有结束，如：`<hr>  <!-- -->  <br>  <hr>`
-- 双标签：有开始有结束，如：`<p></p>   <em></em> `
+标准HTML5网页结构：
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+```
+
+贴士：H5部分将会在03章讲解。
 
 ## 二 常见标签
+
+#### 2.0 标签分类
+
+网页的内容都是由大量的HTML标签构成，按照标签的开合可以将标签分为分类：
+- 单标签：只有开始没有结束，如：`<hr>  <!-- -->  <br>  <hr>`
+- 双标签：有开始有结束，如：`<p></p>   <em></em> `
 
 #### 2.1 图片标签img与路径
 

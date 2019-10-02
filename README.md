@@ -38,13 +38,12 @@
 
 语法基础：
 - [《JavaScript权威指南》第6版](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
-- [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
 - [《JavaScript语言精粹》修订版](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
 - [《JavaScript忍者秘籍》第2版](https://book.douban.com/subject/30143702/)：对函数的讲解：闭包、重载、curry化讲解极好
 - [《JavaScript编程全解》](https://book.douban.com/subject/25767719/)：各项技术的懒人包，适合统领全局式入门
-- [《》]()
 
 DOM编程：
+- [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
 - [《JavaScript DOM编程艺术》第2版](https://book.douban.com/subject/6038371/)
 - [《锋利的jQuery》第2版](https://book.douban.com/subject/10792216/)
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
@@ -81,7 +80,7 @@ React:
 - [《Node.js:来一打C++扩展》](https://book.douban.com/subject/30247892/)： 窥探Node底层的好书
 - [《Node.js调试指南》 ](https://github.com/nswbmw/node-in-debugging)：开源书籍
 
-#### 资料
+#### JS资料
 
 - [《前端面试之道》](https://yuchengkai.cn/docs/frontend/ )
 - [《Koa2进阶学习笔记》](https://chenshenhai.github.io/koa2-note/)
@@ -90,8 +89,6 @@ React:
 
 - [《Flutter：从0到1构建大前端应用》](https://book.douban.com/subject/34455732/)
 - [Flutter实战](https://book.flutterchina.club/)：短小精悍的电子书
-- [flutter项目源码](https://github.com/CarGuo/GSYGithubAppFlutter)：涵盖了移动开发90%功能
-- [技术胖视频教程](https://jspang.com/posts/2017/01/11/all-video-list.html)
 
 ## 附录：笔记汇总
 
