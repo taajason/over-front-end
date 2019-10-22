@@ -1,36 +1,38 @@
 ## 一 JavaScript概述
 
+编程语言有解释型和编译型两种：
+- 解释型：源代码无需经过编译，一行一行解析执行，比如javascript、python
+- 编译型：源码编译为可执行文件后，运行可执行文件，比如C、C++，这些语言往往拥有一个名为main的入口函数
+
 JavaScript（以下简写为js）是一门解释型脚本编程语言，也是当前Web开发领域的核心语言，没有之一。  
 
 该语言由网景(Netscape)公司(火狐的前身)的`Brendan Eich（布兰登·艾奇）`花费了10天时间创建，语言名称中虽然带了Java，但是和另一门编程语言Java没有任何关系，网景早期的意愿是设计一款和Java一样脚本语言。  
 
-由于各家引擎对JS的支持有所不同，为了统一JS的发展反向，欧洲计算机制造商协会为JavaScript提出了语法规范：ECMAScript。提到JavaScript时，通常指的版本是ECMAScrip3和ECMAScript5，js的当前主要版本：
+由于各家引擎对JS的支持有所不同，为了统一JS的发展反向，欧洲计算机制造商协会为JavaScript提出了语法规范：ECMAScript。即各家的JS脚本语言都要以ECMAScript语法规范来开发。  
+
+提到JavaScript时，通常指的版本是ECMAScrip3和ECMAScript5，js的当前主要版本：
 - ECMAScript3：1999年标准规范，火狐的js1.5和1.8都是基于3规范
 - ECMAScript4：为了适应互联网发展出来的激进版本，由于存在大量分歧，该版本并未普及
 - ECMAScript5：2009年发布，包含了4中的一些常见功能，当前的主流版本
-- ECMAScript6：诞生于2015年，也称为ES2015，js划时代意义的版本，为了适应大型项目开发，引入了块级作用域、class语法糖、Promise规范、模块化等功能，JS终于不再是一门`玩具语言`
-- ES2016：诞生于2016年，即ES7，后续版本均以年为名称，如ES2018。ES2016引入`async await`异步解决方案
+- ECMAScript6：诞生于2015年，也称为ES2015，是js划时代意义的版本。引入了开发大型项目所需要的功能，JS终于不再是一门`玩具语言`。
+- ES2016：诞生于2016年，即ES7，后续版本均以年为名称，如ES2017、ES2018。ES2016中引入`async await`异步解决方案。
 
-js可以运行在很多环境中，我们称之为运行时，常见的js运行时有：浏览器、Node.js。本章节记录的JS笔记均运行于Chrome浏览器。   
+任何编程语言都需要编程语言引擎来对代码进行解析，从而让代码转换为机器指令（因为计算机只能运行机器指令，不能直接运行代码）。常见的JS引擎有：
+- v8引擎：js最著名的引擎，以高性能著称，被应用于Chrome浏览器与Node.js
+- SpiderMonkey：火狐浏览器中的js引擎
 
-名词解释：
-- 编程语言有解释型和编译型两种：
-  - 解释型：源代码无需经过编译，一行一行解析执行，比如javascript、python
-  - 编译型：源码编译为可执行文件后，运行可执行文件，比如C、C++，这些语言往往拥有一个名为main的入口函数
-- 解释器：即编程语言引擎。开发者书写的代码能够被对应编程语言引擎转换为机器识别的指令，从而得到运行，常见的有：
-  - v8引擎：js最著名的引擎，以高性能著称，被应用于Chrome浏览器与Node.js
-  - SpiderMonkey：火狐浏览器中的js引擎
-  - jvm：Java的虚拟机
-- 运行时：为编程语言提供运行的环境以及该环境对应的各种API。所以运行时内置了编程语言引擎以及其他的运行时专属功能。JS的常见运行时有：
-  - Chrome浏览器：JS引擎为：V8，内置webkit排版引擎，提供了html文档操作API
-  - FireFox浏览器：JS引擎为：SpiderMonkey，内置Gecko排版引擎，也提供了html文档操作API
-  - Node.js：JS引擎为V8，内置了Node的API，可以实现网络、文件等计算机系统操作API
+在编程引擎基础上，第三方会为编程语言开发一些独立的库，对编程语言进行功能上的包装，这些最终包装出来的编程环境，我们称之为运行时！常见的js运行时有：
+- Chrome浏览器：JS引擎为：V8，内置webkit排版引擎，提供了html文档操作API
+- FireFox浏览器：JS引擎为：SpiderMonkey，内置Gecko排版引擎，也提供了html文档操作API
+- Node.js：JS引擎为V8，内置了Node的API，即提供了网络、文件等计算机系统操作API
 
 ## 二 Hello World
 
 `Hello World`程序是1974年`Brian Kernighan`撰写的`《Programming in C: A Tutorial》`中首次面向大众介绍C语言时使用的最简单程序示例。后来该习惯相继被大量编程语言沿用。   
 
-编写js版`Hello World`：
+本笔记中的JavaScript代码大多都依赖于Chrome运行时，故而我们需要一定的HTML文件来运行。
+
+编写js版`Hello World`，创建helloworld.html文件，代码如下：
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +42,7 @@ js可以运行在很多环境中，我们称之为运行时，常见的js运行�
 </head>
 <body>
     <script>
+        // 这里开始书写js代码
         console.log("Hello World!");
     </script>
 </body>
@@ -97,5 +100,10 @@ console.error("打印错误");
 
 #### 4.3 分号
 
-js语句末尾的分号可以写也可以不写，不写的时候要保证每行代码都具备完整的语义！
+js语句末尾的分号可以写也可以不写，不写的时候要保证每行代码都具备完整的语义！  
 
+**笔者推荐：书写代码时，尽量保证每行代码都有自己的独立意义，不能在一行代码中添加多个功能！**
+
+#### 4.4 JS区分大小写
+
+注意：JavaScript是区分大小写的！
