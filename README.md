@@ -39,8 +39,6 @@
 语法基础：
 - [《JavaScript权威指南》第6版](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
 - [《JavaScript语言精粹》修订版](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
-- [《JavaScript忍者秘籍》第2版](https://book.douban.com/subject/30143702/)：对函数的讲解：闭包、重载、curry化讲解极好
-- [《JavaScript编程全解》](https://book.douban.com/subject/25767719/)：各项技术的懒人包，适合统领全局式入门
 
 DOM编程：
 - [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
@@ -49,12 +47,12 @@ DOM编程：
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
 
 提升篇：
+- [《JavaScript忍者秘籍》第2版](https://book.douban.com/subject/30143702/)：对函数的讲解：闭包、重载、curry化讲解极好
 - [《JavaScript核心技术开发解密》](https://book.douban.com/subject/30190189/)：短小精悍的介绍了一些难点
 - [《你不知道JavaScript》上卷+中卷](https://book.douban.com/subject/26351021/)：笔者认为目前最好的JS深入书籍之一
 - [《JavaScript设计模式与开发实践》](https://book.douban.com/subject/26382780/)
 - [《JavaScript模式》](https://book.douban.com/subject/11506062/)
 - [《JavaScript面向对象精要》](https://book.douban.com/subject/26352658/)
-- [《JavaScript面向对象编程指南（第2版）》](https://book.douban.com/subject/26302623/)
 
 ES6篇：
 - [《深入理解ECMAScript6》](https://book.douban.com/subject/27072230/)
