@@ -38,10 +38,10 @@
 
 语法基础：
 - [《JavaScript权威指南》第6版](https://book.douban.com/subject/10549733/)：犀牛书-大部头，适合作为工具书使用
+- [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
 - [《JavaScript语言精粹》修订版](https://book.douban.com/subject/11874748/)：JS核心语法荟萃，短小精悍，笔者立荐
 
 DOM编程：
-- [《JavaScript高级程序设计》第3版](https://book.douban.com/subject/10546125/)：小红书-最好的JS全面了解书籍
 - [《JavaScript DOM编程艺术》第2版](https://book.douban.com/subject/6038371/)
 - [《锋利的jQuery》第2版](https://book.douban.com/subject/10792216/)
 - [《jQuery技术内幕》](https://book.douban.com/subject/25823709/)
@@ -96,11 +96,10 @@ React:
 
 **OverNote分类**：  
 - [Go](https://github.com/overnote/over-golang)：详尽的Go领域笔记：Go语法、Go并发编程、GoWeb编程、Go微服务等
-- [大前端 front-end-master](https://github.com/overnote/front-end-master)：包含JavaScript、Node.js、vue/react、微信开发、Flutter等大前端技术
+- [大前端 front-end-master](https://github.com/overnote/over-front-end)：包含JavaScript、Node.js、vue/react、微信开发、Flutter等大前端技术
 - [数据结构与算法](https://github.com/overnote/over-algorithm)：以C/Go实现为主记录数据结构与算法的笔记
 - [分布式与微服务架构](https://github.com/overnote/over-architecture/)：分布式与微服务等架构相关笔记
 - [Linux](https://github.com/overnote/over-linux)：计算机组成原理、操作系统、计算机网络、编译原理基础学科笔记
-- [服务端常用技术](https://github.com/overnote/server-sider)：nginx、mysql、redis、mongodb、linux系统基础等服务端常用技术汇总笔记
+- [服务端常用技术](https://github.com/overnote/over-server)：nginx、mysql、redis、mongodb、linux系统基础等服务端常用技术汇总笔记
 - [大数据](https://github.com/overnote/over-bigdata)：大数据笔记，完善中
 - [Python](https://github.com/overnote/over-python)：Python相关笔记，完善中
-- [Java](https://github.com/overnote/over-java)：Java相关笔记，完善中
