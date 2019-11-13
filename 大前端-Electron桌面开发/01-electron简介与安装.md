@@ -86,3 +86,24 @@ npm install && npm start
 - 通过 shell 和 screen API 整合桌面操作系统特性
 - 支持常见的桌面端软件需求，如：菜单、快捷键、托盘
 - 支持自动更新、汇报程序崩溃、操作系统通知等
+
+## 五 打包
+
+electron有两种打包方式：electron-packager及electron-builder。electron-builder更加高效方便。这里只介绍该打包方式。  
+
+```
+yarn add electron-builder --save-dev
+
+"build": {
+    "appId": "com.xxx.app",
+    "mac": {
+      "target": ["dmg","zip"]
+    },
+    "win": {
+      "target": ["nsis","zip"]
+    }
+},
+"scripts": {
+    "dist": "electron-builder --win --x64"
+},
+```

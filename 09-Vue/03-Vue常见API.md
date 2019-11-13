@@ -202,21 +202,21 @@ directives: {
       const url = req.url;
 
       // 解析客户端请求的URL地址
-      var info = urlModule.parse(url, true);
+      let info = urlModule.parse(url, true);
 
       // 如果请求的 URL 地址是 /getjsonp ，则表示要获取JSONP类型的数据
       if (info.pathname === '/getjsonp') {
         // 获取客户端指定的回调函数的名称
-        var cbName = info.query.callback;
+        let cbName = info.query.callback;
         // 手动拼接要返回给客户端的数据对象
-        var data = {
+        let data = {
           name: 'zs',
           age: 22,
           gender: '男',
           hobby: ['吃饭', '睡觉', '运动']
         }
         // 拼接出一个方法的调用，在调用这个方法的时候，把要发送给客户端的数据，序列化为字符串，作为参数传递给这个调用的方法：
-        var result = `${cbName}(${JSON.stringify(data)})`;
+        let result = `${cbName}(${JSON.stringify(data)})`;
         // 将拼接好的方法的调用，返回给客户端去解析执行
         res.end(result);
       } else {
@@ -242,7 +242,7 @@ getInfo() { // get 方式获取数据
 7. 发送post请求：
 ```
 postInfo() {
-  var url = 'http://127.0.0.1:8899/api/post';
+  let url = 'http://127.0.0.1:8899/api/post';
   // post 方法接收三个参数：
   // 参数1： 要请求的URL地址
   // 参数2： 要发送的数据对象
@@ -255,7 +255,7 @@ postInfo() {
 8. 发送JSONP请求获取数据：
 ```
 jsonpInfo() { // JSONP形式从服务器获取数据
-  var url = 'http://127.0.0.1:8899/api/jsonp';
+  let url = 'http://127.0.0.1:8899/api/jsonp';
   this.$http.jsonp(url).then(res => {
     console.log(res.body);
   });

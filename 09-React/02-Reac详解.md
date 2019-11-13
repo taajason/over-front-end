@@ -158,7 +158,7 @@ handleChange: function(event) {
     this.setState({value: event.target.value});
 },
 render: function() {
-    var value = this.state.value;
+    let value = this.state.value;
     return <input type="text" value={value} onChange={this.handleChange} />;
 }
 //使用这种模式非常容易实现类似对用户输入的验证，或者对用户交互做额外的处理，比如截断最多输入140个字符：
@@ -196,9 +196,9 @@ render: function() {
 ## 五 循环插入子元素
 如果组件中包含通过循环插入的子元素，为了保证重新渲染 UI 的时候能够正确显示这些子元素，每个元素都需要通过一个特殊的 key 属性指定一个唯一值。为了内部 diff 的效率。
 ```JavaScript
-var TodoList = React.createClass({
+let TodoList = React.createClass({
     render: function () {
-        var createItem = function (item) {
+        let createItem = function (item) {
             return <li key={item.id}>{item.text}</li>;
         };
         return <ul>{this.props.items.map(createItem)}</ul>;
@@ -210,7 +210,7 @@ module.export = TodoList
 （2）也可以传递 object 来做有 key 的子级。object 的 key 会被当作每个组件的 key。但是一定要牢记 JavaScript 并不总是保证属性的顺序会被保留。实际情况下浏览器一般会保留属性的顺序，除了 使用 32位无符号数字做为 key 的属性。数字型属性会按大小排序并且排在其它属性前面。一旦发生这种情况，React 渲染组件的顺序就是混乱。可能在 key 前面加一个字符串前缀来避免：
 ```
 render: function() {
-    var items = {};
+    let items = {};
 
     this.props.results.forEach(function(result) {
       // 如果 result.id 看起来是一个数字（比如短哈希），那么
@@ -230,7 +230,7 @@ render: function() {
 HTML 元素会作为 React 组件对象、JS 表达式结果是一个文字节点，都会存入 Parent 组件的 props.children。
 props.children 通常是一个组件对象的数组，但是当只有一个子元素的时候，props.children 将是这个唯一的子元素，而不是数组了
 ```
-var NotesList = React.createClass({
+let NotesList = React.createClass({
   render: function() {
     return (
       <ol>

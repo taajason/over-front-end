@@ -47,7 +47,7 @@ vue基本代码和MVVM之间的对应:
 
 
 // VM 
-var vm =new Vue({
+let vm =new Vue({
    el:'#app' ,
 
    // M
