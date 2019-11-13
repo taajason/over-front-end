@@ -57,6 +57,7 @@ DOM编程：
 - [《JavaScript设计模式与开发实践》](https://book.douban.com/subject/26382780/)
 - [《JavaScript模式》](https://book.douban.com/subject/11506062/)
 - [《JavaScript面向对象精要》](https://book.douban.com/subject/26352658/)
+- [《JavaScript面向对象编程指南（第2版》](https://book.douban.com/subject/26302623/)
 
 ES6篇：
 - [《深入理解ECMAScript6》](https://book.douban.com/subject/27072230/)
