@@ -61,7 +61,7 @@ DOM编程：
 
 ES6篇：
 - [《深入理解ECMAScript6》](https://book.douban.com/subject/27072230/)
-- [《ECMAScript6入门》](https://book.douban.com/subject/25966265/)
+- [《ECMAScript6入门》第3版](https://book.douban.com/subject/27127030/)
 
 Vue：
 - [《深入浅出Vue.js》](https://book.douban.com/subject/32581281/)
