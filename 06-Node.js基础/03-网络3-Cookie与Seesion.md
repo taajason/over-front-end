@@ -103,7 +103,7 @@ cookie: {
         maxAge: 50000
     },
     // secure https下才能访问cookie
-//每次请求时强行设置cookue，将重置cookuie过期时间，默认false
+//每次请求时强行设置cookie，将重置cookie过期时间，默认false
     rolling: true   
 }));
 
